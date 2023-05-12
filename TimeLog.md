@@ -6,4 +6,4 @@
 | 2023/05/11 |       |            |    0.5       |           |             |          | Summarize project and proposal requirements
 | 2023/05/11 | 1     |   1        |    1         |    1      |    1        |   1      | Think & document 3 feasible ideas
 | 2023/05/11 | 1.5   |   1.5      |    1.5       |    1.5    |    1.5      |   1.5    | Discuss & Select Idea
-| 2023/05/11 |       |            |              |           |             |   0.5    | Create TimeLog.md
+| 2023/05/11 |       |            |     0.5      |           |             |   0.5    | Create TimeLog.md and README.md
