@@ -8,3 +8,5 @@
 | 2023/05/11 | 1.5   |   1.5      |    1.5       |    1.5    |    1.5      |   1.5    | Discuss & Select Idea
 | 2023/05/11 |       |            |    0.5       |           |             |   0.5    | Create TimeLog.md and README.md
 | 2023/05/15 |       |            |    0.5       |           |             |   0.5    | Divide task on proposal and design
+| 2023/05/15 | 1.5   |   1.5      |    1.5       |    1.5    |    1.5      |   1.5    | Meeting on proposal and design
+| 2023/05/15 |       |            |              |           |             |   1.0    | Initial design on UI
