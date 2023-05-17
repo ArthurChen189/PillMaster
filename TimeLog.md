@@ -10,3 +10,4 @@
 | 2023/05/15 |       |            |    0.5       |           |             |   0.5    | Divide task on proposal and design
 | 2023/05/15 | 1.5   |   1.5      |    1.5       |    1.5    |    1.5      |   1.5    | Meeting on proposal and design
 | 2023/05/15 |       |            |              |           |             |   1.0    | Initial design on UI
+| 2023/05/15 |       |      1.0   |              |           |             |   1.0    | Upgrade UI design
