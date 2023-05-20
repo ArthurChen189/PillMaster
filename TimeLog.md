@@ -13,3 +13,4 @@
 | 2023/05/15 |       |   1.0      |              |           |             |   1.0    | Upgrade UI design
 | 2023/05/19 |       |            |    4.0       |           |             |   4.0    | Design architecture view and architecture style
 | 2023/05/20 |       |            |              |    2      |    2        |          | Discuss design patterns
+| 2023/05/20 |       |   5.0      |              |           |             |          | UI design in Figma
