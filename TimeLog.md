@@ -12,6 +12,7 @@
 | 2023/05/15 |       |            |              |           |             |   1.0    | Initial design on UI
 | 2023/05/15 |       |   1.0      |              |           |             |   1.0    | Upgrade UI design
 | 2023/05/19 |       |            |    4.0       |           |             |   4.0    | Design architecture view and architecture style
-| 2023/05/20 |       |            |              |    2      |    2        |          | Discuss design patterns
+| 2023/05/20 |       |            |              |    2.0    |    2.0      |          | Discuss design patterns
 | 2023/05/20 |       |   5.0      |              |           |             |          | UI design in Figma
 | 2023/05/20 | 5.0   |            |              |           |             |          | Write documentations
+| 2023/05/20 |       |            |              |    4.0    |             |          | Demonstrate implementation of design patterns at the coding level
