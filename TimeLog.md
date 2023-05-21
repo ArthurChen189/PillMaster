@@ -14,3 +14,4 @@
 | 2023/05/19 |       |            |    4.0       |           |             |   4.0    | Design architecture view and architecture style
 | 2023/05/20 |       |            |              |    2      |    2        |          | Discuss design patterns
 | 2023/05/20 |       |   5.0      |              |           |             |          | UI design in Figma
+| 2023/05/20 | 5.0   |            |              |           |             |          | Write documentations
