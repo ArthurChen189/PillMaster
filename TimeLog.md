@@ -17,3 +17,4 @@
 | 2023/05/20 | 5.0   |            |              |           |             |          | Write documentations
 | 2023/05/20 |       |            |              |    4.0    |             |          | Demonstrate implementation of design patterns at the coding level
 | 2023/05/22 |       |   3.0      |              |           |             |          | UI design in Figma
+| 2023/05/23 |       |            |              |           |             |    3.0   | setup starter code
