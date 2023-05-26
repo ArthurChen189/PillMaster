@@ -18,4 +18,6 @@
 | 2023/05/20 |       |            |              |    4.0    |             |          | Demonstrate implementation of design patterns at the coding level
 | 2023/05/22 |       |   3.0      |              |           |             |          | UI design in Figma
 | 2023/05/23 |       |            |              |           |             |    3.0   | Setup starter code
+| 2023/05/23 |       |            |              |           |             |    2.0   | Debug starter code
 | 2023/05/24 |       |            |    6.0       |           |             |          | Write Proposal
+| 2023/05/24 |       |            |              |           |             |    0.2   | Review Proposal
