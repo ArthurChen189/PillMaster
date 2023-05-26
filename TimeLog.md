@@ -21,3 +21,4 @@
 | 2023/05/23 |       |            |              |           |             |    2.0   | Debug starter code
 | 2023/05/24 |       |            |    6.0       |           |             |          | Write Proposal
 | 2023/05/24 |       |            |              |           |             |    0.2   | Review Proposal
+| 2023/05/26 |       |            |    0.5       |           |             |          | Revise Proposal
