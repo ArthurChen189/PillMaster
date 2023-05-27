@@ -22,3 +22,4 @@
 | 2023/05/24 |       |            |    6.0       |           |             |          | Write Proposal
 | 2023/05/24 |       |            |              |           |             |    0.2   | Review Proposal
 | 2023/05/26 |       |            |    0.5       |           |             |          | Revise Proposal
+| 2023/05/26 |       |   1.0      |              |           |             |          | Added UI in Proposal
