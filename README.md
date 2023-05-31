@@ -3,6 +3,9 @@ Team members: Yiwen Wu, Tianyu Zhai, Selina Li, Minhui Zhang, Haodong Xu, Arthur
 
 
 # Draft Tech-stack for team memebers to know:
+---
+> These are all the tech, used in our start code. Please have a big picture on everything before you start your coding
+
   - kotlin
   - jetpack compose: https://developer.android.com/jetpack/compose/tooling#preview
   - coil:
