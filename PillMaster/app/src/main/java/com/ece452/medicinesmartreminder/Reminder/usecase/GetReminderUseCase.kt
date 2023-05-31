@@ -1,18 +1,18 @@
-package com.ece452.medicinesmartreminder.Reminder
+package com.ece452.medicinesmartreminder.Reminder.usecase
 
-import android.telephony.IccOpenLogicalChannelResponse
+import com.ece452.medicinesmartreminder.Reminder.model.ReminderResponse
 import com.ece452.medicinesmartreminder.Reminder.repository.IReminderRepository
 import javax.inject.Inject
 
 interface  IGetReminderUseCase{
 
-    operator fun invoke(): String
+   suspend operator fun invoke(): ReminderResponse
 
 }
 class GetReminderUseCase @Inject constructor(
     val repo: IReminderRepository
 ): IGetReminderUseCase {
-    override fun invoke(): String {
+    override suspend fun invoke(): ReminderResponse {
         return  repo.getAllReminders()
 
         TODO("Not yet implemented")
