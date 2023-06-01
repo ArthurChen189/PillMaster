@@ -25,3 +25,4 @@
 | 2023/05/26 |       |   1.0      |              |           |             |          | Added UI in Proposal
 | 2023/05/30 |       |            |              |           |             |    4.5   | Setup/debug starter code
 | 2023/05/30 |       |            |              |           |             |    1.0   | Prepare Presentation
+| 2023/06/01 |       |            |              |    1.0    |             |          | Revise Proposal based on feedback
