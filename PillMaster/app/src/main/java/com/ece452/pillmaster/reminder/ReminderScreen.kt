@@ -1,4 +1,4 @@
-package com.ece452.medicinesmartreminder.Reminder
+package com.ece452.pillmaster.reminder
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
-import com.ece452.medicinesmartreminder.Reminder.model.Category
-import com.ece452.medicinesmartreminder.Reminder.viewmodel.ReminderViewModel
+import com.ece452.pillmaster.reminder.model.Category
+import com.ece452.pillmaster.reminder.viewmodel.ReminderViewModel
 import coil.compose.rememberImagePainter
 
 @Composable

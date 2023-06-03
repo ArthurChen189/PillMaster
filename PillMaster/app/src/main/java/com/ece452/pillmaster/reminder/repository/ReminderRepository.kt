@@ -1,7 +1,7 @@
-package com.ece452.medicinesmartreminder.Reminder.repository
+package com.ece452.pillmaster.reminder.repository
 
-import com.ece452.medicinesmartreminder.Reminder.model.ReminderResponse
-import com.ece452.medicinesmartreminder.Reminder.service.IReminderService
+import com.ece452.pillmaster.reminder.model.ReminderResponse
+import com.ece452.pillmaster.reminder.service.IReminderService
 import javax.inject.Inject
 
 interface IReminderRepository {

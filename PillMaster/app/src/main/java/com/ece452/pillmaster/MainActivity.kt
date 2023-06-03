@@ -1,4 +1,4 @@
-package com.ece452.medicinesmartreminder
+package com.ece452.pillmaster
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,8 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.ece452.medicinesmartreminder.Reminder.ReminderScreen
-import com.ece452.medicinesmartreminder.ui.theme.MedicineSmartReminderTheme
+import com.ece452.pillmaster.reminder.ReminderScreen
+import com.ece452.pillmaster.ui.theme.PillMasterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,19 +16,19 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MedicineSmartReminderTheme {
+            PillMasterTheme {
                 // A surface container using the 'background' color from the theme
 //                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
 //                    Greeting("Android")
 //                }
-                MedicineSmartReminderApp()
+                PillMasterApp()
             }
         }
     }
 }
 
 @Composable
-fun MedicineSmartReminderApp() {
+fun PillMasterApp() {
     ReminderScreen()
     
 }
@@ -44,7 +44,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    MedicineSmartReminderTheme {
+    PillMasterTheme {
         Greeting("Android")
     }
 }

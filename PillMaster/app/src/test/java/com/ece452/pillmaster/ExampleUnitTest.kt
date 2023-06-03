@@ -1,4 +1,4 @@
-package com.ece452.medicinesmartreminder
+package com.ece452.pillmaster
 
 import org.junit.Test
 

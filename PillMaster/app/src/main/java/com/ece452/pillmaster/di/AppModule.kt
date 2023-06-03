@@ -1,10 +1,10 @@
-package com.ece452.medicinesmartreminder.di
+package com.ece452.pillmaster.di
 
-import com.ece452.medicinesmartreminder.Reminder.usecase.GetReminderUseCase
-import com.ece452.medicinesmartreminder.Reminder.usecase.IGetReminderUseCase
-import com.ece452.medicinesmartreminder.Reminder.repository.IReminderRepository
-import com.ece452.medicinesmartreminder.Reminder.repository.ReminderRepository
-import com.ece452.medicinesmartreminder.Reminder.service.IReminderService
+import com.ece452.pillmaster.reminder.usecase.GetReminderUseCase
+import com.ece452.pillmaster.reminder.usecase.IGetReminderUseCase
+import com.ece452.pillmaster.reminder.repository.IReminderRepository
+import com.ece452.pillmaster.reminder.repository.ReminderRepository
+import com.ece452.pillmaster.reminder.service.IReminderService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

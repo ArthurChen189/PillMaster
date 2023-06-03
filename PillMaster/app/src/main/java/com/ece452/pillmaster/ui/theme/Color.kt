@@ -1,4 +1,4 @@
-package com.ece452.medicinesmartreminder.ui.theme
+package com.ece452.pillmaster.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

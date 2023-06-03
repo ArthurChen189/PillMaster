@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.ece452.medicinesmartreminder'
+    namespace 'com.ece452.pillmaster'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.ece452.medicinesmartreminder"
+        applicationId "com.ece452.pillmaster"
         minSdk 24
         targetSdk 33
         versionCode 1

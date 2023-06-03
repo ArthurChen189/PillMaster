@@ -1,6 +1,6 @@
-package com.ece452.medicinesmartreminder.Reminder.service
+package com.ece452.pillmaster.reminder.service
 
-import com.ece452.medicinesmartreminder.Reminder.model.ReminderResponse
+import com.ece452.pillmaster.reminder.model.ReminderResponse
 import retrofit2.http.GET
 
 interface IReminderService {
