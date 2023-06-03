@@ -27,3 +27,4 @@
 | 2023/05/30 |       |            |              |           |             |    1.0   | Prepare Presentation
 | 2023/06/01 |       |            |              |    1.0    |             |          | Revise Proposal based on feedback
 | 2023/06/02 |       |            |    0.5       |           |             |          | Revise Proposal and upload
+| 2023/06/03 |       |            |    1.0       |           |             |   1.0    | Plan on how to implement and find resources
