@@ -17,7 +17,7 @@ Team members: Yiwen Wu, Tianyu Zhai, Selina Li, Minhui Zhang, Haodong Xu, Arthur
   
   
 # Helpful Videos:
-  - https://www.youtube.com/playlist?list=PL3Y9MECuxct3Od7W_AcOvpo-PZD2NHbDe
+  - https://www.youtube.com/watch?v=MpYRRB3nLSU&list=PL3Y9MECuxct3Od7W_AcOvpo-PZD2NHbDe&index=1
 
 
 
