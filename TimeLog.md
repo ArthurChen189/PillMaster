@@ -28,3 +28,5 @@
 | 2023/06/01 |       |            |              |    1.0    |             |          | Revise Proposal based on feedback
 | 2023/06/02 |       |            |    0.5       |           |             |          | Revise Proposal and upload
 | 2023/06/03 |       |            |    1.0       |           |             |   1.0    | Plan on how to implement and find resources
+| 2023/06/03 |       |            |              |    1.0    |             |          | PR Review
+| 2023/06/03 |       |            |              |    2.0    |             |          | Raise a PR to standardize and clean up code
