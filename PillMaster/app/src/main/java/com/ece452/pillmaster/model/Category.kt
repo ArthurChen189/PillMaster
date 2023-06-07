@@ -1,4 +1,4 @@
-package com.ece452.pillmaster.reminder.model
+package com.ece452.pillmaster.model
 //change name later
 data class Category(
     val idCategory: String,

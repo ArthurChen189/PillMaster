@@ -1,4 +1,4 @@
-package com.ece452.pillmaster.reminder.model
+package com.ece452.pillmaster.model
 
 data class ReminderResponse(
     //change the name later on

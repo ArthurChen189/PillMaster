@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
-import com.ece452.pillmaster.reminder.model.Category
-import com.ece452.pillmaster.reminder.viewmodel.ReminderViewModel
+import com.ece452.pillmaster.model.Category
+import com.ece452.pillmaster.viewmodel.ReminderViewModel
 import coil.compose.rememberImagePainter
 
 @Composable
