@@ -32,3 +32,4 @@
 | 2023/06/03 |             |            |              | 2.0       |             |          | Raise a PR to standardize and clean up code                                             |
 | 2023/06/07 |             |            |              |           | 4.5         |          | Set up Navigation Manager for future screens. Create example onboard and login screens. |
 | 2023/06/07 |             |            |              |           | 1.0         |          | Address comments & Add prototype screens for care-giver & receiver.                     |
+| 2023/06/07 |             |            |              |           |             | 1.0      | PR Review                                                                               |
