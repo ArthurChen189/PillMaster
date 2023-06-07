@@ -1,4 +1,4 @@
-package com.ece452.pillmaster.screen
+package com.ece452.pillmaster.screen.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

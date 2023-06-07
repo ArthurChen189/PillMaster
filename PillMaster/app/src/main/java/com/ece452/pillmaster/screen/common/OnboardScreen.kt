@@ -1,4 +1,4 @@
-package com.ece452.pillmaster.screen
+package com.ece452.pillmaster.screen.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,17 +17,26 @@ import androidx.compose.ui.unit.dp
 fun OnboardScreen(
     // TODO - Expose an action if this action takes the user to another screen.
     onNav: () -> Unit = {},
+    tempReceiver: () -> Unit = {},
+    tempGiver: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
             .padding(16.dp)
-            .semantics { contentDescription = "Onboarding Screen" }
+            .semantics { contentDescription = "Onboard Screen" }
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Button(onClick = onNav) {
-            Text("Click me")
+            Text("Go to login")
+        }
+        // TODO - Notice that they should be removed when we have the authentication functionality.
+        Button(onClick = tempReceiver) {
+            Text("Go to receiver home")
+        }
+        Button(onClick = tempGiver) {
+            Text("Go to giver home")
         }
     }
 }
