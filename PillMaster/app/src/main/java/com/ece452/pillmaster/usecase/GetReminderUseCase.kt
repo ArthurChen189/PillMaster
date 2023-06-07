@@ -1,7 +1,7 @@
-package com.ece452.pillmaster.reminder.usecase
+package com.ece452.pillmaster.usecase
 
-import com.ece452.pillmaster.reminder.model.ReminderResponse
-import com.ece452.pillmaster.reminder.repository.IReminderRepository
+import com.ece452.pillmaster.model.ReminderResponse
+import com.ece452.pillmaster.repository.IReminderRepository
 import javax.inject.Inject
 
 interface  IGetReminderUseCase{

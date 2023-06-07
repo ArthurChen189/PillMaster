@@ -1,10 +1,10 @@
 package com.ece452.pillmaster.di
 
-import com.ece452.pillmaster.reminder.usecase.GetReminderUseCase
-import com.ece452.pillmaster.reminder.usecase.IGetReminderUseCase
-import com.ece452.pillmaster.reminder.repository.IReminderRepository
-import com.ece452.pillmaster.reminder.repository.ReminderRepository
-import com.ece452.pillmaster.reminder.service.IReminderService
+import com.ece452.pillmaster.usecase.GetReminderUseCase
+import com.ece452.pillmaster.usecase.IGetReminderUseCase
+import com.ece452.pillmaster.repository.IReminderRepository
+import com.ece452.pillmaster.repository.ReminderRepository
+import com.ece452.pillmaster.service.IReminderService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -37,7 +37,7 @@ class AppModule {
     @Provides
     @Singleton
     //know how to call api
-    fun providesReminderService(retrofit: Retrofit): IReminderService{
+    fun providesReminderService(retrofit: Retrofit): IReminderService {
         return retrofit.create(IReminderService::class.java)
     }
 
@@ -47,7 +47,7 @@ class AppModule {
 
         @Binds
         @Singleton
-        fun provideReminderRepository(repo:ReminderRepository) : IReminderRepository
+        fun provideReminderRepository(repo: ReminderRepository) : IReminderRepository
 
         @Binds
         @Singleton
