@@ -22,9 +22,11 @@
 | 2023/05/24 |             |            | 6.0          |           |             |          | Write Proposal                                                                          |
 | 2023/05/24 |             |            |              |           |             | 0.2      | Review Proposal                                                                         |
 | 2023/05/26 |             |            | 0.5          |           |             |          | Revise Proposal                                                                         |
+| 2023/05/26 | 1.0         |            |              |           |             |          | Revise Documentations                                                                   |
 | 2023/05/26 |             | 1.0        |              |           |             |          | Added UI in Proposal                                                                    |
 | 2023/05/30 |             |            |              |           |             | 4.5      | Setup/debug starter code                                                                |
 | 2023/05/30 |             |            |              |           |             | 1.0      | Prepare Presentation                                                                    |
+| 2023/05/31 | 4.0         |            |              |           |             |          | Make and revise all documents for presentation                                          |
 | 2023/06/01 |             |            |              | 1.0       |             |          | Revise Proposal based on feedback                                                       |
 | 2023/06/02 |             |            | 0.5          |           |             |          | Revise Proposal and upload                                                              |
 | 2023/06/03 |             |            | 1.0          |           |             | 1.0      | Plan on how to implement and find resources                                             |
@@ -33,3 +35,5 @@
 | 2023/06/07 |             |            |              |           | 4.5         |          | Set up Navigation Manager for future screens. Create example onboard and login screens. |
 | 2023/06/07 |             |            |              |           | 1.0         |          | Address comments & Add prototype screens for care-giver & receiver.                     |
 | 2023/06/07 |             |            |              |           |             | 1.0      | PR Review                                                                               |
+| 2023/06/07 | 1.0         |            |              |           |             |          | Investigate OCR function implementation                                                 |
+| 2023/06/07 | 1.5         |            |              |           |             |          | Investigate Python + Kotlin integration                                                 |
