@@ -39,3 +39,5 @@
 | 2023/06/07 | 1.5         |            |              |           |             |          | Investigate Python + Kotlin integration                                                 |
 | 2023/06/10 |             |            |              | 3.0       |             |          | Investigate Authentication Method: Auth0 chosen                                         |
 | 2023/06/11 |             |            |              | 9.0       |             |          | Implement User authentication/authorization with Auth0                                  |
+| 2023/06/13 | 1.5         |            | 1.5          |           | 1.0         |          | Write and Revise Buddy Team Evaluation                                                  |
+| 2023/06/13 |             |            | 4.0          |           |             |          | Add Firebase to project                                                                 |
