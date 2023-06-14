@@ -10,7 +10,7 @@ import com.ece452.pillmaster.screen.common.CareGiverHomeScreen
 import com.ece452.pillmaster.screen.common.CareReceiverHomepageScreen
 import com.ece452.pillmaster.screen.common.DashboardScreen
 import com.ece452.pillmaster.screen.common.HomeScreen
-import com.ece452.pillmaster.screen.carereceiver.PillAddPageScreen
+import com.ece452.pillmaster.screen.common.PillAddPageScreen
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.LoginViewModel
 

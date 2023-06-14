@@ -1,4 +1,4 @@
-package com.ece452.pillmaster.screen.carereceiver
+package com.ece452.pillmaster.screen.common
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -102,7 +102,7 @@ fun PillAddPageScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CareGiverDropdownMenu() {
-    val coffeeDrinks = arrayOf("Americano", "Mocha", "None")
+    val coffeeDrinks = arrayOf("PERSON1", "PERSON2", "PERSON3", "None")
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("None") }
 
