@@ -1,5 +1,6 @@
 package com.ece452.pillmaster.screen.common
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
@@ -12,18 +13,24 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.ece452.pillmaster.utils.NavigationPath
+import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PillAddPageScreen() {
-    var infoField1 by remember { mutableStateOf("") }
-    var infoField2 by remember { mutableStateOf("") }
-    var infoField3 by remember { mutableStateOf("") }
-    var infoField4 by remember { mutableStateOf("") }
-    var selectedOption by remember { mutableStateOf("") }
+fun PillAddPageScreen(
+    navController: NavController
+) {
+    var pillName by remember { mutableStateOf("") }
+    var direction by remember { mutableStateOf("") }
+    var startDate by remember { mutableStateOf("") }
+    var endDate by remember { mutableStateOf("") }
+    var selectedOption by remember { mutableStateOf("None") }
     var isChecked by remember { mutableStateOf(false) }
-
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -31,34 +38,37 @@ fun PillAddPageScreen() {
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         TextField(
-            value = infoField1,
-            onValueChange = { infoField1 = it },
+            value = pillName,
+            onValueChange = { pillName = it },
             label = { Text("*Name") },
             modifier = Modifier.fillMaxWidth()
         )
 
         TextField(
-            value = infoField2,
-            onValueChange = { infoField2 = it },
+            value = direction,
+            onValueChange = { direction = it },
             label = { Text("*Direction") },
             modifier = Modifier.fillMaxWidth()
         )
 
         TextField(
-            value = infoField3,
-            onValueChange = { infoField3 = it },
+            value = startDate,
+            onValueChange = { startDate = it },
             label = { Text("*Start date") },
             modifier = Modifier.fillMaxWidth()
         )
 
         TextField(
-            value = infoField4,
-            onValueChange = { infoField4 = it },
+            value = endDate,
+            onValueChange = { endDate = it },
             label = { Text("*End date") },
             modifier = Modifier.fillMaxWidth()
         )
 
-        CareGiverDropdownMenu()
+        CareGiverDropdownMenu(
+            selectedText = selectedOption,
+            onSelectedTextChange = { selectedOption = it },
+        )
 
         Row(
             modifier = Modifier
@@ -76,18 +86,18 @@ fun PillAddPageScreen() {
 
         Button(
             onClick = {
-                if (infoField1.isNotEmpty() &&
-                    infoField2.isNotEmpty() &&
-                    infoField3.isNotEmpty() &&
-                    infoField4.isNotEmpty()
+                if (pillName.isNotEmpty() &&
+                    direction.isNotEmpty() &&
+                    startDate.isNotEmpty() &&
+                    endDate.isNotEmpty()
                 ) {
                     // All required fields are filled
-                    // Process the input data here
+                    // submit the input data here
+                    PillAddPageViewModel().newPillSubmit(pillName,direction, startDate, endDate, selectedOption, isChecked)
+                    navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
                 } else {
-                    // Display an error message or perform an action for incomplete form
+                    Toast.makeText(context, "fill every *input", Toast.LENGTH_SHORT).show()
                 }
-                // Perform the button click action here
-                // Access infoField1, infoField2, ..., infoField5, and isChecked variables to process the data
             },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
@@ -101,10 +111,12 @@ fun PillAddPageScreen() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CareGiverDropdownMenu() {
-    val coffeeDrinks = arrayOf("PERSON1", "PERSON2", "PERSON3", "None")
+fun CareGiverDropdownMenu(
+    selectedText: String,
+    onSelectedTextChange: (String) -> Unit,
+) {
+    val careGivers = arrayOf("PERSON1", "PERSON2", "PERSON3", "None")  //getCareGivers()
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf("None") }
 
     Box() {
         ExposedDropdownMenuBox(
@@ -129,11 +141,11 @@ fun CareGiverDropdownMenu() {
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                coffeeDrinks.forEach { item ->
+                careGivers.forEach { item ->
                     DropdownMenuItem(
                         text = { Text(text = item) },
                         onClick = {
-                            selectedText = item
+                            onSelectedTextChange(item)
                             expanded = false
                         }
                     )

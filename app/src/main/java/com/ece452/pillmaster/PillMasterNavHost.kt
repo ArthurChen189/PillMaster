@@ -41,7 +41,7 @@ fun PillMasterNavHost(
             CareGiverHomeScreen()
         }
         composable(NavigationPath.PILL_ADD_PAGE.route) {
-            PillAddPageScreen()
+            PillAddPageScreen(navController= navController)
         }
     }
 }
