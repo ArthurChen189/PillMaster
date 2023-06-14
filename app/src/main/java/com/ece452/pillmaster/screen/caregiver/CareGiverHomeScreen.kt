@@ -68,7 +68,7 @@ val receiverList = listOf(
 )
 
 @Composable
-fun GiverHomeScreen(
+fun CareGiverHomeScreen(
     // TODO - Expose an action if this action takes the user to another screen.
 ) {
     Column(

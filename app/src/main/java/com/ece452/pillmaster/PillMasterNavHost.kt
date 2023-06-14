@@ -6,49 +6,39 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.ece452.pillmaster.screen.common.GiverHomeScreen
-import com.ece452.pillmaster.screen.common.LoginScreen
-import com.ece452.pillmaster.screen.common.OnboardScreen
-import com.ece452.pillmaster.screen.common.ReceiverHomeScreen
-
-enum class Route(val route: String) {
-    ONBOARD("onboard"),
-    LOGIN("login"),
-    RECEIVER_HOME("receiver/home"),
-    GIVER_HOME("giver/home")
-    ; // TODO - Register more as needed.
-}
-
+import com.ece452.pillmaster.screen.common.CareGiverHomeScreen
+import com.ece452.pillmaster.screen.common.CareReceiverHomepageScreen
+import com.ece452.pillmaster.screen.common.DashboardScreen
+import com.ece452.pillmaster.screen.common.HomeScreen
+import com.ece452.pillmaster.utils.NavigationPath
+import com.ece452.pillmaster.viewmodel.LoginViewModel
 
 @Composable
 fun PillMasterNavHost(
-    nC: NavHostController,
-    modifier: Modifier = Modifier
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    loginViewModel: LoginViewModel
 ) {
     NavHost(
-        navController = nC,
-        startDestination = Route.ONBOARD.route,
+        navController = navController,
+        startDestination = NavigationPath.DASHBOARD.route,
         modifier = modifier
     ) {
-        composable(route = Route.ONBOARD.route) {
-            OnboardScreen(
-                onNav = {nC.navigateTo(Route.LOGIN.route)},
-                tempReceiver = {nC.navigateTo(Route.RECEIVER_HOME.route)},
-                tempGiver = {nC.navigateTo(Route.GIVER_HOME.route)},
-            )
+        composable(NavigationPath.DASHBOARD.route) {
+            DashboardScreen(navController = navController, loginViewModel = loginViewModel)
         }
-        composable(route = Route.LOGIN.route) {
-            LoginScreen(
-                onNav = {nC.navigateTo(Route.ONBOARD.route)}
-            )
+        composable(NavigationPath.HOMEPAGE.route) {
+            HomeScreen(navController = navController, loginViewModel = loginViewModel, false)
         }
-        composable(route = Route.RECEIVER_HOME.route) {
-            ReceiverHomeScreen()
+        composable(NavigationPath.HOMEPAGE_TEST.route) {
+            HomeScreen(navController = navController, loginViewModel = loginViewModel, true)
         }
-        composable(route = Route.GIVER_HOME.route) {
-            GiverHomeScreen()
+        composable(NavigationPath.CARE_RECEIVER_HOMEPAGE.route) {
+            CareReceiverHomepageScreen()
         }
-        // TODO - Register screens and specific navigation behaviours as needed.
+        composable(NavigationPath.CARE_GIVER_HOMEPAGE.route) {
+            CareGiverHomeScreen()
+        }
     }
 }
 

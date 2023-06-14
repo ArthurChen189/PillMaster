@@ -56,7 +56,7 @@ val medicines = listOf(
 )
 
 @Composable
-fun ReceiverHomeScreen(
+fun CareReceiverHomepageScreen(
     // TODO - Expose an action if this action takes the user to another screen.
 ) {
     Column(
