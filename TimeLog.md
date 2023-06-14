@@ -43,5 +43,5 @@
 | 2023/06/13 |             |            | 4.0          |           |             |          | Add Firebase to project                                                                 |
 | 2023/06/13 | 1.5         | 1.5        | 1.5          | 1.5       | 1.5         | 1.5      | team meeting on task work                                                               |
 | 2023/06/14 |             | 4.0        |              |           |             |          | working on add pill page ui                                                             |
-
+| 2023/06/14 |             |            |              | 0.5       |             |          | PR review                                                                               |
 
