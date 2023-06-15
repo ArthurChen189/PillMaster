@@ -26,6 +26,7 @@ fun PillAddPageScreen(
 ) {
     var pillName by remember { mutableStateOf("") }
     var direction by remember { mutableStateOf("") }
+    var reminderTime by remember { mutableStateOf("") }
     var startDate by remember { mutableStateOf("") }
     var endDate by remember { mutableStateOf("") }
     var selectedOption by remember { mutableStateOf("None") }
@@ -52,6 +53,13 @@ fun PillAddPageScreen(
         )
 
         TextField(
+            value = reminderTime,
+            onValueChange = { reminderTime = it },
+            label = { Text("*Reminder time") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        TextField(
             value = startDate,
             onValueChange = { startDate = it },
             label = { Text("*Start date") },
@@ -61,7 +69,7 @@ fun PillAddPageScreen(
         TextField(
             value = endDate,
             onValueChange = { endDate = it },
-            label = { Text("*End date") },
+            label = { Text("End date") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -88,12 +96,11 @@ fun PillAddPageScreen(
             onClick = {
                 if (pillName.isNotEmpty() &&
                     direction.isNotEmpty() &&
-                    startDate.isNotEmpty() &&
-                    endDate.isNotEmpty()
+                    startDate.isNotEmpty()
                 ) {
                     // All required fields are filled
                     // submit the input data here
-                    PillAddPageViewModel().newPillSubmit(pillName,direction, startDate, endDate, selectedOption, isChecked)
+                    PillAddPageViewModel().newPillSubmit(pillName,direction, reminderTime, startDate, endDate, selectedOption, isChecked)
                     navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
                 } else {
                     Toast.makeText(context, "fill every *input", Toast.LENGTH_SHORT).show()

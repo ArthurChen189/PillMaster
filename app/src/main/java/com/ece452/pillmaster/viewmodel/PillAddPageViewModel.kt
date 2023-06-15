@@ -12,6 +12,7 @@ class PillAddPageViewModel @Inject constructor(): ViewModel() {
     fun newPillSubmit(
         pillName: (String),
         direction: (String),
+        reminderTime: (String),
         startDate: (String),
         endDate: (String),
         selectedOption: (String),
