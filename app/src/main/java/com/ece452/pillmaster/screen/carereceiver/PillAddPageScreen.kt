@@ -1,7 +1,10 @@
 package com.ece452.pillmaster.screen.common
-
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
@@ -15,9 +18,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
+import java.util.Calendar
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,6 +38,8 @@ fun PillAddPageScreen(
     var selectedOption by remember { mutableStateOf("None") }
     var isChecked by remember { mutableStateOf(false) }
     val context = LocalContext.current
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -45,6 +53,7 @@ fun PillAddPageScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
+
         TextField(
             value = direction,
             onValueChange = { direction = it },
@@ -52,25 +61,22 @@ fun PillAddPageScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        TextField(
-            value = reminderTime,
-            onValueChange = { reminderTime = it },
-            label = { Text("*Reminder time") },
-            modifier = Modifier.fillMaxWidth()
+        TimePicker(
+            reminderTime = reminderTime,
+            onReminderTimeChange = { reminderTime = it },
+            reminderTimeTitle = "*Reminder Time"
         )
 
-        TextField(
-            value = startDate,
-            onValueChange = { startDate = it },
-            label = { Text("*Start date") },
-            modifier = Modifier.fillMaxWidth()
+        DatePicker(
+            date = startDate,
+            onDateChange = { startDate = it },
+            dateTitle = "*Start Date"
         )
 
-        TextField(
-            value = endDate,
-            onValueChange = { endDate = it },
-            label = { Text("End date") },
-            modifier = Modifier.fillMaxWidth()
+        DatePicker(
+            date = endDate,
+            onDateChange = { endDate = it },
+            dateTitle = "End Date"
         )
 
         CareGiverDropdownMenu(
@@ -125,12 +131,16 @@ fun CareGiverDropdownMenu(
     val careGivers = arrayOf("PERSON1", "PERSON2", "PERSON3", "None")  //getCareGivers()
     var expanded by remember { mutableStateOf(false) }
 
-    Box() {
+    Box(
+        modifier = Modifier.fillMaxWidth()
+    ) {
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = {
                 expanded = !expanded
-            }
+            },
+
+
         ) {
             TextField(
                 value = if(selectedText == "None"){
@@ -141,7 +151,10 @@ fun CareGiverDropdownMenu(
                 onValueChange = {},
                 readOnly = true,
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                modifier = Modifier.menuAnchor()
+                modifier = Modifier
+                    .menuAnchor()
+                    .fillMaxWidth()
+
             )
 
             ExposedDropdownMenu(
@@ -161,4 +174,74 @@ fun CareGiverDropdownMenu(
         }
     }
 }
+
+
+@Composable
+fun DatePicker(
+    date: String,
+    onDateChange: (String) -> Unit,
+    dateTitle: String
+){
+    val mContext = LocalContext.current
+    val mYear: Int
+    val mMonth: Int
+    val mDay: Int
+    val mCalendar = Calendar.getInstance()
+    mYear = mCalendar.get(Calendar.YEAR)
+    mMonth = mCalendar.get(Calendar.MONTH)
+    mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
+    mCalendar.time = Date()
+    val mDatePickerDialog = DatePickerDialog(
+        mContext,
+        { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
+            onDateChange( "$mDayOfMonth/${mMonth+1}/$mYear")
+        }, mYear, mMonth, mDay
+    )
+
+    Button(
+        onClick = {
+        mDatePickerDialog.show()
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .size(55.dp),
+        shape = CutCornerShape(0.dp),
+    )
+     {
+        Text(text = "$dateTitle $date", fontSize = 20.sp)
+    }
+}
+
+@Composable
+fun TimePicker(
+    reminderTime: String,
+    onReminderTimeChange: (String) -> Unit,
+    reminderTimeTitle: String
+){
+    val mContext = LocalContext.current
+    val mCalendar = Calendar.getInstance()
+    val mHour = mCalendar[Calendar.HOUR_OF_DAY]
+    val mMinute = mCalendar[Calendar.MINUTE]
+    val mTimePickerDialog = TimePickerDialog(
+        mContext,
+        {_, mHour : Int, mMinute: Int ->
+            onReminderTimeChange("$mHour:$mMinute")
+        }, mHour, mMinute, false
+    )
+
+    Button(
+        onClick = {
+            mTimePickerDialog.show()
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .size(55.dp),
+        shape = CutCornerShape(0.dp),
+        )
+    {
+        Text(text = "$reminderTimeTitle $reminderTime", fontSize = 20.sp)
+    }
+}
+
+
 
