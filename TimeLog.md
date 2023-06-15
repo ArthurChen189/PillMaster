@@ -45,4 +45,5 @@
 | 2023/06/14 |             | 4.0        |              |           |             |          | working on add pill page ui                                                             |
 | 2023/06/14 |             |            |              | 0.5       |             |          | PR review                                                                               |
 | 2023/06/14 |             | 1.0        |              |           |             |          | update PR                                                                               |
+| 2023/06/14 |             | 2.5        |              |           |             |          | working on add pill page and receiver home page ui                                      |
 
