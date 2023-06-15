@@ -17,6 +17,9 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+plugins{
+   id 'com.chaquo.python' version '14.0.2' apply false
+}
 
 task clean(type: Delete) {
     delete rootProject.buildDir

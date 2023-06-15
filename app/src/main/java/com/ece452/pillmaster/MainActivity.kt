@@ -13,6 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.ece452.pillmaster.ui.theme.PillMasterTheme
 import dagger.hilt.android.AndroidEntryPoint
+import com.chaquo.python.Python
+import com.chaquo.python.android.AndroidPlatform
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -21,6 +23,15 @@ class MainActivity : ComponentActivity() {
     // TODO - Create App Icon resource and register it in AndroidManifest.xml
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (! Python.isStarted()) {
+            Python.start(new AndroidPlatform(context));
+        }
+        println("Python version: " + Python.version())
+        val py = Python.getInstance()
+        val module = py.getModule("my-python")
+        
+        val values = module.callAttr("myFunc", 1, 2).toString()
+        println("Python values: " + values)
 
         setContent {
             PillMasterTheme {

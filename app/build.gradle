@@ -1,9 +1,10 @@
 plugins {
-    id 'com.android.application'
+//    id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
+    id 'com.chaquo.python'
 }
 
 android {
@@ -22,6 +23,15 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+       python {
+           version "3.8"
+           pip{
+               install "pyserini==0.15.0"
+           }
+       }
     }
 
     buildTypes {
