@@ -16,6 +16,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,9 +58,23 @@ fun PillAddPageScreen(
         TextField(
             value = direction,
             onValueChange = { direction = it },
-            label = { Text("*Direction") },
+            label = { Text("*Description") },
             modifier = Modifier.fillMaxWidth()
         )
+
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Spacer(modifier = Modifier.weight(1f))
+            Button(
+                onClick = {
+                    // auto fill
+                },
+            ){
+                Text(text = "Auto fill above")
+            }
+        }
+
 
         TimePicker(
             reminderTime = reminderTime,
