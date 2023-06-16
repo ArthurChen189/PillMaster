@@ -1,0 +1,119 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.ece452.pillmaster"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+8-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:5:5-66
+11-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:5:22-64
+12
+13    <application
+13-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:7:5-29:19
+14        android:name="com.ece452.pillmaster.PillMasterApplication"
+14-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:8:9-46
+15        android:allowBackup="true"
+15-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:9:9-35
+16        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+16-->[androidx.core:core:1.8.0] /Users/nolan/.gradle/caches/transforms-3/d2c3e6ceb0d5cbe48ddde3f72100a64c/transformed/core-1.8.0/AndroidManifest.xml:24:18-86
+17        android:dataExtractionRules="@xml/data_extraction_rules"
+17-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:10:9-65
+18        android:debuggable="true"
+19        android:extractNativeLibs="false"
+20        android:fullBackupContent="@xml/backup_rules"
+20-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:11:9-54
+21        android:icon="@mipmap/ic_launcher"
+21-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:12:9-43
+22        android:label="@string/app_name"
+22-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:13:9-41
+23        android:roundIcon="@mipmap/ic_launcher_round"
+23-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:14:9-54
+24        android:supportsRtl="true"
+24-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:15:9-35
+25        android:testOnly="true"
+26        android:theme="@style/Theme.PillMaster" >
+26-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:16:9-48
+27        <activity
+27-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:18:9-28:20
+28            android:name="com.ece452.pillmaster.MainActivity"
+28-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:19:13-41
+29            android:exported="true"
+29-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:20:13-36
+30            android:label="@string/app_name"
+30-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:21:13-45
+31            android:theme="@style/Theme.PillMaster" >
+31-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:22:13-52
+32            <intent-filter>
+32-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:23:13-27:29
+33                <action android:name="android.intent.action.MAIN" />
+33-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:24:17-69
+33-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:24:25-66
+34
+35                <category android:name="android.intent.category.LAUNCHER" />
+35-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:26:17-77
+35-->/Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:26:27-74
+36            </intent-filter>
+37        </activity>
+38        <activity
+38-->[androidx.compose.ui:ui-tooling:1.3.0] /Users/nolan/.gradle/caches/transforms-3/86eac5eeed031f2a6272216d50cbbd9b/transformed/ui-tooling-1.3.0/AndroidManifest.xml:23:9-25:39
+39            android:name="androidx.compose.ui.tooling.PreviewActivity"
+39-->[androidx.compose.ui:ui-tooling:1.3.0] /Users/nolan/.gradle/caches/transforms-3/86eac5eeed031f2a6272216d50cbbd9b/transformed/ui-tooling-1.3.0/AndroidManifest.xml:24:13-71
+40            android:exported="true" />
+40-->[androidx.compose.ui:ui-tooling:1.3.0] /Users/nolan/.gradle/caches/transforms-3/86eac5eeed031f2a6272216d50cbbd9b/transformed/ui-tooling-1.3.0/AndroidManifest.xml:25:13-36
+41        <activity
+41-->[androidx.compose.ui:ui-test-manifest:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2e93934ecef52b7bacae4374c522f12c/transformed/ui-test-manifest-1.3.0/AndroidManifest.xml:23:9-25:39
+42            android:name="androidx.activity.ComponentActivity"
+42-->[androidx.compose.ui:ui-test-manifest:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2e93934ecef52b7bacae4374c522f12c/transformed/ui-test-manifest-1.3.0/AndroidManifest.xml:24:13-63
+43            android:exported="true" />
+43-->[androidx.compose.ui:ui-test-manifest:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2e93934ecef52b7bacae4374c522f12c/transformed/ui-test-manifest-1.3.0/AndroidManifest.xml:25:13-36
+44
+45        <provider
+45-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:25:9-33:20
+46            android:name="androidx.startup.InitializationProvider"
+46-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:26:13-67
+47            android:authorities="com.ece452.pillmaster.androidx-startup"
+47-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:27:13-68
+48            android:exported="false" >
+48-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:28:13-37
+49            <meta-data
+49-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:30:13-32:52
+50                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+50-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:31:17-85
+51                android:value="androidx.startup" />
+51-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:32:17-49
+52        </provider>
+53
+54        <receiver
+54-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:35:9-47:20
+55            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+55-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:36:13-76
+56            android:directBootAware="false"
+56-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:37:13-44
+57            android:enabled="true"
+57-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:38:13-35
+58            android:exported="true"
+58-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:39:13-36
+59            android:permission="android.permission.DUMP" >
+59-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:40:13-57
+60            <intent-filter>
+60-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:41:13-43:29
+61                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+61-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:42:17-91
+61-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:42:25-88
+62            </intent-filter>
+63            <intent-filter>
+63-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:44:13-46:29
+64                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+64-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:45:17-85
+64-->[androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:45:25-82
+65            </intent-filter>
+66        </receiver>
+67    </application>
+68
+69</manifest>

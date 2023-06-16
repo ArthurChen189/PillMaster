@@ -1,0 +1,348 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:2:1-31:12
+INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:2:1-31:12
+INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:2:1-31:12
+INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:2:1-31:12
+MERGED from [androidx.compose.ui:ui-tooling:1.3.0] /Users/nolan/.gradle/caches/transforms-3/86eac5eeed031f2a6272216d50cbbd9b/transformed/ui-tooling-1.3.0/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.hilt:hilt-navigation-compose:1.0.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/d10a7e43fb663c199083854f3d5be89f/transformed/hilt-navigation-compose-1.0.0-alpha03/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.navigation:navigation-compose:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/e3e9bdb9fe8db71b86a65a2fd9c788bf/transformed/navigation-compose-2.4.0-alpha03/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.activity:activity-compose:1.5.1] /Users/nolan/.gradle/caches/transforms-3/2e5f7c9a85f4013f79bdedcc39a889d7/transformed/activity-compose-1.5.1/AndroidManifest.xml:17:1-24:12
+MERGED from [io.coil-kt:coil-compose:1.3.2] /Users/nolan/.gradle/caches/transforms-3/704651af7eb9bc8a8ff7ba33d519369a/transformed/coil-compose-1.3.2/AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.compose.material3:material3:1.0.0] /Users/nolan/.gradle/caches/transforms-3/08118e900716cfb1abc2c620844b48d1/transformed/material3-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07] /Users/nolan/.gradle/caches/transforms-3/e07057f9ef8c624fcc685fa0910b4b34/transformed/lifecycle-viewmodel-compose-1.0.0-alpha07/AndroidManifest.xml:17:1-24:12
+MERGED from [io.coil-kt:coil-compose-base:1.3.2] /Users/nolan/.gradle/caches/transforms-3/567c3bb21c051a98e5f59c9466942462/transformed/coil-compose-base-1.3.2/AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.compose.material:material:1.3.0] /Users/nolan/.gradle/caches/transforms-3/988d6127cc3bad9efe2635aefebd7357/transformed/material-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.material:material-ripple:1.3.0] /Users/nolan/.gradle/caches/transforms-3/b1a00710bf9817bd56413442046e1e82/transformed/material-ripple-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.foundation:foundation:1.3.0] /Users/nolan/.gradle/caches/transforms-3/a981a183372055803829c0db496ff8dd/transformed/foundation-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.animation:animation:1.3.0] /Users/nolan/.gradle/caches/transforms-3/b6c01a00f18410ba7c4e76f71b5886e3/transformed/animation-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.foundation:foundation-layout:1.3.0] /Users/nolan/.gradle/caches/transforms-3/6bc96d2f3de7ece75bf4e1041a19fb2e/transformed/foundation-layout-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.animation:animation-core:1.3.0] /Users/nolan/.gradle/caches/transforms-3/80e23d181aa8df8bc00492bf9f0ad777/transformed/animation-core-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.material:material-icons-core:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2aca87e01aa11ebed1abda3e6d3338b0/transformed/material-icons-core-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-tooling-data:1.3.0] /Users/nolan/.gradle/caches/transforms-3/4226e64b2ed5aed4c9ab0361b1fd4215/transformed/ui-tooling-data-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui:1.3.0] /Users/nolan/.gradle/caches/transforms-3/3e17414dee8d1f63db7f8ea2ccbf00cf/transformed/ui-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-text:1.3.0] /Users/nolan/.gradle/caches/transforms-3/46fc1628a3365558160d06c82505765e/transformed/ui-text-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-graphics:1.3.0] /Users/nolan/.gradle/caches/transforms-3/754ce2b897e5bb684296fa23e92581fb/transformed/ui-graphics-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-tooling-preview:1.3.0] /Users/nolan/.gradle/caches/transforms-3/87c7213a4d74582748a82b70e2f38b50/transformed/ui-tooling-preview-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.runtime:runtime-saveable:1.3.0] /Users/nolan/.gradle/caches/transforms-3/abe3de0a3efbb124a058a5285e7eddb4/transformed/runtime-saveable-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-unit:1.3.0] /Users/nolan/.gradle/caches/transforms-3/a2eeafd476eadc468e35babf6f38e380/transformed/ui-unit-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-geometry:1.3.0] /Users/nolan/.gradle/caches/transforms-3/77c4c2c74019187a1eb134948041b80e/transformed/ui-geometry-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.runtime:runtime:1.3.0] /Users/nolan/.gradle/caches/transforms-3/6e7613dd47404fa8399177288f4a3b8d/transformed/runtime-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.hilt:hilt-navigation:1.0.0] /Users/nolan/.gradle/caches/transforms-3/846e81ad3cbfd4a2ae25f6401bdad447/transformed/hilt-navigation-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.dagger:hilt-android:2.44] /Users/nolan/.gradle/caches/transforms-3/9d6ba1716aa8d6beb5501f1f1ad6bb6b/transformed/hilt-android-2.44/AndroidManifest.xml:16:1-19:12
+MERGED from [androidx.compose.ui:ui-test-manifest:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2e93934ecef52b7bacae4374c522f12c/transformed/ui-test-manifest-1.3.0/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/09a673c8098fc1d146b0dca63e92954c/transformed/navigation-runtime-ktx-2.4.0-alpha03/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.navigation:navigation-runtime:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/3578901e185cebd2dc657658d3959330/transformed/navigation-runtime-2.4.0-alpha03/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.activity:activity-ktx:1.5.1] /Users/nolan/.gradle/caches/transforms-3/6abf9343efce2155b0a01ab875cbc001/transformed/activity-ktx-1.5.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.fragment:fragment:1.5.1] /Users/nolan/.gradle/caches/transforms-3/ffbf942557e2aa0b02d361c1562890db/transformed/fragment-1.5.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.activity:activity:1.5.1] /Users/nolan/.gradle/caches/transforms-3/5cb12db42b779629a7cc6dfb39611365/transformed/activity-1.5.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.navigation:navigation-common-ktx:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/d57a675291f77516221f626abfc13d31/transformed/navigation-common-ktx-2.4.0-alpha03/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.navigation:navigation-common:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/18540ff53b2deb169f189372cb4916bb/transformed/navigation-common-2.4.0-alpha03/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1] /Users/nolan/.gradle/caches/transforms-3/149e7baca11850809a9d2fe03c653b9e/transformed/lifecycle-viewmodel-ktx-2.5.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.loader:loader:1.0.0] /Users/nolan/.gradle/caches/transforms-3/c40c6123e6075a2881ea2ea90de18275/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.5.1] /Users/nolan/.gradle/caches/transforms-3/59179ab68bd1e694e5e130009176c5c7/transformed/lifecycle-viewmodel-2.5.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1] /Users/nolan/.gradle/caches/transforms-3/bc18da2016614f929e3becf38c73959d/transformed/lifecycle-viewmodel-savedstate-2.5.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.5.1] /Users/nolan/.gradle/caches/transforms-3/e4b837c73d546366f65cbc79a6667768/transformed/lifecycle-runtime-ktx-2.5.1/AndroidManifest.xml:17:1-24:12
+MERGED from [io.coil-kt:coil:1.3.2] /Users/nolan/.gradle/caches/transforms-3/707f7948051b4107705fe333864e9cff/transformed/coil-1.3.2/AndroidManifest.xml:2:1-9:12
+MERGED from [io.coil-kt:coil-base:1.3.2] /Users/nolan/.gradle/caches/transforms-3/15f33059ae64fa99259ebfbe5d9a7fc1/transformed/coil-base-1.3.2/AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/nolan/.gradle/caches/transforms-3/c37c81d605125a4b7381749fa0b7a7a7/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.core:core-ktx:1.8.0] /Users/nolan/.gradle/caches/transforms-3/3cb751d3be6f3c5ee7e86b0d66071eef/transformed/core-ktx-1.8.0/AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.compose.ui:ui-util:1.3.0] /Users/nolan/.gradle/caches/transforms-3/f650a20ea241f7bdaedfd0fae6104a6c/transformed/ui-util-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.0] /Users/nolan/.gradle/caches/transforms-3/aa7e503e914c3ac1cea8779b67ca6859/transformed/savedstate-ktx-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.savedstate:savedstate:1.2.0] /Users/nolan/.gradle/caches/transforms-3/da7b9763159c47df4cb3c1c056081e26/transformed/savedstate-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.autofill:autofill:1.0.0] /Users/nolan/.gradle/caches/transforms-3/a81684c7976cb973cf0fde1ca81b218e/transformed/autofill-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/nolan/.gradle/caches/transforms-3/a84ab66b6e59b23bce38063966ec28d3/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] /Users/nolan/.gradle/caches/transforms-3/de1506c30fe81be61f0c9a088591a76f/transformed/customview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.appcompat:appcompat-resources:1.3.1] /Users/nolan/.gradle/caches/transforms-3/7130a31dea6a1dc86596e68e257be509/transformed/appcompat-resources-1.3.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/nolan/.gradle/caches/transforms-3/8019b1ccf5ebdb34caf97d9a9f7df086/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/nolan/.gradle/caches/transforms-3/171aa718086e1b3fda450084d54b862c/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core:1.8.0] /Users/nolan/.gradle/caches/transforms-3/d2c3e6ceb0d5cbe48ddde3f72100a64c/transformed/core-1.8.0/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.5.1] /Users/nolan/.gradle/caches/transforms-3/4cd88a679ba867d9878d1e68ae51846c/transformed/lifecycle-runtime-2.5.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/nolan/.gradle/caches/transforms-3/e9b520986be1cc54559a57dabac94365/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.5.1] /Users/nolan/.gradle/caches/transforms-3/e32b20ce874521c9b2028d0232602faa/transformed/lifecycle-livedata-core-2.5.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:17:1-50:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/nolan/.gradle/caches/transforms-3/ce296509599f5f502f86a4f7938b3823/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/nolan/.gradle/caches/transforms-3/ae4bd82f0e781a4f9592fe96a6aee201/transformed/core-runtime-2.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/nolan/.gradle/caches/transforms-3/284675bc173bb11af4ee13069fd1714e/transformed/startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/nolan/.gradle/caches/transforms-3/0a6fa1fd45aa8ef45a286b5511ab982a/transformed/tracing-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.3] /Users/nolan/.gradle/caches/transforms-3/4013618a79d295c3fed669d351fce7f3/transformed/exifinterface-1.3.3/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/nolan/.gradle/caches/transforms-3/78df7ee0296b2dd3841699b9ed508680/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.dagger:dagger-lint-aar:2.44] /Users/nolan/.gradle/caches/transforms-3/8a4ff7a431fe250c068cdbe42da035f5/transformed/dagger-lint-aar-2.44/AndroidManifest.xml:16:1-19:12
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] /Users/nolan/.gradle/caches/transforms-3/c34d215199f8b86ac4093c70a5dd569d/transformed/annotation-experimental-1.1.0/AndroidManifest.xml:17:1-24:12
+INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:2:1-31:12
+INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:2:1-31:12
+INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:2:1-31:12
+	package
+		INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:2:1-31:12
+		INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:2:1-31:12
+		INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:3:5-51
+	android:versionCode
+		INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:2:1-31:12
+		INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:5:5-66
+	android:name
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:5:22-64
+application
+ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:7:5-29:19
+MERGED from [androidx.compose.ui:ui-tooling:1.3.0] /Users/nolan/.gradle/caches/transforms-3/86eac5eeed031f2a6272216d50cbbd9b/transformed/ui-tooling-1.3.0/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-tooling:1.3.0] /Users/nolan/.gradle/caches/transforms-3/86eac5eeed031f2a6272216d50cbbd9b/transformed/ui-tooling-1.3.0/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-test-manifest:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2e93934ecef52b7bacae4374c522f12c/transformed/ui-test-manifest-1.3.0/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-test-manifest:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2e93934ecef52b7bacae4374c522f12c/transformed/ui-test-manifest-1.3.0/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.core:core:1.8.0] /Users/nolan/.gradle/caches/transforms-3/d2c3e6ceb0d5cbe48ddde3f72100a64c/transformed/core-1.8.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.8.0] /Users/nolan/.gradle/caches/transforms-3/d2c3e6ceb0d5cbe48ddde3f72100a64c/transformed/core-1.8.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:24:5-48:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:24:5-48:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/nolan/.gradle/caches/transforms-3/ce296509599f5f502f86a4f7938b3823/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/nolan/.gradle/caches/transforms-3/ce296509599f5f502f86a4f7938b3823/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/nolan/.gradle/caches/transforms-3/284675bc173bb11af4ee13069fd1714e/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/nolan/.gradle/caches/transforms-3/284675bc173bb11af4ee13069fd1714e/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.8.0] /Users/nolan/.gradle/caches/transforms-3/d2c3e6ceb0d5cbe48ddde3f72100a64c/transformed/core-1.8.0/AndroidManifest.xml:24:18-86
+	android:supportsRtl
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:15:9-35
+	android:label
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:13:9-41
+	android:fullBackupContent
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:11:9-54
+	android:roundIcon
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:14:9-54
+	tools:targetApi
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:17:9-29
+	android:icon
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:12:9-43
+	android:allowBackup
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:9:9-35
+	android:theme
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:16:9-48
+	android:dataExtractionRules
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:10:9-65
+	android:name
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:8:9-46
+activity#com.ece452.pillmaster.MainActivity
+ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:18:9-28:20
+	android:label
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:21:13-45
+	android:exported
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:20:13-36
+	android:theme
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:22:13-52
+	android:name
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:19:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:23:13-27:29
+action#android.intent.action.MAIN
+ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:24:17-69
+	android:name
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:24:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:26:17-77
+	android:name
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml:26:27-74
+uses-sdk
+INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+MERGED from [androidx.compose.ui:ui-tooling:1.3.0] /Users/nolan/.gradle/caches/transforms-3/86eac5eeed031f2a6272216d50cbbd9b/transformed/ui-tooling-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling:1.3.0] /Users/nolan/.gradle/caches/transforms-3/86eac5eeed031f2a6272216d50cbbd9b/transformed/ui-tooling-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.hilt:hilt-navigation-compose:1.0.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/d10a7e43fb663c199083854f3d5be89f/transformed/hilt-navigation-compose-1.0.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.hilt:hilt-navigation-compose:1.0.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/d10a7e43fb663c199083854f3d5be89f/transformed/hilt-navigation-compose-1.0.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-compose:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/e3e9bdb9fe8db71b86a65a2fd9c788bf/transformed/navigation-compose-2.4.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-compose:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/e3e9bdb9fe8db71b86a65a2fd9c788bf/transformed/navigation-compose-2.4.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity-compose:1.5.1] /Users/nolan/.gradle/caches/transforms-3/2e5f7c9a85f4013f79bdedcc39a889d7/transformed/activity-compose-1.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity-compose:1.5.1] /Users/nolan/.gradle/caches/transforms-3/2e5f7c9a85f4013f79bdedcc39a889d7/transformed/activity-compose-1.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [io.coil-kt:coil-compose:1.3.2] /Users/nolan/.gradle/caches/transforms-3/704651af7eb9bc8a8ff7ba33d519369a/transformed/coil-compose-1.3.2/AndroidManifest.xml:5:5-7:41
+MERGED from [io.coil-kt:coil-compose:1.3.2] /Users/nolan/.gradle/caches/transforms-3/704651af7eb9bc8a8ff7ba33d519369a/transformed/coil-compose-1.3.2/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.compose.material3:material3:1.0.0] /Users/nolan/.gradle/caches/transforms-3/08118e900716cfb1abc2c620844b48d1/transformed/material3-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material3:material3:1.0.0] /Users/nolan/.gradle/caches/transforms-3/08118e900716cfb1abc2c620844b48d1/transformed/material3-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07] /Users/nolan/.gradle/caches/transforms-3/e07057f9ef8c624fcc685fa0910b4b34/transformed/lifecycle-viewmodel-compose-1.0.0-alpha07/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07] /Users/nolan/.gradle/caches/transforms-3/e07057f9ef8c624fcc685fa0910b4b34/transformed/lifecycle-viewmodel-compose-1.0.0-alpha07/AndroidManifest.xml:20:5-22:41
+MERGED from [io.coil-kt:coil-compose-base:1.3.2] /Users/nolan/.gradle/caches/transforms-3/567c3bb21c051a98e5f59c9466942462/transformed/coil-compose-base-1.3.2/AndroidManifest.xml:5:5-7:41
+MERGED from [io.coil-kt:coil-compose-base:1.3.2] /Users/nolan/.gradle/caches/transforms-3/567c3bb21c051a98e5f59c9466942462/transformed/coil-compose-base-1.3.2/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.compose.material:material:1.3.0] /Users/nolan/.gradle/caches/transforms-3/988d6127cc3bad9efe2635aefebd7357/transformed/material-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material:material:1.3.0] /Users/nolan/.gradle/caches/transforms-3/988d6127cc3bad9efe2635aefebd7357/transformed/material-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material:material-ripple:1.3.0] /Users/nolan/.gradle/caches/transforms-3/b1a00710bf9817bd56413442046e1e82/transformed/material-ripple-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material:material-ripple:1.3.0] /Users/nolan/.gradle/caches/transforms-3/b1a00710bf9817bd56413442046e1e82/transformed/material-ripple-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.foundation:foundation:1.3.0] /Users/nolan/.gradle/caches/transforms-3/a981a183372055803829c0db496ff8dd/transformed/foundation-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.foundation:foundation:1.3.0] /Users/nolan/.gradle/caches/transforms-3/a981a183372055803829c0db496ff8dd/transformed/foundation-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.animation:animation:1.3.0] /Users/nolan/.gradle/caches/transforms-3/b6c01a00f18410ba7c4e76f71b5886e3/transformed/animation-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.animation:animation:1.3.0] /Users/nolan/.gradle/caches/transforms-3/b6c01a00f18410ba7c4e76f71b5886e3/transformed/animation-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.foundation:foundation-layout:1.3.0] /Users/nolan/.gradle/caches/transforms-3/6bc96d2f3de7ece75bf4e1041a19fb2e/transformed/foundation-layout-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.foundation:foundation-layout:1.3.0] /Users/nolan/.gradle/caches/transforms-3/6bc96d2f3de7ece75bf4e1041a19fb2e/transformed/foundation-layout-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.animation:animation-core:1.3.0] /Users/nolan/.gradle/caches/transforms-3/80e23d181aa8df8bc00492bf9f0ad777/transformed/animation-core-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.animation:animation-core:1.3.0] /Users/nolan/.gradle/caches/transforms-3/80e23d181aa8df8bc00492bf9f0ad777/transformed/animation-core-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material:material-icons-core:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2aca87e01aa11ebed1abda3e6d3338b0/transformed/material-icons-core-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material:material-icons-core:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2aca87e01aa11ebed1abda3e6d3338b0/transformed/material-icons-core-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data:1.3.0] /Users/nolan/.gradle/caches/transforms-3/4226e64b2ed5aed4c9ab0361b1fd4215/transformed/ui-tooling-data-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data:1.3.0] /Users/nolan/.gradle/caches/transforms-3/4226e64b2ed5aed4c9ab0361b1fd4215/transformed/ui-tooling-data-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui:1.3.0] /Users/nolan/.gradle/caches/transforms-3/3e17414dee8d1f63db7f8ea2ccbf00cf/transformed/ui-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui:1.3.0] /Users/nolan/.gradle/caches/transforms-3/3e17414dee8d1f63db7f8ea2ccbf00cf/transformed/ui-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-text:1.3.0] /Users/nolan/.gradle/caches/transforms-3/46fc1628a3365558160d06c82505765e/transformed/ui-text-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-text:1.3.0] /Users/nolan/.gradle/caches/transforms-3/46fc1628a3365558160d06c82505765e/transformed/ui-text-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-graphics:1.3.0] /Users/nolan/.gradle/caches/transforms-3/754ce2b897e5bb684296fa23e92581fb/transformed/ui-graphics-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-graphics:1.3.0] /Users/nolan/.gradle/caches/transforms-3/754ce2b897e5bb684296fa23e92581fb/transformed/ui-graphics-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview:1.3.0] /Users/nolan/.gradle/caches/transforms-3/87c7213a4d74582748a82b70e2f38b50/transformed/ui-tooling-preview-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview:1.3.0] /Users/nolan/.gradle/caches/transforms-3/87c7213a4d74582748a82b70e2f38b50/transformed/ui-tooling-preview-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable:1.3.0] /Users/nolan/.gradle/caches/transforms-3/abe3de0a3efbb124a058a5285e7eddb4/transformed/runtime-saveable-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable:1.3.0] /Users/nolan/.gradle/caches/transforms-3/abe3de0a3efbb124a058a5285e7eddb4/transformed/runtime-saveable-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-unit:1.3.0] /Users/nolan/.gradle/caches/transforms-3/a2eeafd476eadc468e35babf6f38e380/transformed/ui-unit-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-unit:1.3.0] /Users/nolan/.gradle/caches/transforms-3/a2eeafd476eadc468e35babf6f38e380/transformed/ui-unit-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-geometry:1.3.0] /Users/nolan/.gradle/caches/transforms-3/77c4c2c74019187a1eb134948041b80e/transformed/ui-geometry-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-geometry:1.3.0] /Users/nolan/.gradle/caches/transforms-3/77c4c2c74019187a1eb134948041b80e/transformed/ui-geometry-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.runtime:runtime:1.3.0] /Users/nolan/.gradle/caches/transforms-3/6e7613dd47404fa8399177288f4a3b8d/transformed/runtime-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.runtime:runtime:1.3.0] /Users/nolan/.gradle/caches/transforms-3/6e7613dd47404fa8399177288f4a3b8d/transformed/runtime-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.hilt:hilt-navigation:1.0.0] /Users/nolan/.gradle/caches/transforms-3/846e81ad3cbfd4a2ae25f6401bdad447/transformed/hilt-navigation-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.hilt:hilt-navigation:1.0.0] /Users/nolan/.gradle/caches/transforms-3/846e81ad3cbfd4a2ae25f6401bdad447/transformed/hilt-navigation-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.dagger:hilt-android:2.44] /Users/nolan/.gradle/caches/transforms-3/9d6ba1716aa8d6beb5501f1f1ad6bb6b/transformed/hilt-android-2.44/AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:hilt-android:2.44] /Users/nolan/.gradle/caches/transforms-3/9d6ba1716aa8d6beb5501f1f1ad6bb6b/transformed/hilt-android-2.44/AndroidManifest.xml:18:3-42
+MERGED from [androidx.compose.ui:ui-test-manifest:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2e93934ecef52b7bacae4374c522f12c/transformed/ui-test-manifest-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-test-manifest:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2e93934ecef52b7bacae4374c522f12c/transformed/ui-test-manifest-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/09a673c8098fc1d146b0dca63e92954c/transformed/navigation-runtime-ktx-2.4.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/09a673c8098fc1d146b0dca63e92954c/transformed/navigation-runtime-ktx-2.4.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-runtime:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/3578901e185cebd2dc657658d3959330/transformed/navigation-runtime-2.4.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-runtime:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/3578901e185cebd2dc657658d3959330/transformed/navigation-runtime-2.4.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity-ktx:1.5.1] /Users/nolan/.gradle/caches/transforms-3/6abf9343efce2155b0a01ab875cbc001/transformed/activity-ktx-1.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity-ktx:1.5.1] /Users/nolan/.gradle/caches/transforms-3/6abf9343efce2155b0a01ab875cbc001/transformed/activity-ktx-1.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.5.1] /Users/nolan/.gradle/caches/transforms-3/ffbf942557e2aa0b02d361c1562890db/transformed/fragment-1.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.5.1] /Users/nolan/.gradle/caches/transforms-3/ffbf942557e2aa0b02d361c1562890db/transformed/fragment-1.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.5.1] /Users/nolan/.gradle/caches/transforms-3/5cb12db42b779629a7cc6dfb39611365/transformed/activity-1.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.5.1] /Users/nolan/.gradle/caches/transforms-3/5cb12db42b779629a7cc6dfb39611365/transformed/activity-1.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-common-ktx:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/d57a675291f77516221f626abfc13d31/transformed/navigation-common-ktx-2.4.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-common-ktx:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/d57a675291f77516221f626abfc13d31/transformed/navigation-common-ktx-2.4.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-common:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/18540ff53b2deb169f189372cb4916bb/transformed/navigation-common-2.4.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-common:2.4.0-alpha03] /Users/nolan/.gradle/caches/transforms-3/18540ff53b2deb169f189372cb4916bb/transformed/navigation-common-2.4.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1] /Users/nolan/.gradle/caches/transforms-3/149e7baca11850809a9d2fe03c653b9e/transformed/lifecycle-viewmodel-ktx-2.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1] /Users/nolan/.gradle/caches/transforms-3/149e7baca11850809a9d2fe03c653b9e/transformed/lifecycle-viewmodel-ktx-2.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.loader:loader:1.0.0] /Users/nolan/.gradle/caches/transforms-3/c40c6123e6075a2881ea2ea90de18275/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/nolan/.gradle/caches/transforms-3/c40c6123e6075a2881ea2ea90de18275/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.5.1] /Users/nolan/.gradle/caches/transforms-3/59179ab68bd1e694e5e130009176c5c7/transformed/lifecycle-viewmodel-2.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.5.1] /Users/nolan/.gradle/caches/transforms-3/59179ab68bd1e694e5e130009176c5c7/transformed/lifecycle-viewmodel-2.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1] /Users/nolan/.gradle/caches/transforms-3/bc18da2016614f929e3becf38c73959d/transformed/lifecycle-viewmodel-savedstate-2.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1] /Users/nolan/.gradle/caches/transforms-3/bc18da2016614f929e3becf38c73959d/transformed/lifecycle-viewmodel-savedstate-2.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.5.1] /Users/nolan/.gradle/caches/transforms-3/e4b837c73d546366f65cbc79a6667768/transformed/lifecycle-runtime-ktx-2.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.5.1] /Users/nolan/.gradle/caches/transforms-3/e4b837c73d546366f65cbc79a6667768/transformed/lifecycle-runtime-ktx-2.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [io.coil-kt:coil:1.3.2] /Users/nolan/.gradle/caches/transforms-3/707f7948051b4107705fe333864e9cff/transformed/coil-1.3.2/AndroidManifest.xml:5:5-7:41
+MERGED from [io.coil-kt:coil:1.3.2] /Users/nolan/.gradle/caches/transforms-3/707f7948051b4107705fe333864e9cff/transformed/coil-1.3.2/AndroidManifest.xml:5:5-7:41
+MERGED from [io.coil-kt:coil-base:1.3.2] /Users/nolan/.gradle/caches/transforms-3/15f33059ae64fa99259ebfbe5d9a7fc1/transformed/coil-base-1.3.2/AndroidManifest.xml:5:5-7:41
+MERGED from [io.coil-kt:coil-base:1.3.2] /Users/nolan/.gradle/caches/transforms-3/15f33059ae64fa99259ebfbe5d9a7fc1/transformed/coil-base-1.3.2/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/nolan/.gradle/caches/transforms-3/c37c81d605125a4b7381749fa0b7a7a7/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/nolan/.gradle/caches/transforms-3/c37c81d605125a4b7381749fa0b7a7a7/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.core:core-ktx:1.8.0] /Users/nolan/.gradle/caches/transforms-3/3cb751d3be6f3c5ee7e86b0d66071eef/transformed/core-ktx-1.8.0/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.core:core-ktx:1.8.0] /Users/nolan/.gradle/caches/transforms-3/3cb751d3be6f3c5ee7e86b0d66071eef/transformed/core-ktx-1.8.0/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.compose.ui:ui-util:1.3.0] /Users/nolan/.gradle/caches/transforms-3/f650a20ea241f7bdaedfd0fae6104a6c/transformed/ui-util-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-util:1.3.0] /Users/nolan/.gradle/caches/transforms-3/f650a20ea241f7bdaedfd0fae6104a6c/transformed/ui-util-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.0] /Users/nolan/.gradle/caches/transforms-3/aa7e503e914c3ac1cea8779b67ca6859/transformed/savedstate-ktx-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.0] /Users/nolan/.gradle/caches/transforms-3/aa7e503e914c3ac1cea8779b67ca6859/transformed/savedstate-ktx-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.2.0] /Users/nolan/.gradle/caches/transforms-3/da7b9763159c47df4cb3c1c056081e26/transformed/savedstate-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.2.0] /Users/nolan/.gradle/caches/transforms-3/da7b9763159c47df4cb3c1c056081e26/transformed/savedstate-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] /Users/nolan/.gradle/caches/transforms-3/a81684c7976cb973cf0fde1ca81b218e/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] /Users/nolan/.gradle/caches/transforms-3/a81684c7976cb973cf0fde1ca81b218e/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/nolan/.gradle/caches/transforms-3/a84ab66b6e59b23bce38063966ec28d3/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/nolan/.gradle/caches/transforms-3/a84ab66b6e59b23bce38063966ec28d3/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/nolan/.gradle/caches/transforms-3/de1506c30fe81be61f0c9a088591a76f/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/nolan/.gradle/caches/transforms-3/de1506c30fe81be61f0c9a088591a76f/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.3.1] /Users/nolan/.gradle/caches/transforms-3/7130a31dea6a1dc86596e68e257be509/transformed/appcompat-resources-1.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.3.1] /Users/nolan/.gradle/caches/transforms-3/7130a31dea6a1dc86596e68e257be509/transformed/appcompat-resources-1.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/nolan/.gradle/caches/transforms-3/8019b1ccf5ebdb34caf97d9a9f7df086/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/nolan/.gradle/caches/transforms-3/8019b1ccf5ebdb34caf97d9a9f7df086/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/nolan/.gradle/caches/transforms-3/171aa718086e1b3fda450084d54b862c/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/nolan/.gradle/caches/transforms-3/171aa718086e1b3fda450084d54b862c/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.8.0] /Users/nolan/.gradle/caches/transforms-3/d2c3e6ceb0d5cbe48ddde3f72100a64c/transformed/core-1.8.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.8.0] /Users/nolan/.gradle/caches/transforms-3/d2c3e6ceb0d5cbe48ddde3f72100a64c/transformed/core-1.8.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.5.1] /Users/nolan/.gradle/caches/transforms-3/4cd88a679ba867d9878d1e68ae51846c/transformed/lifecycle-runtime-2.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.5.1] /Users/nolan/.gradle/caches/transforms-3/4cd88a679ba867d9878d1e68ae51846c/transformed/lifecycle-runtime-2.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/nolan/.gradle/caches/transforms-3/e9b520986be1cc54559a57dabac94365/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/nolan/.gradle/caches/transforms-3/e9b520986be1cc54559a57dabac94365/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.5.1] /Users/nolan/.gradle/caches/transforms-3/e32b20ce874521c9b2028d0232602faa/transformed/lifecycle-livedata-core-2.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.5.1] /Users/nolan/.gradle/caches/transforms-3/e32b20ce874521c9b2028d0232602faa/transformed/lifecycle-livedata-core-2.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:21:5-22:38
+MERGED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:21:5-22:38
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/nolan/.gradle/caches/transforms-3/ce296509599f5f502f86a4f7938b3823/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/nolan/.gradle/caches/transforms-3/ce296509599f5f502f86a4f7938b3823/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/nolan/.gradle/caches/transforms-3/ae4bd82f0e781a4f9592fe96a6aee201/transformed/core-runtime-2.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/nolan/.gradle/caches/transforms-3/ae4bd82f0e781a4f9592fe96a6aee201/transformed/core-runtime-2.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/nolan/.gradle/caches/transforms-3/284675bc173bb11af4ee13069fd1714e/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/nolan/.gradle/caches/transforms-3/284675bc173bb11af4ee13069fd1714e/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/nolan/.gradle/caches/transforms-3/0a6fa1fd45aa8ef45a286b5511ab982a/transformed/tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/nolan/.gradle/caches/transforms-3/0a6fa1fd45aa8ef45a286b5511ab982a/transformed/tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.3] /Users/nolan/.gradle/caches/transforms-3/4013618a79d295c3fed669d351fce7f3/transformed/exifinterface-1.3.3/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.3] /Users/nolan/.gradle/caches/transforms-3/4013618a79d295c3fed669d351fce7f3/transformed/exifinterface-1.3.3/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/nolan/.gradle/caches/transforms-3/78df7ee0296b2dd3841699b9ed508680/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/nolan/.gradle/caches/transforms-3/78df7ee0296b2dd3841699b9ed508680/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.dagger:dagger-lint-aar:2.44] /Users/nolan/.gradle/caches/transforms-3/8a4ff7a431fe250c068cdbe42da035f5/transformed/dagger-lint-aar-2.44/AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:dagger-lint-aar:2.44] /Users/nolan/.gradle/caches/transforms-3/8a4ff7a431fe250c068cdbe42da035f5/transformed/dagger-lint-aar-2.44/AndroidManifest.xml:18:3-42
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] /Users/nolan/.gradle/caches/transforms-3/c34d215199f8b86ac4093c70a5dd569d/transformed/annotation-experimental-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] /Users/nolan/.gradle/caches/transforms-3/c34d215199f8b86ac4093c70a5dd569d/transformed/annotation-experimental-1.1.0/AndroidManifest.xml:20:5-22:41
+INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+		ADDED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/nolan/Desktop/452/ECE452-Project/PillMaster/app/src/main/AndroidManifest.xml
+activity#androidx.compose.ui.tooling.PreviewActivity
+ADDED from [androidx.compose.ui:ui-tooling:1.3.0] /Users/nolan/.gradle/caches/transforms-3/86eac5eeed031f2a6272216d50cbbd9b/transformed/ui-tooling-1.3.0/AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-tooling:1.3.0] /Users/nolan/.gradle/caches/transforms-3/86eac5eeed031f2a6272216d50cbbd9b/transformed/ui-tooling-1.3.0/AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-tooling:1.3.0] /Users/nolan/.gradle/caches/transforms-3/86eac5eeed031f2a6272216d50cbbd9b/transformed/ui-tooling-1.3.0/AndroidManifest.xml:24:13-71
+activity#androidx.activity.ComponentActivity
+ADDED from [androidx.compose.ui:ui-test-manifest:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2e93934ecef52b7bacae4374c522f12c/transformed/ui-test-manifest-1.3.0/AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2e93934ecef52b7bacae4374c522f12c/transformed/ui-test-manifest-1.3.0/AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.3.0] /Users/nolan/.gradle/caches/transforms-3/2e93934ecef52b7bacae4374c522f12c/transformed/ui-test-manifest-1.3.0/AndroidManifest.xml:24:13-63
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:25:9-33:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/nolan/.gradle/caches/transforms-3/284675bc173bb11af4ee13069fd1714e/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/nolan/.gradle/caches/transforms-3/284675bc173bb11af4ee13069fd1714e/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:29:13-31
+	android:authorities
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:27:13-68
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:28:13-37
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:26:13-67
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:30:13-32:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:32:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:31:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:35:9-47:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:38:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:39:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:40:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:37:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:36:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:41:13-43:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:42:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:42:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:44:13-46:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:45:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.2.0] /Users/nolan/.gradle/caches/transforms-3/a64ac30213df0b05f0c2ce16eabb853e/transformed/profileinstaller-1.2.0/AndroidManifest.xml:45:25-82
