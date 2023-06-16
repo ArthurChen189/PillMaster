@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">PillMaster</string>
+
+    <!--
+    Auth0 identifiers and settings
+    ==============================
+    -->
+
+    <!-- Identifiers -->
+    <string name="com_auth0_scheme">app</string>
+
+    <!-- Settings -->
+    <string name="login_scopes">openid profile email read:current_user update:current_user_metadata</string>
+    <string name="login_audience">https://%1$s/api/v2/</string>
+
+</resources>
