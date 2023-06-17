@@ -41,11 +41,13 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.ece452.pillmaster.R
 import com.ece452.pillmaster.utils.NavigationPath
+import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 
 // Sample data of medicines
 val medicines = listOf(
@@ -79,10 +81,9 @@ val medicines = listOf(
 fun CareReceiverHomepageScreen(
     // TODO - Expose an action if this action takes the user to another screen.
     navController: NavController,
-
+    vm: PillAddPageViewModel = hiltViewModel()
 ) {
-
-        Column(
+    Column(
             modifier = Modifier
                 .fillMaxSize()
                 .fillMaxWidth()
@@ -90,46 +91,50 @@ fun CareReceiverHomepageScreen(
                 .semantics { contentDescription = "Care receiver's home screen" },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            // TODO - Build this screen as per the Figma file.
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                items(medicines){
-                        medicine ->
-                    //Text(text = medicine, modifier = Modifier.padding(8.dp))
-                    SingleReminderItem(medicine)
-                }
+    ) {
+        // TODO - Notice for now testList is used.
+        LazyColumn(modifier = Modifier.weight(1f)) {
+            items(vm.testList.value){
+                    medicine -> SingleReminderItem(medicine.first)
             }
-            AddPillButton(navController)
-            NavBar()
         }
-
-
-
-
-
-
+        AddPillButton(navController)
+        NavBar(navController)
+    }
 }
 
 @Composable
-fun NavBar(){
+fun NavBar(
+    navController: NavController,
+){
     Row(
         Modifier
             .height(80.dp)
             .padding(0.dp, 0.dp),
         verticalAlignment = Alignment.CenterVertically
         ){
-        NavItem(Icons.Rounded.DateRange,"Calender", Color(0xFF227EBA) )
-        NavItem(Icons.Rounded.Email,"Message" , Color(0xFF227EBA))
-        NavItem(Icons.Rounded.Face,"ChatBot", Color(0xFF227EBA) )
-        NavItem(Icons.Rounded.Settings,"Setting", Color(0xFF227EBA) )
+        NavItem(Icons.Rounded.DateRange,"Calender", Color(0xFF227EBA)) {
+            navController.navigate(NavigationPath.CALENDAR.route)
+        }
+        NavItem(Icons.Rounded.Email,"Message" , Color(0xFF227EBA)) {
+
+        }
+        NavItem(Icons.Rounded.Face,"ChatBot", Color(0xFF227EBA) ) {
+
+        }
+        NavItem(Icons.Rounded.Settings,"Setting", Color(0xFF227EBA) ) {
+
+        }
     }
 }
 
 @Composable
-fun RowScope.NavItem(icon: ImageVector,description: String, tint: Color){
-    Button(onClick = {
-        // nav to relating pages
-        },
+fun RowScope.NavItem(
+    icon: ImageVector,description: String,
+    tint: Color,
+    navigateTo: () -> Unit = {},
+){
+    Button(onClick = navigateTo,
         Modifier
             .weight(1f)
             .fillMaxHeight(),

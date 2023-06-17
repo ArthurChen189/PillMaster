@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ece452.pillmaster.utils.AuthResult
 import com.ece452.pillmaster.utils.NavigationPath
@@ -23,8 +24,8 @@ import com.google.gson.reflect.TypeToken
 @Composable
 fun HomeScreen(
     navController: NavController,
-    loginViewModel: LoginViewModel,
-    testUser: Boolean
+    testUser: Boolean,
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     var userRoles by remember { mutableStateOf(emptyList<String>()) }
     var errorText by remember { mutableStateOf("") }

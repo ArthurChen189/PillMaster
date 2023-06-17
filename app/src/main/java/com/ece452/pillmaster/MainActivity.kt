@@ -1,8 +1,10 @@
 package com.ece452.pillmaster
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -26,23 +28,22 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var loginViewModel: LoginViewModel
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-        loginViewModel.setAccount(this)
-
         setContent {
             PillMasterTheme {
-                PillMasterApp(loginViewModel)
+                PillMasterApp()
             }
         }
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PillMasterApp(loginViewModel: LoginViewModel) {
+fun PillMasterApp() {
     // Inflate the reminder screen as an example for now.
     // TODO - This reminder screen is an example.
     // ReminderScreen()
@@ -53,8 +54,7 @@ fun PillMasterApp(loginViewModel: LoginViewModel) {
     Scaffold() { innerPadding ->
         PillMasterNavHost(
             navController = navController,
-            modifier = Modifier.padding(innerPadding),
-            loginViewModel = loginViewModel
+            modifier = Modifier.padding(innerPadding)
         )
     }
 }
