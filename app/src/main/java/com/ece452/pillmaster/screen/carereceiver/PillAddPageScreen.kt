@@ -51,7 +51,7 @@ fun PillAddPageScreen(
         TextField(
             value = pillName,
             onValueChange = { pillName = it },
-            label = { Text("*Name") },
+            label = { Text("*Pill Name") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -111,7 +111,7 @@ fun PillAddPageScreen(
                 onCheckedChange = { isChecked = it },
                 modifier = Modifier.padding(end = 8.dp)
             )
-            Text(text = "Send the pill information to your CareGiver")
+            Text(text = "Link this reminder to your selected CareGiver above")
         }
 
         Button(
@@ -125,7 +125,7 @@ fun PillAddPageScreen(
                     PillAddPageViewModel().newPillSubmit(pillName,description, reminderTime, startDate, endDate, selectedOption, isChecked)
                     navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
                 } else {
-                    Toast.makeText(context, "fill every *input", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier
@@ -156,11 +156,10 @@ fun CareGiverDropdownMenu(
                 expanded = !expanded
             },
 
-
         ) {
             TextField(
                 value = if(selectedText == "None"){
-                    "Plz choose a Caregiver"
+                    "Select a CareGiver (Optional)"
                 }else{
                     selectedText
                 },
@@ -170,7 +169,6 @@ fun CareGiverDropdownMenu(
                 modifier = Modifier
                     .menuAnchor()
                     .fillMaxWidth()
-
             )
 
             ExposedDropdownMenu(
