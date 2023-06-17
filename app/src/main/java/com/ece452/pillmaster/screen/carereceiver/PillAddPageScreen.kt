@@ -16,10 +16,10 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
@@ -29,17 +29,18 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PillAddPageScreen(
-    navController: NavController
+    navController: NavController,
+    entry: NavBackStackEntry
 ) {
     var pillName by remember { mutableStateOf("") }
-    var direction by remember { mutableStateOf("") }
     var reminderTime by remember { mutableStateOf("") }
     var startDate by remember { mutableStateOf("") }
     var endDate by remember { mutableStateOf("") }
     var selectedOption by remember { mutableStateOf("None") }
     var isChecked by remember { mutableStateOf(false) }
     val context = LocalContext.current
-
+    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+   var description by remember { mutableStateOf(savedStateHandle?.get<String>("description") ?: "") }
 
     Column(
         modifier = Modifier
@@ -54,10 +55,9 @@ fun PillAddPageScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-
         TextField(
-            value = direction,
-            onValueChange = { direction = it },
+            value = description,
+            onValueChange = { description = it },
             label = { Text("*Description") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -117,12 +117,12 @@ fun PillAddPageScreen(
         Button(
             onClick = {
                 if (pillName.isNotEmpty() &&
-                    direction.isNotEmpty() &&
+                    description.isNotEmpty() &&
                     startDate.isNotEmpty()
                 ) {
                     // All required fields are filled
                     // submit the input data here
-                    PillAddPageViewModel().newPillSubmit(pillName,direction, reminderTime, startDate, endDate, selectedOption, isChecked)
+                    PillAddPageViewModel().newPillSubmit(pillName,description, reminderTime, startDate, endDate, selectedOption, isChecked)
                     navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
                 } else {
                     Toast.makeText(context, "fill every *input", Toast.LENGTH_SHORT).show()

@@ -43,11 +43,12 @@ fun PillMasterNavHost(
         composable(NavigationPath.CARE_GIVER_HOMEPAGE.route) {
             CareGiverHomeScreen()
         }
-        composable(NavigationPath.PILL_ADD_PAGE.route) {
-            PillAddPageScreen(navController = navController)
+        composable(NavigationPath.PILL_ADD_PAGE.route) { entry ->
+            PillAddPageScreen(navController = navController, entry)
         }
         composable(NavigationPath.CAMERA_HOMEPAGE.route) {
-            AutoFillEntry(context)
+
+            AutoFillEntry(navController = navController, context = context)
         }
     }
 }
