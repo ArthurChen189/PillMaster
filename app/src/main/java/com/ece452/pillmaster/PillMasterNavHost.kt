@@ -1,5 +1,7 @@
 package com.ece452.pillmaster
 
+import com.ece452.pillmaster.screen.carereceiver.AutoFillEntry
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -18,7 +20,8 @@ import com.ece452.pillmaster.viewmodel.LoginViewModel
 fun PillMasterNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    loginViewModel: LoginViewModel
+    loginViewModel: LoginViewModel,
+    context: Context
 ) {
     NavHost(
         navController = navController,
@@ -42,6 +45,9 @@ fun PillMasterNavHost(
         }
         composable(NavigationPath.PILL_ADD_PAGE.route) {
             PillAddPageScreen(navController = navController)
+        }
+        composable(NavigationPath.CAMERA_HOMEPAGE.route) {
+            AutoFillEntry(context)
         }
     }
 }

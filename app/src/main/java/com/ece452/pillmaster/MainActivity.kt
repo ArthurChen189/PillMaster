@@ -1,5 +1,6 @@
 package com.ece452.pillmaster
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             PillMasterTheme {
-                PillMasterApp(loginViewModel)
+                PillMasterApp(loginViewModel,this@MainActivity)
             }
         }
     }
@@ -42,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PillMasterApp(loginViewModel: LoginViewModel) {
+fun PillMasterApp(loginViewModel: LoginViewModel,context: Context) {
     // Inflate the reminder screen as an example for now.
     // TODO - This reminder screen is an example.
     // ReminderScreen()
@@ -54,7 +55,8 @@ fun PillMasterApp(loginViewModel: LoginViewModel) {
         PillMasterNavHost(
             navController = navController,
             modifier = Modifier.padding(innerPadding),
-            loginViewModel = loginViewModel
+            loginViewModel = loginViewModel,
+            context = context
         )
     }
 }

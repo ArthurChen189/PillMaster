@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".PillMasterApplication"
@@ -15,6 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PillMaster"
         tools:targetApi="31">
+        <!-- ..... -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" /> <!--version--><!-- make sure added-->
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="ocr" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -22,10 +31,10 @@
             android:theme="@style/Theme.PillMaster">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

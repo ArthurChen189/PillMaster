@@ -69,9 +69,10 @@ fun PillAddPageScreen(
             Button(
                 onClick = {
                     // auto fill
+                    navController.navigate(NavigationPath.CAMERA_HOMEPAGE.route)
                 },
             ){
-                Text(text = "Auto fill above")
+                Text(text = "scan your prescription to auto fill")
             }
         }
 
