@@ -39,11 +39,16 @@
 | 2023/06/07 | 1.5         |            |              |           |             |          | Investigate Python + Kotlin integration                                                 |
 | 2023/06/10 |             |            |              | 3.0       |             |          | Investigate Authentication Method: Auth0 chosen                                         |
 | 2023/06/11 |             |            |              | 9.0       |             |          | Implement User authentication/authorization with Auth0                                  |
+| 2023/06/12 |             |            |              |           |             | 1.0      | Draw Architect diagram - part 1                                                         |
 | 2023/06/13 | 1.5         |            | 1.5          |           | 1.0         |          | Write and Revise Buddy Team Evaluation                                                  |
 | 2023/06/13 |             |            | 4.0          |           |             |          | Add Firebase to project                                                                 |
+| 2023/06/13 |             |            |              |           |             | 0.5      | Redesign UI + Code review                                                               |
 | 2023/06/13 | 1.5         | 1.5        | 1.5          | 1.5       | 1.5         | 1.5      | team meeting on task work                                                               |
 | 2023/06/14 |             | 4.0        |              |           |             |          | working on add pill page ui                                                             |
 | 2023/06/14 |             |            |              | 0.5       |             |          | PR review                                                                               |
 | 2023/06/14 |             | 1.0        |              |           |             |          | update PR                                                                               |
+| 2023/06/14 |             |            |              |           |             | 0.5      | PR review                                                                               |
 | 2023/06/14 |             | 2.5        |              |           |             |          | working on add pill page and receiver home page ui                                      |
+| 2023/06/14 |             |            |              |           |             | 5        | Implement Camera access permission + add text recognize feature + config google ML kit  |
+| 2023/06/15 |             |            |              |           |             | 5        | Implement upload local photo feature + add auto-fill UI page                            |
 
