@@ -1,5 +1,7 @@
 package com.ece452.pillmaster
 
+import com.ece452.pillmaster.screen.carereceiver.AutoFillEntry
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -10,6 +12,7 @@ import com.ece452.pillmaster.screen.common.CareGiverHomeScreen
 import com.ece452.pillmaster.screen.common.CareReceiverHomepageScreen
 import com.ece452.pillmaster.screen.common.DashboardScreen
 import com.ece452.pillmaster.screen.common.HomeScreen
+import com.ece452.pillmaster.screen.common.PillAddPageScreen
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.LoginViewModel
 
@@ -17,7 +20,8 @@ import com.ece452.pillmaster.viewmodel.LoginViewModel
 fun PillMasterNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    loginViewModel: LoginViewModel
+    loginViewModel: LoginViewModel,
+    context: Context
 ) {
     NavHost(
         navController = navController,
@@ -34,10 +38,17 @@ fun PillMasterNavHost(
             HomeScreen(navController = navController, loginViewModel = loginViewModel, true)
         }
         composable(NavigationPath.CARE_RECEIVER_HOMEPAGE.route) {
-            CareReceiverHomepageScreen()
+            CareReceiverHomepageScreen(navController = navController)
         }
         composable(NavigationPath.CARE_GIVER_HOMEPAGE.route) {
             CareGiverHomeScreen()
+        }
+        composable(NavigationPath.PILL_ADD_PAGE.route) { entry ->
+            PillAddPageScreen(navController = navController, entry)
+        }
+        composable(NavigationPath.CAMERA_HOMEPAGE.route) {
+
+            AutoFillEntry(navController = navController, context = context)
         }
     }
 }
