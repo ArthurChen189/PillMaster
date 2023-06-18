@@ -16,8 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.ece452.pillmaster.model.User
 import com.ece452.pillmaster.utils.AuthResult
 import com.ece452.pillmaster.utils.NavigationPath
+import com.ece452.pillmaster.utils.UserRole
 import com.ece452.pillmaster.viewmodel.LoginViewModel
 
 @Composable
@@ -57,7 +59,17 @@ fun DashboardScreen(
             Text("Login")
         }
         Button(
-            onClick = { navController.navigate(NavigationPath.HOMEPAGE_TEST.route) }
+            onClick = {
+                val user = User(
+                    id = "123",
+                    email = "example@example.com",
+                    name = "John Doe",
+                    password = "password",
+                    roles = listOf(UserRole.ADMIN)
+                )
+                val userString = user.toString()
+                navController.navigate("${NavigationPath.HOMEPAGE.route}/$userString")
+            }
         ) {
             Text("Homepage Test")
         }

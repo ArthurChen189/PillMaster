@@ -6,8 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
+import com.ece452.pillmaster.model.User
 import com.ece452.pillmaster.screen.common.CareGiverHomeScreen
 import com.ece452.pillmaster.screen.common.CareReceiverHomepageScreen
 import com.ece452.pillmaster.screen.common.DashboardScreen
@@ -31,11 +34,14 @@ fun PillMasterNavHost(
         composable(NavigationPath.DASHBOARD.route) {
             DashboardScreen(navController = navController, loginViewModel = loginViewModel)
         }
-        composable(NavigationPath.HOMEPAGE.route) {
-            HomeScreen(navController = navController, loginViewModel = loginViewModel, false)
-        }
-        composable(NavigationPath.HOMEPAGE_TEST.route) {
-            HomeScreen(navController = navController, loginViewModel = loginViewModel, true)
+        composable("${NavigationPath.HOMEPAGE.route}/{user}",
+            arguments = listOf(navArgument("user") {
+                type = NavType.StringType
+            }))
+        { backStackEntry ->
+            val userString = backStackEntry.arguments?.getString("user")
+            val user = userString?.let { User.fromString(it) }
+            HomeScreen(navController = navController, user = user)
         }
         composable(NavigationPath.CARE_RECEIVER_HOMEPAGE.route) {
             CareReceiverHomepageScreen(navController = navController)
