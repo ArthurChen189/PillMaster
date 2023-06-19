@@ -20,31 +20,25 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.ece452.pillmaster.model.User
 import com.ece452.pillmaster.utils.NavigationPath
-import com.ece452.pillmaster.utils.UserRole
 import com.ece452.pillmaster.viewmodel.LoginViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignupScreen(
     navController: NavController,
-    loginViewModel: LoginViewModel? = null
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-    val loginUiState = loginViewModel?.loginUiState
-    val isError = loginUiState?.signUpError != null
+    val loginUiState = loginViewModel.loginUiState
+    val isError = loginUiState.signUpError != null
     val context = LocalContext.current
 
     Row(
@@ -72,19 +66,21 @@ fun SignupScreen(
     ) {
         Text(
             text = "Sign Up",
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
             textAlign = TextAlign.Center
         )
 
         if (isError) {
             Text(
-                text = loginUiState?.signUpError ?: "unknown error",
+                text = loginUiState.signUpError ?: "unknown error",
                 modifier = Modifier.padding(bottom = 16.dp)
             )
         }
         OutlinedTextField(
-            value = loginUiState?.userNameSignUp ?: "",
-            onValueChange = { loginViewModel?.onUserNameSignUpChange(it) },
+            value = loginUiState.userNameSignUp,
+            onValueChange = { loginViewModel.onUserNameSignUpChange(it) },
             label = { Text("Email") },
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Person, contentDescription = null)
@@ -94,8 +90,8 @@ fun SignupScreen(
         )
 
         OutlinedTextField(
-            value = loginUiState?.passwordSignUp ?: "",
-            onValueChange = { loginViewModel?.onPasswordSignUpChange(it) },
+            value = loginUiState.passwordSignUp,
+            onValueChange = { loginViewModel.onPasswordSignUpChange(it) },
             label = { Text("Password") },
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Lock, contentDescription = null)
@@ -106,8 +102,8 @@ fun SignupScreen(
         )
 
         OutlinedTextField(
-            value = loginUiState?.confirmPasswordSignUp ?: "",
-            onValueChange = { loginViewModel?.onConfirmPasswordSignUpChange(it) },
+            value = loginUiState.confirmPasswordSignUp,
+            onValueChange = { loginViewModel.onConfirmPasswordSignUpChange(it) },
             label = { Text("Confirm Password") },
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Lock, contentDescription = null)
@@ -118,7 +114,7 @@ fun SignupScreen(
         )
 
         Button(
-            onClick = { loginViewModel?.createUser(context) },
+            onClick = { loginViewModel.createUser(context) },
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
         ) {
             Text("Sign Up")
@@ -136,7 +132,7 @@ fun SignupScreen(
             Text(text = "Log In")
         }
 
-        if (loginUiState?.isLoading == true) {
+        if (loginUiState.isLoading == true) {
             CircularProgressIndicator()
         }
     }

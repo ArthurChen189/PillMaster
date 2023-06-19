@@ -3,11 +3,11 @@ package com.ece452.pillmaster.model
 import com.ece452.pillmaster.utils.UserRole
 
 data class User(
-    val id: String,
-    val email: String,
-    val name: String,
-    val password: String,
-    val roles: List<UserRole>
+    val id: String = "",
+    val email: String = "",
+    val name: String = "",
+    val password: String = "",
+    val roles: List<UserRole> = listOf()
 ) {
     override fun toString(): String {
         val rolesString = roles.joinToString(",") { it.name }

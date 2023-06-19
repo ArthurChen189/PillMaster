@@ -19,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -28,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ece452.pillmaster.model.User
 import com.ece452.pillmaster.utils.NavigationPath
@@ -38,10 +38,10 @@ import com.ece452.pillmaster.viewmodel.LoginViewModel
 @Composable
 fun LoginScreen(
     navController: NavController,
-    loginViewModel: LoginViewModel? = null
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-    val loginUiState = loginViewModel?.loginUiState
-    val isError = loginUiState?.loginError != null
+    val loginUiState = loginViewModel.loginUiState
+    val isError = loginUiState.loginError != null
     val context = LocalContext.current
 
     Row(
@@ -77,13 +77,13 @@ fun LoginScreen(
 
         if (isError) {
             Text(
-                text = loginUiState?.loginError ?: "unknown error",
+                text = loginUiState.loginError ?: "unknown error",
                 modifier = Modifier.padding(bottom = 16.dp)
             )
         }
         OutlinedTextField(
-            value = loginUiState?.userName ?: "",
-            onValueChange = { loginViewModel?.onUserNameChange(it) },
+            value = loginUiState.userName,
+            onValueChange = { loginViewModel.onUserNameChange(it) },
             label = { Text("Email") },
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Person, contentDescription = null)
@@ -93,8 +93,8 @@ fun LoginScreen(
         )
 
         OutlinedTextField(
-            value = loginUiState?.password ?: "",
-            onValueChange = { loginViewModel?.onPasswordChange(it) },
+            value = loginUiState.password,
+            onValueChange = { loginViewModel.onPasswordChange(it) },
             label = { Text("Password") },
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Lock, contentDescription = null)
@@ -106,7 +106,7 @@ fun LoginScreen(
 
         Button(
             onClick = {
-                loginViewModel?.loginUser(context)
+                loginViewModel.loginUser(context)
             },
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
         ) {
@@ -125,12 +125,12 @@ fun LoginScreen(
             Text(text = "Signup")
         }
 
-        if (loginUiState?.isLoading == true) {
+        if (loginUiState.isLoading == true) {
             CircularProgressIndicator()
         }
 
-        LaunchedEffect(key1 = loginViewModel?.hasUser) {
-            if (loginViewModel?.hasUser == true) {
+        LaunchedEffect(key1 = loginViewModel.hasUser) {
+            if (loginViewModel.hasUser == true) {
                 // TODO: UPDATE THIS TO THE ACTUAL USER FROM DB
                 val user = User(
                     id = "123",

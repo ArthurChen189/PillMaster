@@ -1,7 +1,6 @@
 package com.ece452.pillmaster
 
 import com.ece452.pillmaster.screen.carereceiver.AutoFillEntry
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -19,14 +18,11 @@ import com.ece452.pillmaster.screen.common.LoginScreen
 import com.ece452.pillmaster.screen.common.PillAddPageScreen
 import com.ece452.pillmaster.screen.common.SignupScreen
 import com.ece452.pillmaster.utils.NavigationPath
-import com.ece452.pillmaster.viewmodel.LoginViewModel
 
 @Composable
 fun PillMasterNavHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier,
-    loginViewModel: LoginViewModel,
-    context: Context
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
@@ -37,10 +33,10 @@ fun PillMasterNavHost(
             DashboardScreen(navController = navController)
         }
         composable(NavigationPath.LOGIN.route) {
-            LoginScreen(navController = navController, loginViewModel = loginViewModel)
+            LoginScreen(navController = navController)
         }
         composable(NavigationPath.SIGNUP.route) {
-            SignupScreen(navController = navController, loginViewModel = loginViewModel)
+            SignupScreen(navController = navController)
         }
         composable("${NavigationPath.HOMEPAGE.route}/{user}",
             arguments = listOf(navArgument("user") {
@@ -49,7 +45,7 @@ fun PillMasterNavHost(
         { backStackEntry ->
             val userString = backStackEntry.arguments?.getString("user")
             val user = userString?.let { User.fromString(it) }
-            HomeScreen(navController = navController, loginViewModel = loginViewModel, user = user)
+            HomeScreen(navController = navController, user = user)
         }
         composable(NavigationPath.CARE_RECEIVER_HOMEPAGE.route) {
             CareReceiverHomepageScreen(navController = navController)
@@ -62,7 +58,7 @@ fun PillMasterNavHost(
         }
         composable(NavigationPath.CAMERA_HOMEPAGE.route) {
 
-            AutoFillEntry(navController = navController, context = context)
+            AutoFillEntry(navController = navController)
         }
     }
 }

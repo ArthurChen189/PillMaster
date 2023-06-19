@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ece452.pillmaster.model.User
 import com.ece452.pillmaster.utils.NavigationPath
@@ -21,8 +22,8 @@ import com.ece452.pillmaster.viewmodel.LoginViewModel
 @Composable
 fun HomeScreen(
     navController: NavController,
-    loginViewModel: LoginViewModel,
-    user: User?
+    user: User?,
+    loginViewModel: LoginViewModel = hiltViewModel(),
 ) {
     val errorText by remember { mutableStateOf("") }
 
