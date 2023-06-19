@@ -1,186 +1,144 @@
 package com.ece452.pillmaster.viewmodel
 
-import android.app.Activity
-import android.app.Application
 import android.content.Context
-import android.util.Log
+import android.widget.Toast
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.auth0.android.Auth0
-import com.auth0.android.authentication.AuthenticationAPIClient
-import com.auth0.android.authentication.AuthenticationException
-import com.auth0.android.callback.Callback
-import com.auth0.android.management.ManagementException
-import com.auth0.android.management.UsersAPIClient
-import com.auth0.android.provider.WebAuthProvider
-import com.auth0.android.result.Credentials
-import com.auth0.android.result.UserProfile
-import com.ece452.pillmaster.R
-import com.ece452.pillmaster.utils.AuthResult
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import androidx.lifecycle.viewModelScope
+import com.ece452.pillmaster.repository.AuthRepository
+import kotlinx.coroutines.launch
 
-/**
- * Resources Used: https://auth0.com/blog/android-authentication-jetpack-compose-part-2/
- */
-@HiltViewModel
-class LoginViewModel @Inject constructor(): ViewModel() {
-    private lateinit var account: Auth0
-    private var cachedCredentials: Credentials? = null
-    private var cachedUserProfile: UserProfile? = null
 
-    private val LOGGER = "LoginViewModel"
+// Used Resources: https://www.youtube.com/watch?v=n7tUmLP6pdo
+class LoginViewModel (
+    private val repository: AuthRepository = AuthRepository()
+): ViewModel() {
+    val currentUser = repository.currentUser
 
-    fun setAccount(context: Context) {
-        account = Auth0(
-            context.getString(R.string.com_auth0_client_id),
-            context.getString(R.string.com_auth0_domain)
-        )
-    }
+    val hasUser: Boolean
+        get() = repository.hasUser()
 
-    fun login(context: Context) : AuthResult<Credentials> {
-        if (cachedCredentials != null) {
-            // User is already logged in, return success
-            return AuthResult.Success(cachedCredentials!!)
-        }
+    var loginUiState by mutableStateOf(LoginUiState())
+        private set
 
-        val client = WebAuthProvider
-            .login(account)
-            .withScheme(context.getString(R.string.com_auth0_scheme))
-            .withScope(context.getString(R.string.login_scopes))
-            .withAudience(
-                context.getString(
-                    R.string.login_audience,
-                    context.getString(R.string.com_auth0_domain)
-                )
-            )
+    fun loginUser(context: Context) = viewModelScope.launch {
+        try {
+            if (!validateLoginForm()) {
+                throw IllegalArgumentException("email and password can not be empty")
+            }
 
-        return runCatching {
-            client.start(context, object : Callback<Credentials, AuthenticationException> {
+            loginUiState = loginUiState.copy(isLoading = true)
+            loginUiState = loginUiState.copy(loginError = null)
 
-                override fun onFailure(error: AuthenticationException) {
-                    Log.e(LOGGER, "Error occurred in login(): $error")
-                    throw error
+            repository.login(
+                loginUiState.userName,
+                loginUiState.password
+            ) { isSuccessful ->
+                if (isSuccessful) {
+                    Toast.makeText(
+                        context,
+                        "success login",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    loginUiState = loginUiState.copy(isSuccessLogin = true)
+                } else {
+                    Toast.makeText(
+                        context,
+                        "failed login",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    loginUiState = loginUiState.copy(isSuccessLogin = false)
                 }
+            }
+        } catch (e: Exception) {
+            loginUiState = loginUiState.copy(loginError = e.localizedMessage)
+            e.printStackTrace()
+        } finally {
+            loginUiState = loginUiState.copy(isLoading = false)
+        }
+    }
 
-                override fun onSuccess(result: Credentials) {
-                    Log.d(LOGGER, "login() succeeded: $result")
-                    cachedCredentials = result
+    fun createUser(context: Context) = viewModelScope.launch {
+        try {
+            if (!validateSignupForm()) {
+                throw IllegalArgumentException("email and password can not be empty")
+            }
+            if (loginUiState.passwordSignUp != loginUiState.confirmPasswordSignUp) {
+                throw IllegalArgumentException("passwords do not match")
+            }
+
+            loginUiState = loginUiState.copy(isLoading = true)
+            loginUiState = loginUiState.copy(signUpError = null)
+
+            repository.signup(
+                loginUiState.userNameSignUp,
+                loginUiState.passwordSignUp
+            ) { isSuccessful ->
+                if (isSuccessful) {
+                    Toast.makeText(
+                        context,
+                        "success signup",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    loginUiState = loginUiState.copy(isSuccessLogin = true)
+                } else {
+                    Toast.makeText(
+                        context,
+                        "failed signup",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    loginUiState = loginUiState.copy(isSuccessLogin = false)
                 }
-            })
-        }.fold(
-            onSuccess = { AuthResult.Success(cachedCredentials!!) },
-            onFailure = { AuthResult.Failure(it.message ?: "Unknown error occurred") }
-        )
-    }
-
-    fun logout(context: Context): AuthResult<Unit> {
-        if (cachedCredentials == null) {
-            // User is not logged in, return success
-            return AuthResult.Success(Unit)
+            }
+        } catch (e: Exception) {
+            loginUiState = loginUiState.copy(signUpError = e.localizedMessage)
+            e.printStackTrace()
+        } finally {
+            loginUiState = loginUiState.copy(isLoading = false)
         }
-
-        val client = WebAuthProvider
-            .logout(account)
-            .withScheme(context.getString(R.string.com_auth0_scheme))
-
-
-        return runCatching {
-            client.start(context, object : Callback<Void?, AuthenticationException> {
-
-                    override fun onFailure(error: AuthenticationException) {
-                        Log.e(LOGGER, "Error occurred in logout(): $error")
-                        throw error
-                    }
-
-                    override fun onSuccess(result: Void?) {
-                        Log.d(LOGGER, "logout() succeeded.")
-                        cachedCredentials = null
-                        cachedUserProfile = null
-                    }
-                })
-        }.fold(
-            onSuccess = { AuthResult.Success(Unit) },
-            onFailure = { AuthResult.Failure(it.message ?: "Unknown error occurred") }
-        )
     }
 
-    fun showUserProfile(): AuthResult<UserProfile> {
-        if (cachedCredentials == null) {
-            Log.e(LOGGER, "Error occurred in showUserProfile(): User not logged in.")
-            return AuthResult.Failure("User not logged in.")
-        }
+    fun signoutUser() = repository.signout()
 
-        val client = AuthenticationAPIClient(account).userInfo(cachedCredentials!!.accessToken)
-
-        return runCatching {
-            client.start(object : Callback<UserProfile, AuthenticationException> {
-
-                    override fun onFailure(error: AuthenticationException) {
-                        Log.e(LOGGER, "Error occurred in showUserProfile(): $error")
-                        throw error
-                    }
-
-                    override fun onSuccess(result: UserProfile) {
-                        Log.d(LOGGER, "showUserProfile() succeeded: $result")
-                        cachedUserProfile = result
-                    }
-                })
-        }.fold(
-            onSuccess = { AuthResult.Success(cachedUserProfile!!) },
-            onFailure = { AuthResult.Failure(it.message ?: "Unknown error occurred") }
-        )
+    fun onUserNameChange(userName: String) {
+        loginUiState = loginUiState.copy(userName = userName)
     }
 
-    fun getUserMetadata(): AuthResult<Map<String, Any>> {
-        if (cachedCredentials == null) {
-            Log.e(LOGGER, "Error occurred in getUserMetadata(): User not logged in.")
-            return AuthResult.Failure("User not logged in.")
-        }
-
-        val client = UsersAPIClient(account, cachedCredentials!!.accessToken).getProfile(cachedUserProfile!!.getId()!!)
-
-        return runCatching {
-            client.start(object : Callback<UserProfile, ManagementException> {
-
-                    override fun onFailure(error: ManagementException) {
-                        Log.e(LOGGER, "Error occurred in getUserMetadata(): $error")
-                        throw error
-                    }
-
-                    override fun onSuccess(result: UserProfile) {
-                        Log.d(LOGGER, "getUserMetadata() succeeded: $result")
-                        cachedUserProfile = result
-                    }
-                })
-        }.fold(
-            onSuccess = { AuthResult.Success(cachedUserProfile!!.getUserMetadata()) },
-            onFailure = { AuthResult.Failure(it.message ?: "Unknown error occurred") }
-        )
+    fun onPasswordChange(password: String) {
+        loginUiState = loginUiState.copy(password = password)
     }
 
-    fun setUserMetadata(userMetadata: Map<String, Any>): AuthResult<UserProfile> {
-        if (cachedCredentials == null) {
-            return AuthResult.Failure("Invalid User.")
-        }
-
-        val client = UsersAPIClient(account, cachedCredentials!!.accessToken).updateMetadata(cachedUserProfile!!.getId()!!, userMetadata)
-
-        return runCatching {
-            client.start(object : Callback<UserProfile, ManagementException> {
-
-                    override fun onFailure(error: ManagementException) {
-                        Log.e(LOGGER, "Error occurred in setUserMetadata(): $error")
-                        throw error
-                    }
-
-                    override fun onSuccess(result: UserProfile) {
-                        Log.d(LOGGER, "setUserMetadata() succeeded: $result")
-                        cachedUserProfile = result
-                    }
-                })
-        }.fold(
-            onSuccess = { AuthResult.Success(cachedUserProfile!!) },
-            onFailure = { AuthResult.Failure(it.message ?: "Unknown error occurred") }
-        )
+    fun onUserNameSignUpChange(userNameSignUp: String) {
+        loginUiState = loginUiState.copy(userNameSignUp = userNameSignUp)
     }
+
+    fun onPasswordSignUpChange(passwordSignUp: String) {
+        loginUiState = loginUiState.copy(passwordSignUp = passwordSignUp)
+    }
+
+    fun onConfirmPasswordSignUpChange(confirmPasswordSignUp: String) {
+        loginUiState = loginUiState.copy(confirmPasswordSignUp = confirmPasswordSignUp)
+    }
+
+    private fun validateLoginForm() =
+        loginUiState.userName.isNotBlank() && loginUiState.password.isNotBlank()
+
+    private fun validateSignupForm() =
+        loginUiState.userNameSignUp.isNotBlank()
+                && loginUiState.passwordSignUp.isNotBlank()
+                && loginUiState.confirmPasswordSignUp.isNotBlank()
 }
+
+data class LoginUiState(
+    val userName: String = "",
+    val password: String = "",
+    val userNameSignUp: String = "",
+    val passwordSignUp: String = "",
+    val confirmPasswordSignUp: String = "",
+    val isLoading: Boolean = false,
+    val isSuccessLogin: Boolean = false,
+    val signUpError: String? = null,
+    val loginError: String? = null
+)
