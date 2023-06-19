@@ -54,3 +54,4 @@
 | 2023/06/18 |             |            |              | 6.0       |             |          | Firebase set up and connection, refactored Login/Signup UI and logic with FireBase      |
 | 2023/06/19 |             |            | 1.0          |           |             |          | PR Review                                                                               |
 | 2023/06/19 |             |            | 6.0          |           |             |          | Implement reminders firestore database crud and view model                              |
+| 2023/06/19 |             |            |              | 0.5       |             |          | Address PR comments and clean up code                                                   |
