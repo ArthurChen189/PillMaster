@@ -51,4 +51,4 @@
 | 2023/06/14 |             | 2.5        |              |           |             |          | working on add pill page and receiver home page ui                                      |
 | 2023/06/14 |             |            |              |           |             | 5        | Implement Camera access permission + add text recognize feature + config google ML kit  |
 | 2023/06/15 |             |            |              |           |             | 5        | Implement upload local photo feature + add auto-fill UI page                            |
-
+| 2023/06/18 |             |            |              | 6.0       |             |          | Firebase set up and connection, refactored Login/Signup UI and logic with FireBase      |
