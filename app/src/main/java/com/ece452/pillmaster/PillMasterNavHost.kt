@@ -2,6 +2,8 @@ package com.ece452.pillmaster
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.ece452.pillmaster.screen.carereceiver.AutoFillEntry
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -21,6 +23,7 @@ import com.ece452.pillmaster.utils.NavigationPath
 fun PillMasterNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    context: Context
 ) {
     NavHost(
         navController = navController,
@@ -42,8 +45,12 @@ fun PillMasterNavHost(
         composable(NavigationPath.CARE_GIVER_HOMEPAGE.route) {
             CareGiverHomeScreen()
         }
-        composable(NavigationPath.PILL_ADD_PAGE.route) {
-            PillAddPageScreen(navController = navController)
+        composable(NavigationPath.PILL_ADD_PAGE.route) { entry ->
+            PillAddPageScreen(navController = navController, entry)
+        }
+        composable(NavigationPath.CAMERA_HOMEPAGE.route) {
+
+            AutoFillEntry(navController = navController, context = context)
         }
         composable(NavigationPath.CALENDAR.route) {
             CalendarScreen(navController = navController)
