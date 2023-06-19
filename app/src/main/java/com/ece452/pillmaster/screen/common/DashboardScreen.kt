@@ -17,15 +17,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ece452.pillmaster.model.User
-import com.ece452.pillmaster.utils.AuthResult
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.utils.UserRole
-import com.ece452.pillmaster.viewmodel.LoginViewModel
 
 @Composable
 fun DashboardScreen(
-    navController: NavController,
-    loginViewModel: LoginViewModel
+    navController: NavController
 ) {
     val context = LocalContext.current
     var errorText by remember { mutableStateOf("") }
@@ -44,17 +41,7 @@ fun DashboardScreen(
             )
         }
         Button(
-            onClick = {
-                val result = loginViewModel.login(context)
-                when (result) {
-                    is AuthResult.Success -> {
-                        navController.navigate(NavigationPath.HOMEPAGE.route)
-                    }
-                    is AuthResult.Failure -> {
-                        errorText = result.errorMessage
-                    }
-                }
-            }
+            onClick = { navController.navigate(NavigationPath.LOGIN.route) }
         ) {
             Text("Login")
         }

@@ -17,6 +17,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ece452.pillmaster.ui.theme.PillMasterTheme
 import com.ece452.pillmaster.viewmodel.LoginViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,7 +34,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-        loginViewModel.setAccount(this)
+
 
         setContent {
             PillMasterTheme {

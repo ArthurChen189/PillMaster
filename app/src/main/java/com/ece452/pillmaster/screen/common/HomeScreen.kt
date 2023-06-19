@@ -16,10 +16,12 @@ import androidx.navigation.NavController
 import com.ece452.pillmaster.model.User
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.utils.UserRole
+import com.ece452.pillmaster.viewmodel.LoginViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
+    loginViewModel: LoginViewModel,
     user: User?
 ) {
     val errorText by remember { mutableStateOf("") }
@@ -35,7 +37,6 @@ fun HomeScreen(
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        // Call the getUserMetadata function to fetch user metadata
         if (errorText.isNotEmpty()) {
             Text(
                 text = errorText,
@@ -68,6 +69,13 @@ fun HomeScreen(
                 }) {
                     Text(text = "Assign Care Giver Role")
                 }
+            }
+
+            Button(onClick = {
+                loginViewModel.signoutUser()
+                navController.navigate(NavigationPath.DASHBOARD.route)
+            }) {
+                Text(text = "Sign out")
             }
         } else {
             // TODO

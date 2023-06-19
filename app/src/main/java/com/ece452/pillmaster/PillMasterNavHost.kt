@@ -15,7 +15,9 @@ import com.ece452.pillmaster.screen.common.CareGiverHomeScreen
 import com.ece452.pillmaster.screen.common.CareReceiverHomepageScreen
 import com.ece452.pillmaster.screen.common.DashboardScreen
 import com.ece452.pillmaster.screen.common.HomeScreen
+import com.ece452.pillmaster.screen.common.LoginScreen
 import com.ece452.pillmaster.screen.common.PillAddPageScreen
+import com.ece452.pillmaster.screen.common.SignupScreen
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.LoginViewModel
 
@@ -32,7 +34,13 @@ fun PillMasterNavHost(
         modifier = modifier
     ) {
         composable(NavigationPath.DASHBOARD.route) {
-            DashboardScreen(navController = navController, loginViewModel = loginViewModel)
+            DashboardScreen(navController = navController)
+        }
+        composable(NavigationPath.LOGIN.route) {
+            LoginScreen(navController = navController, loginViewModel = loginViewModel)
+        }
+        composable(NavigationPath.SIGNUP.route) {
+            SignupScreen(navController = navController, loginViewModel = loginViewModel)
         }
         composable("${NavigationPath.HOMEPAGE.route}/{user}",
             arguments = listOf(navArgument("user") {
@@ -41,7 +49,7 @@ fun PillMasterNavHost(
         { backStackEntry ->
             val userString = backStackEntry.arguments?.getString("user")
             val user = userString?.let { User.fromString(it) }
-            HomeScreen(navController = navController, user = user)
+            HomeScreen(navController = navController, loginViewModel = loginViewModel, user = user)
         }
         composable(NavigationPath.CARE_RECEIVER_HOMEPAGE.route) {
             CareReceiverHomepageScreen(navController = navController)

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "431673152371",
+    "project_id": "pillmaster-ef06b",
+    "storage_bucket": "pillmaster-ef06b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431673152371:android:0997e20a8f7d46d939eb06",
+        "android_client_info": {
+          "package_name": "com.ece452.pillmaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431673152371-h7vgemaj3dosjie7rtsd1bgquo2etff2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5fjM_gwei9OPXN8lmqPaeryJupHqqTSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431673152371-6ho1end3rafdtaqbjjh62ffmht70dk42.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
