@@ -1,6 +1,7 @@
 package com.ece452.pillmaster.screen.carereceiver
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
@@ -26,6 +27,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,6 +43,9 @@ import io.github.boguszpawlowski.composecalendar.day.NonSelectableDayState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import java.time.LocalDate
 
+
+var result: Any = 0
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarScreen(
@@ -48,11 +53,17 @@ fun CalendarScreen(
     vm: PillAddPageViewModel = hiltViewModel()
 ) {
 
+
+    // Fetch Medicine Data
+    // TODO Mock data for now.
+    result = processMedicineData(vm.testList.value)
+
+
     // Retrieve Medicine Data for Calendar View
     vm.fetchMedicineData()
     // Real-time Calendar
     // TODO - mock for now
-    CustomizedCalendarView(medicineList = vm.testList.value)
+    CustomizedCalendarView(vm)
 //    CustomizedCalendarView(medicineList = vm.medicineList.value)
 
 }
@@ -60,7 +71,7 @@ fun CalendarScreen(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CustomizedCalendarView(
-    medicineList: List<Pair<String, Pair<String, String>>>
+    vm: PillAddPageViewModel,
 ) {
     StaticCalendar(
         modifier = Modifier
@@ -69,7 +80,7 @@ fun CustomizedCalendarView(
         dayContent = {
             DayContent(
                 dayState = it,
-                medicineList = medicineList,
+                vm = vm,
             )
         },
     )
@@ -79,31 +90,58 @@ fun CustomizedCalendarView(
 @Composable
 private fun DayContent(
     dayState: NonSelectableDayState,
-    medicineList: List<Pair<String, Pair<String, String>>>
+    vm: PillAddPageViewModel,
 ) {
     DefaultD(
         state = dayState,
-        medicineList = medicineList
+        vm = vm,
     )
 }
 
-fun shouldHighLight(list: List<Pair<String, Pair<String, String>>>, input: String): Boolean {
-    return list.any { (_, innerPair) ->
-        innerPair.first.contains(input) || innerPair.second.contains(input)
+@RequiresApi(Build.VERSION_CODES.O)
+fun processMedicineData(
+    pillList: MutableList<PillAddPageViewModel.Pill>
+): Any {
+    // Return immediately as there are no pills, even in the future.
+    if (pillList.isEmpty()) {
+        return 2
+    }
+    // Here we must find all pills eligible for the current date.
+    val currentDate = LocalDate.now()
+    val currentPills: MutableList<PillAddPageViewModel.Pill> = pillList.filter { pill ->
+        val startDate = LocalDate.parse(pill.startDate)
+        val endDate = LocalDate.parse(pill.endDate)
+        currentDate.isEqual(startDate) || currentDate.isEqual(endDate) || (currentDate.isAfter(startDate) && currentDate.isBefore(endDate))
+    } as MutableList<PillAddPageViewModel.Pill>
+
+    // Return now, if there are no pills for today.
+    if (currentPills.isEmpty()) {
+        return 2
+    }
+
+    val allMedicineTaken = currentPills.all { it.isTaken }
+    val noMedicineTaken = currentPills.none { it.isTaken }
+
+    return when {
+        noMedicineTaken -> -1
+        allMedicineTaken -> 1
+        else -> {
+            val result = mutableListOf<String>()
+            for (pill in currentPills) {
+                val medicine = pill.name
+                val isTaken = pill.isTaken
+                val sentence = if (isTaken) {
+                    "$medicine has been taken."
+                } else {
+                    "$medicine has not been taken."
+                }
+                result.add(sentence)
+            }
+            result
+        }
     }
 }
 
-fun findMedicineByInput(list: List<Pair<String, Pair<String, String>>>, input: String): List<String> {
-    val result = mutableListOf<String>()
-    for ((name, date) in list) {
-        if (date.first.contains(input, ignoreCase = true)) {
-            result.add("$name starts today")
-        } else if (date.second.contains(input, ignoreCase = true)) {
-            result.add("$name ends today")
-        }
-    }
-    return result
-}
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -111,29 +149,40 @@ fun <T : SelectionState> DefaultD(
     state: DayState<T>,
     currentDayColor: Color = MaterialTheme.colorScheme.primary,
     onClick: (LocalDate) -> Unit = {},
-    medicineList: List<Pair<String, Pair<String, String>>>
+    vm: PillAddPageViewModel,
 ) {
     val date = state.date
     val selectionState = state.selectionState
     val cardData = remember { mutableStateListOf<String>() }
     var isCardClicked by remember { mutableStateOf(false) }
-    // Decide if a day has events (i.e. take pill, end pill...)
-    val isEventful = shouldHighLight(medicineList, date.toString())
 
    // Function to handle yellow card click
-    val onYellowCardClick: () -> Unit = {
-        // Update the state to indicate that the yellow card is clicked
+    val onTodayClick: (vm: PillAddPageViewModel) -> Unit = {
         isCardClicked = true
-        // Call findMedicineByInput to get the list of strings for the yellow card
-        cardData.clear()
-        cardData.addAll(findMedicineByInput(medicineList, date.toString()))
+        when (result) {
+            is Int -> {
+                // Handle the case when none or all medicines are taken
+                if (result == -1) {
+                    cardData.add("None of the medicines have been taken!")
+                } else if (result == 1) {
+                    cardData.add("All medicines have been taken!")
+                } else if (result == 2) {
+                    cardData.add("No medicines to take today!")
+                }
+            }
+            is List<*> -> {
+                cardData.addAll(result as Collection<String>)
+            }
+        }
     }
 
     Card(
         modifier = Modifier
             .aspectRatio(1f)
             .padding(2.dp).clickable {
-                onYellowCardClick()
+                if (date == LocalDate.now()) {
+                    onTodayClick(vm)
+                }
                 onClick(date)
                 selectionState.onDateSelected(date)
             },
@@ -141,9 +190,15 @@ fun <T : SelectionState> DefaultD(
         border = if (state.isCurrentDay) BorderStroke(1.dp, currentDayColor) else null,
         colors = CardDefaults.cardColors(
             contentColor = contentColorFor(
-                backgroundColor = if (isEventful) Color.Yellow else MaterialTheme.colorScheme.surface
+                backgroundColor = if (result == -1 && date == LocalDate.now()) Color.Red
+                else if (result == 1 && date == LocalDate.now()) Color.Green
+                else if (date == LocalDate.now() && result != 2) Color.Yellow
+                else MaterialTheme.colorScheme.surface
             ),
-            containerColor = if (isEventful) Color.Yellow else MaterialTheme.colorScheme.surface
+            containerColor = if (result == -1 && date == LocalDate.now()) Color.Red
+            else if (result == 1 && date == LocalDate.now()) Color.Green
+            else if (date == LocalDate.now() && result != 2) Color.Yellow
+            else MaterialTheme.colorScheme.surface
         )
     ) {
         Box(
@@ -156,10 +211,11 @@ fun <T : SelectionState> DefaultD(
         }
     }
 
-    if (isCardClicked && isEventful) {
+    if (isCardClicked) {
         AlertDialog(
             onDismissRequest = {
                 isCardClicked = false
+                // Must reset the cardData.
                 cardData.clear()
             },
             title = { Text(text = "$date") },

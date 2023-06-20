@@ -1,5 +1,7 @@
 package com.ece452.pillmaster.screen.common
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -49,34 +51,7 @@ import com.ece452.pillmaster.R
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 
-// Sample data of medicines
-val medicines = listOf(
-    "Medicine A",
-    "Medicine B",
-    "Medicine C",
-    "Medicine D",
-    "Medicine E",
-    "Medicine F",
-    "Medicine G",
-    "Medicine H",
-    "Medicine I",
-    "Medicine J",
-    "Medicine K",
-    "Medicine L",
-    "Medicine A",
-    "Medicine B",
-    "Medicine C",
-    "Medicine D",
-    "Medicine E",
-    "Medicine F",
-    "Medicine G",
-    "Medicine H",
-    "Medicine I",
-    "Medicine J",
-    "Medicine K",
-    "Medicine L"
-)
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CareReceiverHomepageScreen(
     // TODO - Expose an action if this action takes the user to another screen.
@@ -93,9 +68,11 @@ fun CareReceiverHomepageScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         // TODO - Notice for now testList is used.
+        // Notice that testList is directly used without being filtered, because user
+        // could add pills for future and we should display them as well.
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(vm.testList.value){
-                    medicine -> SingleReminderItem(medicine.first)
+                    medicine -> SingleReminderItem(medicine.name, vm)
             }
         }
         AddPillButton(navController)
@@ -156,13 +133,17 @@ fun AddPillButton(
     navController: NavController
 ){
     Row(
-        modifier = Modifier.fillMaxWidth().padding(top = 0.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 0.dp),
     ) {
         Button(
             onClick = {
                 navController.navigate(NavigationPath.PILL_ADD_PAGE.route)
             },
-            Modifier.padding(horizontal = 5.dp).fillMaxWidth(),
+            Modifier
+                .padding(horizontal = 5.dp)
+                .fillMaxWidth(),
             shape = RoundedCornerShape(10.dp)
         ) {
             Icon(
@@ -177,12 +158,14 @@ fun AddPillButton(
 
 
 // please use under code to implement each pill reminder
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun SingleReminderItem (
-    reminder: String
+    reminder: String,
+    vm: PillAddPageViewModel
 ){
-    var isChecked by remember { mutableStateOf(false) }
+    var isChecked by remember { mutableStateOf(vm.testList.value.find { it.name == reminder }?.isTaken) }
 
     Card(  shape = RoundedCornerShape(10.dp), modifier = Modifier
         .padding(5.dp)
@@ -204,17 +187,31 @@ fun SingleReminderItem (
             Checkbox(
                 // below line we are setting
                 // the state of checkbox.
-                checked = isChecked,
+                checked = isChecked!!,
                 // below line is use to add padding
                 // to our checkbox.
                 modifier = Modifier.padding(end = 5.dp),
                 // below line is use to add on check
                 // change to our checkbox.
-                onCheckedChange = { isChecked = it },
+                onCheckedChange = {
+                    updatePills(reminder, vm, it)
+                    isChecked = it
+                },
 
             )
         }
     }
+}
 
+@RequiresApi(Build.VERSION_CODES.O)
+fun updatePills(medicineName: String, vm: PillAddPageViewModel, isChecked: Boolean) {
+    val updatedList = vm.testList.value.map { pill ->
+        if (pill.name == medicineName) {
+            pill.copy(isTaken = isChecked)
+        } else {
+            pill
+        }
+    }
+    vm.testList.value = updatedList.toMutableList()
 }
 
