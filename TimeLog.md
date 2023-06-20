@@ -14,7 +14,7 @@
 | 2023/05/19 |             |            | 4.0          |           |             | 4.0      | Design architecture view and architecture style                                         |
 | 2023/05/20 |             |            |              | 2.0       | 2.0         |          | Discuss design patterns                                                                 |
 | 2023/05/20 |             | 5.0        |              |           |             |          | UI design in Figma                                                                      |
-| 2023/05/20 | 5.0         |            |              |           |             |          | Write documentations                                                                    |
+| 2023/05/20 | 5.0         |            |              |           |             |          | Write documentations proposal                                                           |
 | 2023/05/20 |             |            |              | 4.0       |             |          | Demonstrate implementation of design patterns at the coding level                       |
 | 2023/05/22 |             | 3.0        |              |           |             |          | UI design in Figma                                                                      |
 | 2023/05/23 |             |            |              |           |             | 3.0      | Setup starter code                                                                      |
@@ -37,6 +37,7 @@
 | 2023/06/07 |             |            |              |           |             | 1.0      | PR Review                                                                               |
 | 2023/06/07 | 1.0         |            |              |           |             |          | Investigate OCR function implementation                                                 |
 | 2023/06/07 | 1.5         |            |              |           |             |          | Investigate Python + Kotlin integration                                                 |
+| 2023/06/08 | 3.0         |            |              |           |             |          | Write up Buddy Team Evaluation                                                          |
 | 2023/06/10 |             |            |              | 3.0       |             |          | Investigate Authentication Method: Auth0 chosen                                         |
 | 2023/06/11 |             |            |              | 9.0       |             |          | Implement User authentication/authorization with Auth0                                  |
 | 2023/06/12 |             |            |              |           |             | 1.0      | Draw Architect diagram - part 1                                                         |
@@ -44,6 +45,7 @@
 | 2023/06/13 |             |            | 4.0          |           |             |          | Add Firebase to project                                                                 |
 | 2023/06/13 |             |            |              |           |             | 0.5      | Redesign UI + Code review                                                               |
 | 2023/06/13 | 1.5         | 1.5        | 1.5          | 1.5       | 1.5         | 1.5      | team meeting on task work                                                               |
+| 2023/06/14 | 3.0         |            |              |           |             |          | Implement search engine in Python                                                       |
 | 2023/06/14 |             | 4.0        |              |           |             |          | working on add pill page ui                                                             |
 | 2023/06/14 |             |            |              | 0.5       |             |          | PR review                                                                               |
 | 2023/06/14 |             | 1.0        |              |           |             |          | update PR                                                                               |
@@ -51,7 +53,9 @@
 | 2023/06/14 |             | 2.5        |              |           |             |          | working on add pill page and receiver home page ui                                      |
 | 2023/06/14 |             |            |              |           |             | 5        | Implement Camera access permission + add text recognize feature + config google ML kit  |
 | 2023/06/15 |             |            |              |           |             | 5        | Implement upload local photo feature + add auto-fill UI page                            |
+| 2023/06/17 |             |            |              |           | 7.0         |          | Implement customized calendar; fix wrong viewModel access.                              |
 | 2023/06/18 |             |            |              | 6.0       |             |          | Firebase set up and connection, refactored Login/Signup UI and logic with FireBase      |
 | 2023/06/19 |             |            | 1.0          |           |             |          | PR Review                                                                               |
 | 2023/06/19 |             |            | 6.0          |           |             |          | Implement reminders firestore database crud and view model                              |
-| 2023/06/19 |             |            |              |           | 7.0         |          | Add calendar that highlights events; refactor wrong viewModel inputs                    |
+| 2023/06/19 |             |            |              | 0.5       |             |          | Address PR comments and clean up code                                                   |
+| 2023/06/19 | 5.0         |            |              |           |             |          | Resolve Python integration issues, investigate using ElasticSearch in Kotlin            |

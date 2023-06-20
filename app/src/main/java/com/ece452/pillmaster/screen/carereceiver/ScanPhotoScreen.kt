@@ -51,8 +51,7 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 
 @Composable
 fun ScanPhotoScreen(
-    navController: NavController,
-    context: Context
+    navController: NavController
 ) {
     lateinit var image: MutableState<Bitmap>
     lateinit var text: MutableState<String>
