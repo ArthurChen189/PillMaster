@@ -60,3 +60,4 @@
 | 2023/06/19 |             |            |              | 0.5       |             |          | Address PR comments and clean up code                                                     |
 | 2023/06/19 | 5.0         |            |              |           |             |          | Resolve Python integration issues, investigate using ElasticSearch in Kotlin              |
 | 2023/06/20 |             |            |              |           | 8.0         |          | Update Calendar; set up shared view model for easy data-sharing; add splash; add app icon |
+| 2023/06/21 |             |            | 8.0          |           |             |          | Implement and Test Model, Repository, ViewModel, Screen on Reminders                      |
