@@ -9,11 +9,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ece452.pillmaster.repository.AuthRepository
 import kotlinx.coroutines.launch
-
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 // Used Resources: https://www.youtube.com/watch?v=n7tUmLP6pdo
-class LoginViewModel (
-    private val repository: AuthRepository = AuthRepository()
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val repository: AuthRepository
 ): ViewModel() {
     val currentUser = repository.currentUser
 

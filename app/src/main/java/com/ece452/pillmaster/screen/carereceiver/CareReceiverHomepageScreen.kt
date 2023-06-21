@@ -44,69 +44,73 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ece452.pillmaster.R
+import com.ece452.pillmaster.di.FirebaseModule
 import com.ece452.pillmaster.utils.NavigationPath
+import com.ece452.pillmaster.model.Reminder
+import com.ece452.pillmaster.repository.AuthRepository
+import com.ece452.pillmaster.repository.ReminderRepository
+import com.ece452.pillmaster.viewmodel.ReminderViewModel
 
 // Sample data of medicines
-val medicines = listOf(
-    "Medicine A",
-    "Medicine B",
-    "Medicine C",
-    "Medicine D",
-    "Medicine E",
-    "Medicine F",
-    "Medicine G",
-    "Medicine H",
-    "Medicine I",
-    "Medicine J",
-    "Medicine K",
-    "Medicine L",
-    "Medicine A",
-    "Medicine B",
-    "Medicine C",
-    "Medicine D",
-    "Medicine E",
-    "Medicine F",
-    "Medicine G",
-    "Medicine H",
-    "Medicine I",
-    "Medicine J",
-    "Medicine K",
-    "Medicine L"
-)
+// val medicines = listOf(
+//     "Medicine A",
+//     "Medicine B",
+//     "Medicine C",
+//     "Medicine D",
+//     "Medicine E",
+//     "Medicine F",
+//     "Medicine G",
+//     "Medicine H",
+//     "Medicine I",
+//     "Medicine J",
+//     "Medicine K",
+//     "Medicine L",
+//     "Medicine A",
+//     "Medicine B",
+//     "Medicine C",
+//     "Medicine D",
+//     "Medicine E",
+//     "Medicine F",
+//     "Medicine G",
+//     "Medicine H",
+//     "Medicine I",
+//     "Medicine J",
+//     "Medicine K",
+//     "Medicine L"
+// )
 
 @Composable
 fun CareReceiverHomepageScreen(
     // TODO - Expose an action if this action takes the user to another screen.
     navController: NavController,
-
+    viewModel: ReminderViewModel = hiltViewModel(),
 ) {
+    val reminders = viewModel.reminders.collectAsStateWithLifecycle(emptyList())
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .fillMaxWidth()
-                .padding(bottom = 0.dp) // Adjust the value as needed for spacing
-                .semantics { contentDescription = "Care receiver's home screen" },
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            // TODO - Build this screen as per the Figma file.
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                items(medicines){
-                        medicine ->
-                    //Text(text = medicine, modifier = Modifier.padding(8.dp))
-                    SingleReminderItem(medicine)
-                }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .fillMaxWidth()
+            .padding(bottom = 0.dp) // Adjust the value as needed for spacing
+            .semantics { contentDescription = "Care receiver's home screen" },
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        // TODO - Build this screen as per the Figma file.
+        LazyColumn(modifier = Modifier.weight(1f)) {
+            items(reminders.value) { reminderItem ->
+                SingleReminderItem(
+                    reminder = reminderItem,
+                    onCheckChange = { viewModel.onReminderCheckChange(reminderItem) },
+                )
             }
-            AddPillButton(navController)
-            NavBar()
         }
-
-
-
-
-
+        AddPillButton(navController)
+        NavBar()
+    }
 
 }
 
@@ -170,14 +174,13 @@ fun AddPillButton(
     }
 }
 
-
-// please use under code to implement each pill reminder
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun SingleReminderItem (
-    reminder: String
+    reminder: Reminder,
+    onCheckChange: () -> Unit,
 ){
-    var isChecked by remember { mutableStateOf(false) }
+    // var isChecked by remember { mutableStateOf(false) }
 
     Card(  shape = RoundedCornerShape(10.dp), modifier = Modifier
         .padding(5.dp)
@@ -192,21 +195,20 @@ fun SingleReminderItem (
                 contentDescription = null
             )
 
-            Text(text = reminder, fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
+            Text(text = reminder.name, fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
 
             Spacer(modifier = Modifier.weight(1f))
 
             Checkbox(
                 // below line we are setting
                 // the state of checkbox.
-                checked = isChecked,
+               checked = reminder.completed,
                 // below line is use to add padding
                 // to our checkbox.
-                modifier = Modifier.padding(end = 5.dp),
+                modifier = Modifier.padding(16.dp),
                 // below line is use to add on check
                 // change to our checkbox.
-                onCheckedChange = { isChecked = it },
-
+                onCheckedChange = { onCheckChange() },
             )
         }
     }

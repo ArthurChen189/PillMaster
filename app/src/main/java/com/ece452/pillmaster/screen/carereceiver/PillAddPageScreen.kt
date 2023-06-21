@@ -1,4 +1,5 @@
 package com.ece452.pillmaster.screen.common
+
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.widget.DatePicker
@@ -21,6 +22,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.ece452.pillmaster.di.FirebaseModule
+import com.ece452.pillmaster.repository.AuthRepository
+import com.ece452.pillmaster.repository.ReminderRepository
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 import java.util.Calendar
@@ -30,7 +35,8 @@ import java.util.Date
 @Composable
 fun PillAddPageScreen(
     navController: NavController,
-    entry: NavBackStackEntry
+    entry: NavBackStackEntry,
+    viewModel: PillAddPageViewModel = hiltViewModel()
 ) {
     var pillName by remember { mutableStateOf("") }
     var reminderTime by remember { mutableStateOf("") }
@@ -122,7 +128,7 @@ fun PillAddPageScreen(
                 ) {
                     // All required fields are filled
                     // submit the input data here
-                    PillAddPageViewModel().newPillSubmit(pillName,description, reminderTime, startDate, endDate, selectedOption, isChecked)
+                    viewModel.newPillSubmit(pillName,description, reminderTime, startDate, endDate, selectedOption, isChecked)
                     navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
                 } else {
                     Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
