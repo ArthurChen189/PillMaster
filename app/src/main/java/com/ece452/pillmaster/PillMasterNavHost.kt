@@ -31,7 +31,6 @@ fun PillMasterNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    val sharedPillDataVM = remember { SharedPillDataStoreOwner() }
 
     NavHost(
         navController = navController,
