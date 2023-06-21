@@ -47,32 +47,38 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ece452.pillmaster.R
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
+import com.ece452.pillmaster.model.Reminder
+import com.ece452.pillmaster.viewmodel.ReminderViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CareReceiverHomepageScreen(
     // TODO - Expose an action if this action takes the user to another screen.
     navController: NavController,
-    vm: PillAddPageViewModel = hiltViewModel()
+    vm: PillAddPageViewModel = hiltViewModel(),
+    viewModel: ReminderViewModel = hiltViewModel(),
 ) {
+    val reminders = viewModel.reminders.collectAsStateWithLifecycle(emptyList())
+
     Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .fillMaxWidth()
-                .padding(bottom = 0.dp) // Adjust the value as needed for spacing
-                .semantics { contentDescription = "Care receiver's home screen" },
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .fillMaxWidth()
+            .padding(bottom = 0.dp) // Adjust the value as needed for spacing
+            .semantics { contentDescription = "Care receiver's home screen" },
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // TODO - Notice for now testList is used.
-        // Notice that testList is directly used without being filtered, because user
-        // could add pills for future and we should display them as well.
+        // TODO - Build this screen as per the Figma file.
         LazyColumn(modifier = Modifier.weight(1f)) {
-            items(vm.testList.value){
-                    medicine -> SingleReminderItem(medicine.name, vm)
+            items(reminders.value) { reminderItem ->
+                SingleReminderItem(
+                    reminder = reminderItem,
+                ) { viewModel.onReminderCheckChange(reminderItem) }
             }
         }
         AddPillButton(navController)
@@ -162,10 +168,9 @@ fun AddPillButton(
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun SingleReminderItem (
-    reminder: String,
-    vm: PillAddPageViewModel
+    reminder: Reminder,
+    onCheckChange: () -> Unit,
 ){
-    var isChecked by remember { mutableStateOf(vm.testList.value.find { it.name == reminder }?.isTaken) }
 
     Card(  shape = RoundedCornerShape(10.dp), modifier = Modifier
         .padding(5.dp)
@@ -180,38 +185,23 @@ fun SingleReminderItem (
                 contentDescription = null
             )
 
-            Text(text = reminder, fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
+            Text(text = reminder.name, fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
 
             Spacer(modifier = Modifier.weight(1f))
 
             Checkbox(
                 // below line we are setting
                 // the state of checkbox.
-                checked = isChecked!!,
+               checked = reminder.completed,
                 // below line is use to add padding
                 // to our checkbox.
-                modifier = Modifier.padding(end = 5.dp),
+                modifier = Modifier.padding(16.dp),
                 // below line is use to add on check
                 // change to our checkbox.
-                onCheckedChange = {
-                    updatePills(reminder, vm, it)
-                    isChecked = it
-                },
-
+                onCheckedChange = { onCheckChange() },
             )
         }
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-fun updatePills(medicineName: String, vm: PillAddPageViewModel, isChecked: Boolean) {
-    val updatedList = vm.testList.value.map { pill ->
-        if (pill.name == medicineName) {
-            pill.copy(isTaken = isChecked)
-        } else {
-            pill
-        }
-    }
-    vm.testList.value = updatedList.toMutableList()
-}
 

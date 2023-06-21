@@ -24,7 +24,6 @@ import com.ece452.pillmaster.screen.common.LoginScreen
 import com.ece452.pillmaster.screen.common.PillAddPageScreen
 import com.ece452.pillmaster.screen.common.SignupScreen
 import com.ece452.pillmaster.utils.NavigationPath
-import com.ece452.pillmaster.viewmodel.SharedPillDataStoreOwner
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -58,13 +57,11 @@ fun PillMasterNavHost(
             HomeScreen(
                 navController = navController,
                 user = user,
-                vm = sharedPillDataVM.sharedViewModel
             )
         }
         composable(NavigationPath.CARE_RECEIVER_HOMEPAGE.route) {
             CareReceiverHomepageScreen(
                 navController = navController,
-                vm = sharedPillDataVM.sharedViewModel
             )
         }
         composable(NavigationPath.CARE_GIVER_HOMEPAGE.route) {
@@ -80,7 +77,6 @@ fun PillMasterNavHost(
         composable(NavigationPath.CALENDAR.route) {
             CalendarScreen(
                 navController = navController,
-                vm = sharedPillDataVM.sharedViewModel
             )
         }
     }
