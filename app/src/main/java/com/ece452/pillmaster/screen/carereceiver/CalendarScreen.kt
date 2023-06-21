@@ -36,12 +36,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.ece452.pillmaster.model.Reminder
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 import io.github.boguszpawlowski.composecalendar.StaticCalendar
 import io.github.boguszpawlowski.composecalendar.day.DayState
 import io.github.boguszpawlowski.composecalendar.day.NonSelectableDayState
 import io.github.boguszpawlowski.composecalendar.selection.SelectionState
 import java.time.LocalDate
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 
 var result: Any = 0
@@ -55,12 +57,12 @@ fun CalendarScreen(
 
 
     // Fetch Medicine Data
-    // TODO Mock data for now.
-    result = processMedicineData(vm.testList.value)
-
+    val reminders = vm.reminders.collectAsStateWithLifecycle(emptyList())
+    val pill_list = reminders.value
+    // Process
+    result = processMedicineData(pill_list)
 
     // Retrieve Medicine Data for Calendar View
-    vm.fetchMedicineData()
     // Real-time Calendar
     // TODO - mock for now
     CustomizedCalendarView(vm)
@@ -100,7 +102,7 @@ private fun DayContent(
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun processMedicineData(
-    pillList: MutableList<PillAddPageViewModel.Pill>
+    pillList: List<Reminder>
 ): Any {
     // Return immediately as there are no pills, even in the future.
     if (pillList.isEmpty()) {
@@ -108,19 +110,22 @@ fun processMedicineData(
     }
     // Here we must find all pills eligible for the current date.
     val currentDate = LocalDate.now()
-    val currentPills: MutableList<PillAddPageViewModel.Pill> = pillList.filter { pill ->
+    val currentPills: List<Reminder> = pillList.filter { pill ->
         val startDate = LocalDate.parse(pill.startDate)
-        val endDate = LocalDate.parse(pill.endDate)
-        currentDate.isEqual(startDate) || currentDate.isEqual(endDate) || (currentDate.isAfter(startDate) && currentDate.isBefore(endDate))
-    } as MutableList<PillAddPageViewModel.Pill>
+        val endDate = if (pill.endDate.isNotEmpty()) LocalDate.parse(pill.endDate) else null
+
+        currentDate.isEqual(startDate) || currentDate.isEqual(endDate) ||
+                (currentDate.isAfter(startDate) && (endDate == null || currentDate.isBefore(endDate)))
+    }
+
 
     // Return now, if there are no pills for today.
     if (currentPills.isEmpty()) {
         return 2
     }
 
-    val allMedicineTaken = currentPills.all { it.isTaken }
-    val noMedicineTaken = currentPills.none { it.isTaken }
+    val allMedicineTaken = currentPills.all { it.completed }
+    val noMedicineTaken = currentPills.none { it.completed }
 
     return when {
         noMedicineTaken -> -1
@@ -129,7 +134,7 @@ fun processMedicineData(
             val result = mutableListOf<String>()
             for (pill in currentPills) {
                 val medicine = pill.name
-                val isTaken = pill.isTaken
+                val isTaken = pill.completed
                 val sentence = if (isTaken) {
                     "$medicine has been taken."
                 } else {
