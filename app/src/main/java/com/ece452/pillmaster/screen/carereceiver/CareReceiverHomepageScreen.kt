@@ -1,5 +1,7 @@
 package com.ece452.pillmaster.screen.common
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,48 +43,22 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.ece452.pillmaster.R
 import com.ece452.pillmaster.utils.NavigationPath
+import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 
-// Sample data of medicines
-val medicines = listOf(
-    "Medicine A",
-    "Medicine B",
-    "Medicine C",
-    "Medicine D",
-    "Medicine E",
-    "Medicine F",
-    "Medicine G",
-    "Medicine H",
-    "Medicine I",
-    "Medicine J",
-    "Medicine K",
-    "Medicine L",
-    "Medicine A",
-    "Medicine B",
-    "Medicine C",
-    "Medicine D",
-    "Medicine E",
-    "Medicine F",
-    "Medicine G",
-    "Medicine H",
-    "Medicine I",
-    "Medicine J",
-    "Medicine K",
-    "Medicine L"
-)
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CareReceiverHomepageScreen(
     // TODO - Expose an action if this action takes the user to another screen.
     navController: NavController,
-
+    vm: PillAddPageViewModel = hiltViewModel()
 ) {
-
-        Column(
+    Column(
             modifier = Modifier
                 .fillMaxSize()
                 .fillMaxWidth()
@@ -90,46 +66,52 @@ fun CareReceiverHomepageScreen(
                 .semantics { contentDescription = "Care receiver's home screen" },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            // TODO - Build this screen as per the Figma file.
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                items(medicines){
-                        medicine ->
-                    //Text(text = medicine, modifier = Modifier.padding(8.dp))
-                    SingleReminderItem(medicine)
-                }
+    ) {
+        // TODO - Notice for now testList is used.
+        // Notice that testList is directly used without being filtered, because user
+        // could add pills for future and we should display them as well.
+        LazyColumn(modifier = Modifier.weight(1f)) {
+            items(vm.testList.value){
+                    medicine -> SingleReminderItem(medicine.name, vm)
             }
-            AddPillButton(navController)
-            NavBar()
         }
-
-
-
-
-
-
+        AddPillButton(navController)
+        NavBar(navController)
+    }
 }
 
 @Composable
-fun NavBar(){
+fun NavBar(
+    navController: NavController,
+){
     Row(
         Modifier
             .height(80.dp)
             .padding(0.dp, 0.dp),
         verticalAlignment = Alignment.CenterVertically
         ){
-        NavItem(Icons.Rounded.DateRange,"Calender", Color(0xFF227EBA) )
-        NavItem(Icons.Rounded.Email,"Message" , Color(0xFF227EBA))
-        NavItem(Icons.Rounded.Face,"ChatBot", Color(0xFF227EBA) )
-        NavItem(Icons.Rounded.Settings,"Setting", Color(0xFF227EBA) )
+        NavItem(Icons.Rounded.DateRange,"Calender", Color(0xFF227EBA)) {
+            navController.navigate(NavigationPath.CALENDAR.route)
+        }
+        NavItem(Icons.Rounded.Email,"Message" , Color(0xFF227EBA)) {
+
+        }
+        NavItem(Icons.Rounded.Face,"ChatBot", Color(0xFF227EBA) ) {
+
+        }
+        NavItem(Icons.Rounded.Settings,"Setting", Color(0xFF227EBA) ) {
+
+        }
     }
 }
 
 @Composable
-fun RowScope.NavItem(icon: ImageVector,description: String, tint: Color){
-    Button(onClick = {
-        // nav to relating pages
-        },
+fun RowScope.NavItem(
+    icon: ImageVector,description: String,
+    tint: Color,
+    navigateTo: () -> Unit = {},
+){
+    Button(onClick = navigateTo,
         Modifier
             .weight(1f)
             .fillMaxHeight(),
@@ -151,13 +133,17 @@ fun AddPillButton(
     navController: NavController
 ){
     Row(
-        modifier = Modifier.fillMaxWidth().padding(top = 0.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 0.dp),
     ) {
         Button(
             onClick = {
                 navController.navigate(NavigationPath.PILL_ADD_PAGE.route)
             },
-            Modifier.padding(horizontal = 5.dp).fillMaxWidth(),
+            Modifier
+                .padding(horizontal = 5.dp)
+                .fillMaxWidth(),
             shape = RoundedCornerShape(10.dp)
         ) {
             Icon(
@@ -172,12 +158,14 @@ fun AddPillButton(
 
 
 // please use under code to implement each pill reminder
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun SingleReminderItem (
-    reminder: String
+    reminder: String,
+    vm: PillAddPageViewModel
 ){
-    var isChecked by remember { mutableStateOf(false) }
+    var isChecked by remember { mutableStateOf(vm.testList.value.find { it.name == reminder }?.isTaken) }
 
     Card(  shape = RoundedCornerShape(10.dp), modifier = Modifier
         .padding(5.dp)
@@ -199,17 +187,31 @@ fun SingleReminderItem (
             Checkbox(
                 // below line we are setting
                 // the state of checkbox.
-                checked = isChecked,
+                checked = isChecked!!,
                 // below line is use to add padding
                 // to our checkbox.
                 modifier = Modifier.padding(end = 5.dp),
                 // below line is use to add on check
                 // change to our checkbox.
-                onCheckedChange = { isChecked = it },
+                onCheckedChange = {
+                    updatePills(reminder, vm, it)
+                    isChecked = it
+                },
 
             )
         }
     }
+}
 
+@RequiresApi(Build.VERSION_CODES.O)
+fun updatePills(medicineName: String, vm: PillAddPageViewModel, isChecked: Boolean) {
+    val updatedList = vm.testList.value.map { pill ->
+        if (pill.name == medicineName) {
+            pill.copy(isTaken = isChecked)
+        } else {
+            pill
+        }
+    }
+    vm.testList.value = updatedList.toMutableList()
 }
 

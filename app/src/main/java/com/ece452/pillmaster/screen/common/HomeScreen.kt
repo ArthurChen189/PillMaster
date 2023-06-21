@@ -18,12 +18,14 @@ import com.ece452.pillmaster.model.User
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.utils.UserRole
 import com.ece452.pillmaster.viewmodel.LoginViewModel
+import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
     user: User?,
     loginViewModel: LoginViewModel = hiltViewModel(),
+    vm: PillAddPageViewModel = hiltViewModel(),
 ) {
     val errorText by remember { mutableStateOf("") }
 
