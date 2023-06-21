@@ -24,7 +24,6 @@ import com.ece452.pillmaster.screen.common.LoginScreen
 import com.ece452.pillmaster.screen.common.PillAddPageScreen
 import com.ece452.pillmaster.screen.common.SignupScreen
 import com.ece452.pillmaster.utils.NavigationPath
-//import com.ece452.pillmaster.viewmodel.SharedPillDataStoreOwner
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -32,6 +31,8 @@ fun PillMasterNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+    val sharedPillDataVM = remember { SharedPillDataStoreOwner() }
+
     NavHost(
         navController = navController,
         startDestination = NavigationPath.DASHBOARD.route,

@@ -24,6 +24,45 @@ class PillAddPageViewModel @Inject constructor(private val repository: ReminderR
     val reminders = repository.reminders
 
 
+    data class Pill(
+        val name: String,
+        val isTaken: Boolean,
+        val startDate: String,
+        val endDate: String,
+        // Add more fields as needed
+    )
+
+    // TODO Static list for testing purpose.
+    // This should be replaced by medicineList, which is dynamically fetched from the
+    // backend. Each item in the list should at least contain
+    // pill_name, start, end date, isTakenToday, etc.
+    val testList = mutableStateOf(mutableListOf<Pill>())
+    init {
+        testList.value = mutableListOf(
+            Pill("Aspirin", false, "2023-06-17", "2023-06-30"),
+            Pill("Vitamin D", false, "2023-06-20", "2023-06-25"),
+            Pill("Antibiotics", false, "2023-06-11", "2023-06-20"),
+        )
+        sortPillsByDate(testList.value)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun sortPillsByDate(testList: MutableList<Pill>) {
+        val currentDate = LocalDate.now()
+
+        // Partition the pills into currently-taking and future pills
+        val (currentPills, futurePills) = testList.partition { pill ->
+            val startDate = LocalDate.parse(pill.startDate)
+            val endDate = LocalDate.parse(pill.endDate)
+            currentDate in startDate..endDate
+        }
+
+        // Clear the original list and add the current and future pills in the modified order
+        testList.clear()
+        testList.addAll(currentPills)
+        testList.addAll(futurePills)
+    }
+
     // submit a new pill
     fun newPillSubmit(
         pillName: (String),
@@ -103,5 +142,4 @@ class PillAddPageViewModel @Inject constructor(private val repository: ReminderR
     //     private const val UTC = "UTC"
     //     private const val DATE_FORMAT = "EEE, d MMM yyyy"
     // }
-
 }
