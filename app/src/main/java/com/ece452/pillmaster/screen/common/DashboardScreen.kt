@@ -1,8 +1,11 @@
 package com.ece452.pillmaster.screen.common
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -14,8 +17,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.ece452.pillmaster.R
 import com.ece452.pillmaster.model.User
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.utils.UserRole
@@ -40,6 +45,13 @@ fun DashboardScreen(
                 modifier = Modifier.padding(bottom = 16.dp)
             )
         }
+        Image(
+            painter = painterResource(id = R.drawable.pill),
+            contentDescription = "Pill Image",
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .padding(horizontal = 100.dp))
         Button(
             onClick = { navController.navigate(NavigationPath.LOGIN.route) }
         ) {

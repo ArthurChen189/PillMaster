@@ -112,10 +112,10 @@ fun processMedicineData(
     val currentDate = LocalDate.now()
     val currentPills: List<Reminder> = pillList.filter { pill ->
         val startDate = LocalDate.parse(pill.startDate)
-        val endDate = if (pill.endDate.isNotEmpty()) LocalDate.parse(pill.endDate) else null
+        val endDate = if (pill.endDate.isNotEmpty()) LocalDate.parse(pill.endDate) else LocalDate.MAX
 
         currentDate.isEqual(startDate) || currentDate.isEqual(endDate) ||
-                (currentDate.isAfter(startDate) && (endDate == null || currentDate.isBefore(endDate)))
+                (currentDate.isAfter(startDate) && (endDate == LocalDate.MAX || currentDate.isBefore(endDate)))
     }
 
 

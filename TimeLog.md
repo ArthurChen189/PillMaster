@@ -63,3 +63,4 @@
 | 2023/06/20 |             |            |              |           | 8.0         |          | Update Calendar; set up shared view model for easy data-sharing; add splash; add app icon             |
 | 2023/06/21 |             |            | 8.0          |           |             |          | Implement and Test Model, Repository, ViewModel, Screen on Reminders                                  |
 | 2023/06/21 |             |            |              |           | 2.0         |          | PR Review and refactor viewModel functions and data model to get backend data.                        |
+| 2023/06/24 |             |            |              |           | 0.5         |          | Add image. Center contents in home screen. Fix Calendar null date bug.                                |                                                                |
