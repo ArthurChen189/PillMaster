@@ -124,27 +124,45 @@ fun PillAddPageScreen(
             )
             Text(text = "Link this reminder to your selected CareGiver above")
         }
-
-        Button(
-            onClick = {
-                if (pillName.isNotEmpty() &&
-                    description.isNotEmpty() &&
-                    startDate.isNotEmpty()
-                ) {
-                    // All required fields are filled
-                    // submit the input data here
-                    viewModel.newPillSubmit(pillName,description, reminderTime, startDate, endDate, selectedOption, isChecked)
-                    navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
-                } else {
-                    Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
-                }
-            },
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(16.dp)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Submit")
+            Button(
+                onClick = {
+                    navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
+                },
+                modifier = Modifier.size(width = 100.dp, height = 50.dp)
+
+                    //.padding(start = 16.dp)
+            ) {
+                Text("Cancel")
+            }
+            Spacer(modifier = Modifier.width(20.dp))
+            Button(
+                onClick = {
+                    if (pillName.isNotEmpty() &&
+                        description.isNotEmpty() &&
+                        startDate.isNotEmpty()
+                    ) {
+                        // All required fields are filled
+                        // submit the input data here
+                        viewModel.newPillSubmit(pillName,description, reminderTime, startDate, endDate, selectedOption, isChecked)
+                        navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
+                    } else {
+                        Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
+                    }
+                },
+                modifier = Modifier.size(width = 100.dp, height = 50.dp)
+
+                    //.padding(end = 16.dp)
+            ) {
+                Text("Submit")
+            }
+
         }
+
 
     }
 }
