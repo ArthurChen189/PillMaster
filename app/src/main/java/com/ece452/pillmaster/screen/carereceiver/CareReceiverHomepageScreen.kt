@@ -181,7 +181,7 @@ fun SingleReminderItem (
         ){
 
             Image( modifier =  Modifier.size(50.dp),
-                painter = rememberImagePainter(R.drawable.ic_launcher_background),
+                painter = rememberImagePainter(R.drawable.reminder_capture),
                 contentDescription = null
             )
 
