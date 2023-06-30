@@ -39,8 +39,11 @@ import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ece452.pillmaster.R
+import com.ece452.pillmaster.utils.ScanUtils
+import com.ece452.pillmaster.viewmodel.LoginViewModel
 import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.common.internal.ImageUtils
@@ -51,7 +54,8 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 
 @Composable
 fun ScanPhotoScreen(
-    navController: NavController
+    navController: NavController,
+    scanUtils: ScanUtils = hiltViewModel()
 ) {
     lateinit var image: MutableState<Bitmap>
     lateinit var text: MutableState<String>
@@ -62,7 +66,7 @@ fun ScanPhotoScreen(
     ) {
         if (it) {
             Toast.makeText(context, "Permission Granted", Toast.LENGTH_SHORT).show()
-            takePic(context)
+            scanUtils.takePic(context)
         } else {
             Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show()
         }
@@ -127,7 +131,7 @@ fun ScanPhotoScreen(
             )
 
             if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
-                takePic(context)
+                scanUtils.takePic(context)
             }else {
                 permissionCameraLauncher.launch(android.Manifest.permission.CAMERA)
             }
@@ -163,41 +167,13 @@ fun ScanPhotoScreen(
             androidx.compose.material3.Text(text = "Upload from gallery")
         }
         Spacer(modifier = Modifier.height(20.dp))
-        Button(onClick = { // button to extract the text from the image
-            detectText(context,capturedImageUri,text,navController)
-        },
-            modifier = Modifier
-                .fillMaxWidth()
-                .size(55.dp),
-            shape = CutCornerShape(0.dp),
+        Button(
+            onClick = { // button to extract the text from the image
+                scanUtils.autoFill(context,capturedImageUri,text,navController)
+                      },
         ) {
             androidx.compose.material3.Text(text = "Auto fill description")
         }
-    }
-}
-
-private fun takePic(context: Context) {
-    //  Navigating to the camera app on the phone to take a photo
-    val takePictureIntent = Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA)
-    context.startActivity(takePictureIntent)
-}
-
-
-private fun detectText(context: Context,capturedImageUri: String,text: MutableState<String>,navController: NavController) {
-    // here we are getting an input image from the uri of the chosen image to process it with the text recognizer instance
-    val inputImage = InputImage.fromFilePath(context, capturedImageUri.toUri())
-    val textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-    val result: Task<Text> = textRecognizer.process(inputImage).addOnSuccessListener {
-        text.value =
-            it.text // after processing, we will set the extracted text from the image to the text variable
-        // Send the extracted text back to the previous screen using savedStateHandle
-        navController.previousBackStackEntry
-            ?.savedStateHandle
-            ?.set("description", text.value)
-        // Pop back to the previous screen (PillAddPageScreen)
-        navController.popBackStack()
-    }.addOnFailureListener {
-        Toast.makeText(context, "Extraction of text failed", Toast.LENGTH_SHORT).show()
     }
 }
 

@@ -43,15 +43,16 @@ fun PillAddPageScreen(
     entry: NavBackStackEntry,
     viewModel: PillAddPageViewModel = hiltViewModel()
 ) {
-    var pillName by remember { mutableStateOf("") }
-    var reminderTime by remember { mutableStateOf("") }
-    var startDate by remember { mutableStateOf("") }
+    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+
+    var pillName by remember { mutableStateOf(savedStateHandle?.get<String>("pillName") ?: "")  }
+    var reminderTime by remember {mutableStateOf(savedStateHandle?.get<String>("reminderTime") ?: "")}
+    var startDate by remember { mutableStateOf(savedStateHandle?.get<String>("startDate") ?: "")}
     var endDate by remember { mutableStateOf("") }
     var selectedOption by remember { mutableStateOf("None") }
     var isChecked by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
-   var description by remember { mutableStateOf(savedStateHandle?.get<String>("description") ?: "") }
+    var description by remember { mutableStateOf(savedStateHandle?.get<String>("description") ?: "") }
 
     Column(
         modifier = Modifier
