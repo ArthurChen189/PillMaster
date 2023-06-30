@@ -64,6 +64,12 @@
 | 2023/06/21 |             |            | 8.0          |           |             |          | Implement and Test Model, Repository, ViewModel, Screen on Reminders                                  |
 | 2023/06/21 |             |            |              |           | 2.0         |          | PR Review and refactor viewModel functions and data model to get backend data.                        |
 | 2023/06/24 |             |            |              |           | 0.5         |          | Add image. Center contents in home screen. Fix Calendar null date bug.                                |                                                                |
+| 2023/06/24 |             |            |              |           |             | 0.5      | Testing code for demo, found a calendar bug                                                           |
+| 2023/06/24 |             |            |              |           |             | 0.5      | PR Review                                                                                             |
 | 2023/06/27 | 2.5         |            |              |           |             |          | Writeup Demo Report and Progress Report, refine demo todos                                            |
 | 2023/06/27 |             | 2.0        |              |           |             |          | Added cancel button for add-pill-page, fixed dash-screen title missing                                |
+| 2023/06/28 |             |            |              |           |             | 0.5      | Create presentation content and process for demo                                                      |
+| 2023/06/28 |             |            |              |           |             | 2.0      | Investigate notification feature                                                                      |
+| 2023/06/29 |             |            |              |           |             | 3        | Investigate the bug between SDK version and creating notification channel                             |
+| 2023/06/30 |             |            |              |           |             | 4        | Implement auto filling for all required fields by scanning a photo when adding a new reminder         |
 
