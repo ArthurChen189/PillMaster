@@ -70,7 +70,7 @@
 | 2023/06/27 |             | 2.0        |              |           |             |          | Added cancel button for add-pill-page, fixed dash-screen title missing                                |
 | 2023/06/28 |             |            |              |           |             | 0.5      | Create presentation content and process for demo                                                      |
 | 2023/06/28 |             |            |              |           |             | 2.0      | Investigate notification feature                                                                      |
+| 2023/06/28 | 1.5         | 1.5        | 1.5          | 1.5       | 1.5         | 1.5      | team meeting on next step                                                                             |
 | 2023/06/29 |             |            |              |           |             | 3        | Investigate the bug between SDK version and creating notification channel                             |
 | 2023/06/30 |             |            |              |           |             | 4        | Implement auto filling for all required fields by scanning a photo when adding a new reminder         |
-| 2023/06/30 | 1.5         | 1.5        | 1.5          | 1.5       | 1.5         | 1.5      | team meeting on next step                                                                             |
 | 2023/06/30 | 1.0         |            | 2.5          |           |             | 1.0      | Draw arch diagram, write demo report                                                                  |
