@@ -1,5 +1,7 @@
 package com.ece452.pillmaster.di
 
+import android.content.Context
+import com.ece452.pillmaster.PillMasterApplication
 import com.ece452.pillmaster.usecase.GetReminderUseCase
 import com.ece452.pillmaster.usecase.IGetReminderUseCase
 import com.ece452.pillmaster.repository.IAuthRepository
@@ -11,6 +13,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -35,7 +38,11 @@ class AppModule {
         //will convert it to ReminderResponse object format
 
     }
-
+    @Singleton
+    @Provides
+    fun provideApplication(@ApplicationContext app: Context): PillMasterApplication {
+        return app as PillMasterApplication
+    }
     @Provides
     @Singleton
     //know how to call api

@@ -1,25 +1,37 @@
 package com.ece452.pillmaster.viewmodel
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import java.time.LocalDate
-import javax.inject.Inject
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.ece452.pillmaster.model.Reminder
-import com.ece452.pillmaster.di.FirebaseModule
-import com.ece452.pillmaster.repository.AuthRepository
 import com.ece452.pillmaster.repository.ReminderRepository
+import com.ece452.pillmaster.broadcast.AlarmReceiver
+import com.ece452.pillmaster.PillMasterApplication
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
+import javax.inject.Inject
+
 
 // TODO consider renaming this so as to serve for both uploading and retrieving
 // TODO pill info to and from the database.
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.S)
 @HiltViewModel
-class PillAddPageViewModel @Inject constructor(private val repository: ReminderRepository) : ViewModel() {
+class PillAddPageViewModel @Inject constructor(
+    private val application: PillMasterApplication,
+    private val repository: ReminderRepository) : ViewModel() {
 
     val reminders = repository.reminders
 
@@ -45,8 +57,14 @@ class PillAddPageViewModel @Inject constructor(private val repository: ReminderR
         )
         sortPillsByDate(testList.value)
     }
+    var month = 0
+    var day = 0
+    var year = 0
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    var hour = 0
+    var minute = 0
+
+    @RequiresApi(Build.VERSION_CODES.S)
     fun sortPillsByDate(testList: MutableList<Pill>) {
         val currentDate = LocalDate.now()
 
@@ -64,6 +82,7 @@ class PillAddPageViewModel @Inject constructor(private val repository: ReminderR
     }
 
     // submit a new pill
+    @RequiresApi(Build.VERSION_CODES.S)
     fun newPillSubmit(
         pillName: (String),
         direction: (String),
@@ -81,7 +100,52 @@ class PillAddPageViewModel @Inject constructor(private val repository: ReminderR
         reminder.giverId = selectedOption
         reminder.send2Giver = isChecked
         viewModelScope.launch {
-            repository.save(reminder)
+
+            val id = repository.save(reminder)
+            Log.d("id",id)
+            val cal : Calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault())
+            cal.set(Calendar.MONTH, month +1)
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.DAY_OF_MONTH, day)
+
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.HOUR_OF_DAY, hour)
+            cal.set(Calendar.MINUTE, minute)
+            id?.let {
+                var res = it.replace("[^0-9]".toRegex(), "")
+                setAlarm(cal, 0, res.toLong() * Math.floor(Math.random() * 999).toLong(), pillName + ": " + direction,hour,minute)
+            }
+        }
+    }
+
+    fun setAlarm(calender: Calendar, i: Int, id: Long, title: String, hour:Int, minute:Int) {
+
+        val alarmManager: AlarmManager = application.applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//        if (alarmManager?.canScheduleExactAlarms() == false) {
+//            Intent().also { intent ->
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.action = Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
+//                context.startActivity(intent)
+//            }
+//        }
+        val intent = Intent(application.applicationContext, AlarmReceiver::class.java)
+//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//        intent.setAction("android.intent.action.NOTIFY");
+//        intent.setAction("com.ece452.pillmaster.Broadcast");
+//        context.registerReceiver(AlarmReceiver(), IntentFilter())
+        intent.putExtra("INTENT_NOTIFY", true)
+        intent.putExtra("isShow", i)
+        intent.putExtra("id", id)
+        intent.putExtra("title", title)
+        intent.putExtra("date","Time-> $hour:$minute")
+        val pandingIntent: PendingIntent =
+            PendingIntent.getBroadcast(application.applicationContext,
+                id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        if (i == 0) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,  calender.timeInMillis , pandingIntent)
+        } else {
+            alarmManager.cancel(pandingIntent)
         }
     }
 
@@ -90,6 +154,9 @@ class PillAddPageViewModel @Inject constructor(private val repository: ReminderR
     suspend fun getCareGivers() {
 
     }
+
+
+
 
     // Below are for PillEditPageViewModel (Implement if needed)
     // val reminder = mutableStateOf(Reminder())
