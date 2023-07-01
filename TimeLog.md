@@ -63,7 +63,7 @@
 | 2023/06/20 |             |            |              |           | 8.0         |          | Update Calendar; set up shared view model for easy data-sharing; add splash; add app icon             |
 | 2023/06/21 |             |            | 8.0          |           |             |          | Implement and Test Model, Repository, ViewModel, Screen on Reminders                                  |
 | 2023/06/21 |             |            |              |           | 2.0         |          | PR Review and refactor viewModel functions and data model to get backend data.                        |
-| 2023/06/24 |             |            |              |           | 0.5         |          | Add image. Center contents in home screen. Fix Calendar null date bug.                                |                                                                |
+| 2023/06/24 |             |            |              |           | 0.5         |          | Add image. Center contents in home screen. Fix Calendar null date bug.                                |                                                             
 | 2023/06/24 |             |            |              |           |             | 0.5      | Testing code for demo, found a calendar bug                                                           |
 | 2023/06/24 |             |            |              |           |             | 0.5      | PR Review                                                                                             |
 | 2023/06/27 | 2.5         |            |              |           |             |          | Writeup Demo Report and Progress Report, refine demo todos                                            |
@@ -72,4 +72,5 @@
 | 2023/06/28 |             |            |              |           |             | 2.0      | Investigate notification feature                                                                      |
 | 2023/06/29 |             |            |              |           |             | 3        | Investigate the bug between SDK version and creating notification channel                             |
 | 2023/06/30 |             |            |              |           |             | 4        | Implement auto filling for all required fields by scanning a photo when adding a new reminder         |
-
+| 2023/06/30 | 1.5         | 1.5        | 1.5          | 1.5       | 1.5         | 1.5      | team meeting on next step                                                                             |
+| 2023/06/30 | 1.0         |            | 2.5          |           |             | 1.0      | Draw arch diagram, write demo report                                                                  |
