@@ -23,7 +23,6 @@ import java.util.*
 class AlarmReceiver : BroadcastReceiver() {
 
 
-    private val GROUP_MESSAGE: String = "TODOLIST"
 
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -31,9 +30,8 @@ class AlarmReceiver : BroadcastReceiver() {
             context?.getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
         var isShow = intent?.getIntExtra("isShow", 0) ?: 0
         val dbId = intent?.getLongExtra("id", -1) ?: -1
-        val title = intent?.getStringExtra("title") ?: ""
-        val time = intent?.getStringExtra("date")?:""
-        Log.d("Alarm Title", "title : $title")
+        val title = intent?.getStringExtra("title") ?: "Pill Master"
+        val time = intent?.getStringExtra("msg")?:"Take Your Today Pill"
 
         val icon = R.drawable.ic_launcher_background
         val fullScreenIntent = Intent(context.applicationContext, MainActivity::class.java)
@@ -72,8 +70,7 @@ class AlarmReceiver : BroadcastReceiver() {
             .setContentTitle(title)
             .setContentText(time)
             .setPriority(NotificationCompat.VISIBILITY_PUBLIC)
-            .setColor(Color.RED)
-            .setGroup(GROUP_MESSAGE)
+            .setColor(Color.GREEN)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(NotificationCompat.CATEGORY_ALARM)

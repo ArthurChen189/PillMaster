@@ -17,6 +17,7 @@ import com.ece452.pillmaster.repository.ReminderRepository
 import com.ece452.pillmaster.broadcast.AlarmReceiver
 import com.ece452.pillmaster.PillMasterApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.Calendar
@@ -99,12 +100,12 @@ class PillAddPageViewModel @Inject constructor(
         reminder.endDate = endDate
         reminder.giverId = selectedOption
         reminder.send2Giver = isChecked
-        viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.IO){
 
             val id = repository.save(reminder)
             Log.d("id",id)
             val cal : Calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault())
-            cal.set(Calendar.MONTH, month +1)
+            cal.set(Calendar.MONTH, month)
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.DAY_OF_MONTH, day)
 
@@ -113,12 +114,12 @@ class PillAddPageViewModel @Inject constructor(
             cal.set(Calendar.MINUTE, minute)
             id?.let {
                 var res = it.replace("[^0-9]".toRegex(), "")
-                setAlarm(cal, 0, res.toLong() * Math.floor(Math.random() * 999).toLong(), pillName + ": " + direction,hour,minute)
+                setAlarm(cal, 0, res.toLong() * Math.floor(Math.random() * 999).toLong(), pillName,hour,minute)
             }
         }
     }
 
-    fun setAlarm(calender: Calendar, i: Int, id: Long, title: String, hour:Int, minute:Int) {
+    fun setAlarm(calender: Calendar, show: Int, id: Long, pillName: String, hour:Int, minute:Int) {
 
         val alarmManager: AlarmManager = application.applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 //        if (alarmManager?.canScheduleExactAlarms() == false) {
@@ -134,16 +135,16 @@ class PillAddPageViewModel @Inject constructor(
 //        intent.setAction("com.ece452.pillmaster.Broadcast");
 //        context.registerReceiver(AlarmReceiver(), IntentFilter())
         intent.putExtra("INTENT_NOTIFY", true)
-        intent.putExtra("isShow", i)
+        intent.putExtra("isShow", show)
         intent.putExtra("id", id)
-        intent.putExtra("title", title)
-        intent.putExtra("date","Time-> $hour:$minute")
+        intent.putExtra("title", "Pill Master")
+        intent.putExtra("msg","Remember to take $pillName at $hour:$minute :)")
         val pandingIntent: PendingIntent =
             PendingIntent.getBroadcast(application.applicationContext,
                 id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
-        if (i == 0) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,  calender.timeInMillis , pandingIntent)
+        if (show == 0) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,  System.currentTimeMillis() , pandingIntent)
         } else {
             alarmManager.cancel(pandingIntent)
         }
