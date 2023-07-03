@@ -1,5 +1,7 @@
 package com.ece452.pillmaster.screen.common
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,95 +43,81 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ece452.pillmaster.R
 import com.ece452.pillmaster.utils.NavigationPath
+import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
+import com.ece452.pillmaster.model.Reminder
+import com.ece452.pillmaster.viewmodel.ReminderViewModel
 
-// Sample data of medicines
-val medicines = listOf(
-    "Medicine A",
-    "Medicine B",
-    "Medicine C",
-    "Medicine D",
-    "Medicine E",
-    "Medicine F",
-    "Medicine G",
-    "Medicine H",
-    "Medicine I",
-    "Medicine J",
-    "Medicine K",
-    "Medicine L",
-    "Medicine A",
-    "Medicine B",
-    "Medicine C",
-    "Medicine D",
-    "Medicine E",
-    "Medicine F",
-    "Medicine G",
-    "Medicine H",
-    "Medicine I",
-    "Medicine J",
-    "Medicine K",
-    "Medicine L"
-)
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CareReceiverHomepageScreen(
     // TODO - Expose an action if this action takes the user to another screen.
     navController: NavController,
-
+    vm: PillAddPageViewModel = hiltViewModel(),
+    viewModel: ReminderViewModel = hiltViewModel(),
 ) {
+    val reminders = viewModel.reminders.collectAsStateWithLifecycle(emptyList())
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .fillMaxWidth()
-                .padding(bottom = 0.dp) // Adjust the value as needed for spacing
-                .semantics { contentDescription = "Care receiver's home screen" },
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            // TODO - Build this screen as per the Figma file.
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                items(medicines){
-                        medicine ->
-                    //Text(text = medicine, modifier = Modifier.padding(8.dp))
-                    SingleReminderItem(medicine)
-                }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .fillMaxWidth()
+            .padding(bottom = 0.dp) // Adjust the value as needed for spacing
+            .semantics { contentDescription = "Care receiver's home screen" },
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        // TODO - Build this screen as per the Figma file.
+        LazyColumn(modifier = Modifier.weight(1f)) {
+            items(reminders.value) { reminderItem ->
+                SingleReminderItem(
+                    reminder = reminderItem,
+                ) { viewModel.onReminderCheckChange(reminderItem) }
             }
-            AddPillButton(navController)
-            NavBar()
         }
-
-
-
-
-
-
+        AddPillButton(navController)
+        NavBar(navController)
+    }
 }
 
 @Composable
-fun NavBar(){
+fun NavBar(
+    navController: NavController,
+){
     Row(
         Modifier
             .height(80.dp)
             .padding(0.dp, 0.dp),
         verticalAlignment = Alignment.CenterVertically
         ){
-        NavItem(Icons.Rounded.DateRange,"Calender", Color(0xFF227EBA) )
-        NavItem(Icons.Rounded.Email,"Message" , Color(0xFF227EBA))
-        NavItem(Icons.Rounded.Face,"ChatBot", Color(0xFF227EBA) )
-        NavItem(Icons.Rounded.Settings,"Setting", Color(0xFF227EBA) )
+        NavItem(Icons.Rounded.DateRange,"Calender", Color(0xFF227EBA)) {
+            navController.navigate(NavigationPath.CALENDAR.route)
+        }
+        NavItem(Icons.Rounded.Email,"Message" , Color(0xFF227EBA)) {
+
+        }
+        NavItem(Icons.Rounded.Face,"ChatBot", Color(0xFF227EBA) ) {
+
+        }
+        NavItem(Icons.Rounded.Settings,"Setting", Color(0xFF227EBA) ) {
+
+        }
     }
 }
 
 @Composable
-fun RowScope.NavItem(icon: ImageVector,description: String, tint: Color){
-    Button(onClick = {
-        // nav to relating pages
-        },
+fun RowScope.NavItem(
+    icon: ImageVector,description: String,
+    tint: Color,
+    navigateTo: () -> Unit = {},
+){
+    Button(onClick = navigateTo,
         Modifier
             .weight(1f)
             .fillMaxHeight(),
@@ -151,13 +139,17 @@ fun AddPillButton(
     navController: NavController
 ){
     Row(
-        modifier = Modifier.fillMaxWidth().padding(top = 0.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 0.dp),
     ) {
         Button(
             onClick = {
                 navController.navigate(NavigationPath.PILL_ADD_PAGE.route)
             },
-            Modifier.padding(horizontal = 5.dp).fillMaxWidth(),
+            Modifier
+                .padding(horizontal = 5.dp)
+                .fillMaxWidth(),
             shape = RoundedCornerShape(10.dp)
         ) {
             Icon(
@@ -172,12 +164,13 @@ fun AddPillButton(
 
 
 // please use under code to implement each pill reminder
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun SingleReminderItem (
-    reminder: String
+    reminder: Reminder,
+    onCheckChange: () -> Unit,
 ){
-    var isChecked by remember { mutableStateOf(false) }
 
     Card(  shape = RoundedCornerShape(10.dp), modifier = Modifier
         .padding(5.dp)
@@ -188,28 +181,27 @@ fun SingleReminderItem (
         ){
 
             Image( modifier =  Modifier.size(50.dp),
-                painter = rememberImagePainter(R.drawable.ic_launcher_background),
+                painter = rememberImagePainter(R.drawable.reminder_capture),
                 contentDescription = null
             )
 
-            Text(text = reminder, fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
+            Text(text = reminder.name, fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
 
             Spacer(modifier = Modifier.weight(1f))
 
             Checkbox(
                 // below line we are setting
                 // the state of checkbox.
-                checked = isChecked,
+               checked = reminder.completed,
                 // below line is use to add padding
                 // to our checkbox.
-                modifier = Modifier.padding(end = 5.dp),
+                modifier = Modifier.padding(16.dp),
                 // below line is use to add on check
                 // change to our checkbox.
-                onCheckedChange = { isChecked = it },
-
+                onCheckedChange = { onCheckChange() },
             )
         }
     }
-
 }
+
 

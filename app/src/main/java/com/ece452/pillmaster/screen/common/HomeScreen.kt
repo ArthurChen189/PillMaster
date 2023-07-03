@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -18,12 +19,14 @@ import com.ece452.pillmaster.model.User
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.utils.UserRole
 import com.ece452.pillmaster.viewmodel.LoginViewModel
+import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
     user: User?,
     loginViewModel: LoginViewModel = hiltViewModel(),
+    vm: PillAddPageViewModel = hiltViewModel(),
 ) {
     val errorText by remember { mutableStateOf("") }
 
@@ -31,7 +34,8 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Home",

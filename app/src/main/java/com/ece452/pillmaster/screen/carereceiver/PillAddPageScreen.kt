@@ -1,8 +1,11 @@
 package com.ece452.pillmaster.screen.common
+
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.os.Build
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.Button
@@ -21,26 +24,35 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.ece452.pillmaster.di.FirebaseModule
+import com.ece452.pillmaster.repository.AuthRepository
+import com.ece452.pillmaster.repository.ReminderRepository
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PillAddPageScreen(
     navController: NavController,
-    entry: NavBackStackEntry
+    entry: NavBackStackEntry,
+    viewModel: PillAddPageViewModel = hiltViewModel()
 ) {
-    var pillName by remember { mutableStateOf("") }
-    var reminderTime by remember { mutableStateOf("") }
-    var startDate by remember { mutableStateOf("") }
+    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+
+    var pillName by remember { mutableStateOf(savedStateHandle?.get<String>("pillName") ?: "")  }
+    var reminderTime by remember {mutableStateOf(savedStateHandle?.get<String>("reminderTime") ?: "")}
+    var startDate by remember { mutableStateOf(savedStateHandle?.get<String>("startDate") ?: "")}
     var endDate by remember { mutableStateOf("") }
     var selectedOption by remember { mutableStateOf("None") }
     var isChecked by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
-   var description by remember { mutableStateOf(savedStateHandle?.get<String>("description") ?: "") }
+    var description by remember { mutableStateOf(savedStateHandle?.get<String>("description") ?: "") }
 
     Column(
         modifier = Modifier
@@ -113,27 +125,45 @@ fun PillAddPageScreen(
             )
             Text(text = "Link this reminder to your selected CareGiver above")
         }
-
-        Button(
-            onClick = {
-                if (pillName.isNotEmpty() &&
-                    description.isNotEmpty() &&
-                    startDate.isNotEmpty()
-                ) {
-                    // All required fields are filled
-                    // submit the input data here
-                    PillAddPageViewModel().newPillSubmit(pillName,description, reminderTime, startDate, endDate, selectedOption, isChecked)
-                    navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
-                } else {
-                    Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
-                }
-            },
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(16.dp)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Submit")
+            Button(
+                onClick = {
+                    navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
+                },
+                modifier = Modifier.size(width = 100.dp, height = 50.dp)
+
+                    //.padding(start = 16.dp)
+            ) {
+                Text("Cancel")
+            }
+            Spacer(modifier = Modifier.width(20.dp))
+            Button(
+                onClick = {
+                    if (pillName.isNotEmpty() &&
+                        description.isNotEmpty() &&
+                        startDate.isNotEmpty()
+                    ) {
+                        // All required fields are filled
+                        // submit the input data here
+                        viewModel.newPillSubmit(pillName,description, reminderTime, startDate, endDate, selectedOption, isChecked)
+                        navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
+                    } else {
+                        Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
+                    }
+                },
+                modifier = Modifier.size(width = 100.dp, height = 50.dp)
+
+                    //.padding(end = 16.dp)
+            ) {
+                Text("Submit")
+            }
+
         }
+
 
     }
 }
@@ -190,6 +220,7 @@ fun CareGiverDropdownMenu(
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DatePicker(
     date: String,
@@ -208,7 +239,9 @@ fun DatePicker(
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            onDateChange( "$mDayOfMonth/${mMonth+1}/$mYear")
+            val selectedDate = LocalDate.of(mYear, mMonth + 1, mDayOfMonth)
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            onDateChange(selectedDate.format(formatter).toString())
         }, mYear, mMonth, mDay
     )
 

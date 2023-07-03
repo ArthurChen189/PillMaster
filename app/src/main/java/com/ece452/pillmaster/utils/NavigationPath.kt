@@ -9,4 +9,5 @@ enum class NavigationPath(val route: String) {
     CARE_GIVER_HOMEPAGE("care_giver_homepage"),
     PILL_ADD_PAGE("pill_add_page"),
     CAMERA_HOMEPAGE("camera_homepage"),
+    CALENDAR("calendar"),
 }
