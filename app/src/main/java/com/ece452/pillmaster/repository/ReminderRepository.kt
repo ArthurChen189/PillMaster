@@ -1,6 +1,7 @@
 package com.ece452.pillmaster.repository
 
 import com.ece452.pillmaster.model.Reminder
+import com.ece452.pillmaster.model.Pill
 import com.ece452.pillmaster.di.FirebaseModule
 import com.ece452.pillmaster.repository.AuthRepository
 import com.google.firebase.firestore.DocumentReference
@@ -40,6 +41,13 @@ class ReminderRepository
         firestore.collection(RECEIVER_COLLECTION).document(userid).collection(REMINDER_COLLECTION).document(reminderId).get().await().toObject()
 
     override suspend fun save(reminder: Reminder): String {
+        val pillRef = firestore.collection(RECEIVER_COLLECTION).document(userid).collection(PILL_COLLECTION).whereEqualTo("name", reminder.pillName).limit(1).get().await().reference
+        if (pillRef == null || !pillRef.exists()) {
+            val newPill = Pill()
+            newPill.name = reminder.name
+            newPill.description = reminder.description
+            firestore.collection(RECEIVER_COLLECTION).document(userid).collection(PILL_COLLECTION).add(newPill).await()
+        }
         val reminderWithUserId = reminder.copy(userId = userid)
         return firestore.collection(RECEIVER_COLLECTION).document(userid).collection(REMINDER_COLLECTION).add(reminderWithUserId).await().id
     }
@@ -55,5 +63,6 @@ class ReminderRepository
     companion object {
         private const val RECEIVER_COLLECTION = "receivers"
         private const val REMINDER_COLLECTION = "reminders"
+        private const val PILL_COLLECTION = "pills"
     }
 }
