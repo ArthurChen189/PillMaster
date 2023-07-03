@@ -22,6 +22,9 @@ class LoginViewModel @Inject constructor(
     val hasUser: Boolean
         get() = repository.hasUser()
 
+    val currentUserId: String
+        get() = repository.getUserId()
+
     var loginUiState by mutableStateOf(LoginUiState())
         private set
 
