@@ -89,6 +89,7 @@ fun PillAddPageScreen(
         }
 
 
+        // TODO: Allow user to add at most 6 reminderTimes, and newPillSubmit to reminder model
         TimePicker(
             reminderTime = reminderTime,
             onReminderTimeChange = { reminderTime = it },
