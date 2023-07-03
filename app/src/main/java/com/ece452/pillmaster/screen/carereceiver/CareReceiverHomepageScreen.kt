@@ -74,6 +74,7 @@ fun CareReceiverHomepageScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        // TODO requested by Anna: Sort the todayReminderList by reminderTime, and show reminderTime below each SingleReminderItem's reminderName 
         // TODO - Build this screen as per the Figma file.
         LazyColumn(modifier = Modifier.weight(1f)) {
             val reminderList = reminders.value

@@ -75,7 +75,7 @@ class PillAddPageViewModel @Inject constructor(private val repository: ReminderR
         val reminder = Reminder()
         reminder.name = pillName
         reminder.description = direction
-        reminder.time1 = reminderTime
+        reminder.time = reminderTime
         reminder.startDate = startDate
         reminder.endDate = endDate
         reminder.giverId = selectedOption

@@ -16,6 +16,7 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 interface IReminderRepository {
+    val userid: String
     val reminders: Flow<List<Reminder>>
     suspend fun getReminder(reminderId: String): Reminder?
     suspend fun save(reminder: Reminder): String
@@ -26,31 +27,33 @@ interface IReminderRepository {
 class ReminderRepository
 @Inject constructor(private val firestore: FirebaseFirestore, private val auth: AuthRepository)
 : IReminderRepository {
+    override val userid: String = auth.getUserId()
+
     @OptIn(ExperimentalCoroutinesApi::class)
     override val reminders: Flow<List<Reminder>>
         get() =
         auth.currentUserFlow.flatMapLatest { user ->
-            firestore.collection(REMINDER_COLLECTION).whereEqualTo(USER_ID_FIELD, user.id).dataObjects()
+            firestore.collection(RECEIVER_COLLECTION).document(user.id).collection(REMINDER_COLLECTION).dataObjects()
         }
 
     override suspend fun getReminder(reminderId: String): Reminder? =
-        firestore.collection(REMINDER_COLLECTION).document(reminderId).get().await().toObject()
+        firestore.collection(RECEIVER_COLLECTION).document(userid).collection(REMINDER_COLLECTION).document(reminderId).get().await().toObject()
 
     override suspend fun save(reminder: Reminder): String {
-        val reminderWithUserId = reminder.copy(userId = auth.getUserId())
-        return firestore.collection(REMINDER_COLLECTION).add(reminderWithUserId).await().id
+        val reminderWithUserId = reminder.copy(userId = userid)
+        return firestore.collection(RECEIVER_COLLECTION).document(userid).collection(REMINDER_COLLECTION).add(reminderWithUserId).await().id
     }
 
     override suspend fun update(reminder: Reminder) {
-        firestore.collection(REMINDER_COLLECTION).document(reminder.id).set(reminder).await()
+        firestore.collection(RECEIVER_COLLECTION).document(userid).collection(REMINDER_COLLECTION).document(reminder.id).set(reminder).await()
     }
 
     override suspend fun delete(reminderId: String) {
-        firestore.collection(REMINDER_COLLECTION).document(reminderId).delete().await()
+        firestore.collection(RECEIVER_COLLECTION).document(userid).collection(REMINDER_COLLECTION).document(reminderId).delete().await()
     }
 
     companion object {
-        private const val USER_ID_FIELD = "userId"
+        private const val RECEIVER_COLLECTION = "receivers"
         private const val REMINDER_COLLECTION = "reminders"
     }
 }
