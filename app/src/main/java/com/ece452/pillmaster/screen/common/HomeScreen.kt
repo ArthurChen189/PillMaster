@@ -10,25 +10,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.ece452.pillmaster.model.User
 import com.ece452.pillmaster.utils.NavigationPath
-import com.ece452.pillmaster.utils.UserRole
 import com.ece452.pillmaster.viewmodel.LoginViewModel
-import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    user: User?,
-    loginViewModel: LoginViewModel = hiltViewModel(),
-    vm: PillAddPageViewModel = hiltViewModel(),
+    userId: String?,
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-    val errorText by remember { mutableStateOf("") }
+    var errorText by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -49,31 +46,15 @@ fun HomeScreen(
             )
         }
 
-        if (user != null) {
-            if (user.roles.contains(UserRole.CARE_RECEIVER) || user.roles.contains(UserRole.ADMIN)) {
-                // Display content for care receiver
-                Button(onClick = { navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route) }) {
-                    Text(text = "Go to Care Receiver Home")
-                }
-            } else {
-                Button(onClick = {
-                    // TODO: ASSIGN ROLE
-                }) {
-                    Text(text = "Assign Care Receiver Role")
-                }
+        if (userId != null) {
+            // Display content for care giver
+            Button(onClick = { navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route) }) {
+                Text(text = "Care Receiver Homepage")
             }
 
-            if (user.roles.contains(UserRole.CARE_GIVER) || user.roles.contains(UserRole.ADMIN)) {
-                // Display content for care receiver
-                Button(onClick = { navController.navigate(NavigationPath.CARE_GIVER_HOMEPAGE.route) }) {
-                    Text(text = "Go to Care Giver Home")
-                }
-            } else {
-                Button(onClick = {
-                    // TODO: ASSIGN ROLE
-                }) {
-                    Text(text = "Assign Care Giver Role")
-                }
+            // Display content for care receiver
+            Button(onClick = { navController.navigate(NavigationPath.CARE_GIVER_HOMEPAGE.route) }) {
+                Text(text = "Care Giver Homepage")
             }
 
             Button(onClick = {
@@ -83,7 +64,7 @@ fun HomeScreen(
                 Text(text = "Sign out")
             }
         } else {
-            // TODO
+            errorText = "Invalid User."
         }
     }
 }
