@@ -75,3 +75,6 @@
 | 2023/06/29 |             |            |              |           |             | 3        | Investigate the bug between SDK version and creating notification channel                             |
 | 2023/06/30 |             |            |              |           |             | 4        | Implement auto filling for all required fields by scanning a photo when adding a new reminder         |
 | 2023/06/30 | 1.0         |            | 2.5          |           |             | 1.0      | Draw arch diagram, write demo report                                                                  |
+| 2023/07/03 |             |            |              | 5.0       |             |         | Investigate deisgn contact, chat message based on structural and behaviour design patterns |
+| 2023/07/03 |             |            | 1.0          | 1.0       |             |         | Pair Coding and Discuss the firebase schema on user management |
+| 2023/07/03 |             |            | 6.0          |           |             |         | Improve implementation of backend for user, reminder, pill                                             |
