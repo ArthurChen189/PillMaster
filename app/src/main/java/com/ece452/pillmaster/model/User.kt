@@ -2,9 +2,7 @@ package com.ece452.pillmaster.model
 
 data class User(
     var id: String = "",
-    var email: String = "",
-    val name: String = "",
-    val password: String = ""
+    var email: String = ""
 ) {
     override fun toString(): String {
         return "$id|$email|$name|$password"
