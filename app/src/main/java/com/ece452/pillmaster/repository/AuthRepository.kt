@@ -3,6 +3,8 @@ package com.ece452.pillmaster.repository
 import com.ece452.pillmaster.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -75,19 +77,24 @@ class AuthRepository
     ) {
         withContext(Dispatchers.IO) {
             // Perform the signup operation in a background thread
+            val completed = false 
             val newUser = auth
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        val user = User()
-                        user.id = newUser.user.uid
-                        user.email = email
-                        firestore.collection(USER_COLLECTION).add(user).await()
+                        completed = true
                         onComplete.invoke(true)
                     } else {
                         onComplete.invoke(false)
                     }
                 }.await()
+                
+            if(completed) {
+                val user = User()
+                user.id = newUser.user.uid
+                user.email = email
+                firestore.collection(USER_COLLECTION).add(user).await()
+            }
         }
     }
 
