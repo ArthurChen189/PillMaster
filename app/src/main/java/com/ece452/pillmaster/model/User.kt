@@ -1,17 +1,13 @@
 package com.ece452.pillmaster.model
 
-import com.ece452.pillmaster.utils.UserRole
-
 data class User(
     val id: String = "",
     val email: String = "",
     val name: String = "",
-    val password: String = "",
-    val roles: List<UserRole> = listOf()
+    val password: String = ""
 ) {
     override fun toString(): String {
-        val rolesString = roles.joinToString(",") { it.name }
-        return "$id|$email|$name|$password|$rolesString"
+        return "$id|$email|$name|$password"
     }
 
     companion object {
@@ -21,9 +17,7 @@ data class User(
             val email = userFields[1]
             val name = userFields[2]
             val password = userFields[3]
-            val rolesString = userFields[4]
-            val roles = rolesString.split(",").map { UserRole.valueOf(it) }
-            return User(id, email, name, password, roles)
+            return User(id, email, name, password)
         }
     }
 }
