@@ -77,7 +77,7 @@ class AuthRepository
     ) {
         withContext(Dispatchers.IO) {
             // Perform the signup operation in a background thread
-            val completed = false 
+            var completed = false 
             val newUser = auth
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
@@ -88,9 +88,9 @@ class AuthRepository
                         onComplete.invoke(false)
                     }
                 }.await()
-                
+
             if(completed) {
-                val user = User()
+                var user = User()
                 user.id = newUser.user.uid
                 user.email = email
                 firestore.collection(USER_COLLECTION).add(user).await()
