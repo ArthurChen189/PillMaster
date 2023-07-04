@@ -53,6 +53,7 @@ import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 import com.ece452.pillmaster.model.Reminder
 import com.ece452.pillmaster.viewmodel.ReminderViewModel
+import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -75,7 +76,21 @@ fun CareReceiverHomepageScreen(
     ) {
         // TODO - Build this screen as per the Figma file.
         LazyColumn(modifier = Modifier.weight(1f)) {
-            items(reminders.value) { reminderItem ->
+            val reminderList = reminders.value
+            val today = LocalDate.now()
+            val todayReminderList: List<Reminder> = reminderList.filter { reminder ->
+                val startDate = LocalDate.parse(reminder.startDate)
+                val endDate = if (reminder.endDate.isNotEmpty()) LocalDate.parse(reminder.endDate) else LocalDate.MAX
+                today.isEqual(startDate) || today.isEqual(endDate) ||
+                (today.isAfter(startDate) && (endDate == LocalDate.MAX || today.isBefore(endDate)))
+            }
+            val todayReminderListSorted = todayReminderList.sortedBy { reminder ->
+                val time = reminder.time.split(":")
+                time[0].toInt() * 60 + time[1].toInt()
+            }
+
+            items(todayReminderListSorted) { reminderItem ->
+                // TODO requested by Anna: show reminderTime below each SingleReminderItem's reminderName
                 SingleReminderItem(
                     reminder = reminderItem,
                 ) { viewModel.onReminderCheckChange(reminderItem) }

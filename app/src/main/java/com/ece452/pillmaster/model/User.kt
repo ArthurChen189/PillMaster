@@ -5,7 +5,7 @@ data class User(
     var email: String = ""
 ) {
     override fun toString(): String {
-        return "$id|$email|$name|$password"
+        return "$id|$email"
     }
 
     companion object {
@@ -13,9 +13,7 @@ data class User(
             val userFields = userString.split("|")
             val id = userFields[0]
             val email = userFields[1]
-            val name = userFields[2]
-            val password = userFields[3]
-            return User(id, email, name, password)
+            return User(id, email)
         }
     }
 }
