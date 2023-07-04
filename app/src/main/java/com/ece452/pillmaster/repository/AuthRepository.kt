@@ -31,7 +31,7 @@ interface IAuthRepository {
 
 // Used Resources: https://www.youtube.com/watch?v=n7tUmLP6pdo
 class AuthRepository
-@Inject constructor(private val auth: FirebaseAuth) : IAuthRepository{
+@Inject constructor(private val firestore: FirebaseFirestore, private val auth: FirebaseAuth) : IAuthRepository{
 
     override val currentUser: FirebaseUser? = auth.currentUser
 
@@ -75,10 +75,14 @@ class AuthRepository
     ) {
         withContext(Dispatchers.IO) {
             // Perform the signup operation in a background thread
-            auth
+            val newUser = auth
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        val user = User()
+                        user.id = newUser.user.uid
+                        user.email = email
+                        firestore.collection(USER_COLLECTION).add(user).await()
                         onComplete.invoke(true)
                     } else {
                         onComplete.invoke(false)
@@ -89,5 +93,9 @@ class AuthRepository
 
     override fun signout() {
         auth.signOut()
+    }
+
+    companion object {
+        private const val USER_COLLECTION = "users"
     }
 }
