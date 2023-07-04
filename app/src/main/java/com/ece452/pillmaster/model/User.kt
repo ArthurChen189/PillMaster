@@ -1,8 +1,8 @@
 package com.ece452.pillmaster.model
 
 data class User(
-    val id: String = "",
-    val email: String = "",
+    var id: String = "",
+    var email: String = "",
     val name: String = "",
     val password: String = ""
 ) {

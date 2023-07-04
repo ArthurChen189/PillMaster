@@ -91,7 +91,7 @@ class AuthRepository
 
             if(completed) {
                 var user = User()
-                user.id = newUser.user.uid
+                user.id = newUser.user!!.uid
                 user.email = email
                 firestore.collection(USER_COLLECTION).add(user).await()
             }
