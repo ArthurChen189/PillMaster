@@ -1,6 +1,7 @@
 package com.ece452.pillmaster.repository
 
 import com.ece452.pillmaster.model.Reminder
+import com.ece452.pillmaster.model.Pill
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.dataObjects
@@ -32,7 +33,16 @@ class ReminderRepository
         firestore.collection(REMINDER_COLLECTION).document(reminderId).get().await().toObject()
 
     override suspend fun save(reminder: Reminder): String {
-        val reminderWithUserId = reminder.copy(userId = auth.getUserId())
+        val userid = auth.getUserId()
+        val pillRef = firestore.collection(PILL_COLLECTION).whereEqualTo(USER_ID_FIELD, userid).whereEqualTo(NAME_FIELD, reminder.name).limit(1).get().await().documents.firstOrNull()
+        if (pillRef == null) {
+            var newPill = Pill()
+            newPill.userId = userid
+            newPill.name = reminder.name
+            newPill.description = reminder.description
+            firestore.collection(PILL_COLLECTION).add(newPill).await()
+        }
+        val reminderWithUserId = reminder.copy(userId = userid)
         return firestore.collection(REMINDER_COLLECTION).add(reminderWithUserId).await().id
     }
 
@@ -46,6 +56,8 @@ class ReminderRepository
 
     companion object {
         private const val USER_ID_FIELD = "userId"
+        private const val NAME_FIELD = "name"
         private const val REMINDER_COLLECTION = "reminders"
+        private const val PILL_COLLECTION = "pills"
     }
 }

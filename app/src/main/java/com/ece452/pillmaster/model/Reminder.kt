@@ -2,8 +2,9 @@ package com.ece452.pillmaster.model
 
 import com.google.firebase.firestore.DocumentId
 
+// Store one Reminder data model for each reminderTime, so it's easy to show on homescreen and complete/uncomplete
 data class Reminder(
-    @DocumentId var id: String = "", // id of Reminder
+    @DocumentId val id: String = "", // id of Reminder
     var userId: String = "", // Carereceiver userId the Reminder belongs to
     var name: String = "", // name of the Pill user enters
     var description: String = "", // description of Reminder user enters, including dosage

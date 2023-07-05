@@ -88,7 +88,8 @@ fun PillAddPageScreen(
             }
         }
 
-
+        // TODO requested by Anna: Allow user to add multiple reminderTimes, 
+        // and when user clicks submit, newPillSubmit to reminder repository for each reminderTime
         TimePicker(
             reminderTime = reminderTime,
             onReminderTimeChange = { reminderTime = it },
