@@ -4,6 +4,8 @@ import com.ece452.pillmaster.usecase.GetReminderUseCase
 import com.ece452.pillmaster.usecase.IGetReminderUseCase
 import com.ece452.pillmaster.repository.IAuthRepository
 import com.ece452.pillmaster.repository.AuthRepository
+import com.ece452.pillmaster.repository.IPillRepository
+import com.ece452.pillmaster.repository.PillRepository
 import com.ece452.pillmaster.repository.IReminderRepository
 import com.ece452.pillmaster.repository.ReminderRepository
 import com.ece452.pillmaster.service.IReminderService
@@ -50,6 +52,10 @@ class AppModule {
         @Binds
         @Singleton
         fun provideReminderRepository(repo: ReminderRepository) : IReminderRepository
+
+        @Binds
+        @Singleton
+        fun providePillRepository(repo: PillRepository) : IPillRepository
 
         @Binds
         @Singleton
