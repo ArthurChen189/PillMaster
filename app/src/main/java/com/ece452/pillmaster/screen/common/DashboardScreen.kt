@@ -61,7 +61,12 @@ fun DashboardScreen(
         Button(
             onClick = { navController.navigate(NavigationPath.LOGIN.route) }
         ) {
-            Text("Login")
+            Text("Log In")
+        }
+        Button(
+            onClick = { navController.navigate(NavigationPath.SIGNUP.route) }
+        ) {
+            Text(text = "Sign up")
         }
     }
 }

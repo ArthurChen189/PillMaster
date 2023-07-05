@@ -1,14 +1,9 @@
 package com.ece452.pillmaster.repository
 
 import com.ece452.pillmaster.model.Reminder
-import com.ece452.pillmaster.di.FirebaseModule
-import com.ece452.pillmaster.repository.AuthRepository
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.dataObjects
-import com.google.firebase.firestore.ktx.toObjects
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +25,7 @@ class ReminderRepository
     override val reminders: Flow<List<Reminder>>
         get() =
         auth.currentUserFlow.flatMapLatest { user ->
-            firestore.collection(REMINDER_COLLECTION).whereEqualTo(USER_ID_FIELD, user.id).dataObjects()
+            firestore.collection(REMINDER_COLLECTION).whereEqualTo(USER_ID_FIELD, user.userId).dataObjects()
         }
 
     override suspend fun getReminder(reminderId: String): Reminder? =

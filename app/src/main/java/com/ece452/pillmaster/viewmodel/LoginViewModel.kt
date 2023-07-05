@@ -17,8 +17,6 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val repository: AuthRepository
 ): ViewModel() {
-    val currentUser = repository.currentUser
-
     val hasUser: Boolean
         get() = repository.hasUser()
 
