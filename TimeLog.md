@@ -79,3 +79,5 @@
 | 2023/07/03 |             |            | 1.0          | 1.0       |             |         | Pair Coding and Discuss the firebase schema on user management |
 | 2023/07/03 |             |            | 6.0          |           |             |         | Improve implementation of backend for user, reminder, pill                                             |
 | 2023/07/04 |             | 0.5        | 1.0          |           |             |         | Implement pill ViewModel, PR into main                                                                 |
+| 2023/07/04 | 4.0         |            |              |           |             |         | Implement document retrieval in Python, deploy to GCP using GCP functions for Python                   |
+| 2023/07/04 |          |            |              | 2.0     |             |         |  Fix the bug that the user are not correctly added into user table                   |
