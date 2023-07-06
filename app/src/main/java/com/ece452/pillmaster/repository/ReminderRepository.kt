@@ -26,7 +26,7 @@ class ReminderRepository
     override val reminders: Flow<List<Reminder>>
         get() =
         auth.currentUserFlow.flatMapLatest { user ->
-            firestore.collection(REMINDER_COLLECTION).whereEqualTo(USER_ID_FIELD, user.id).dataObjects()
+            firestore.collection(REMINDER_COLLECTION).whereEqualTo(USER_ID_FIELD, user.userId).dataObjects()
         }
 
     override suspend fun getReminder(reminderId: String): Reminder? =
