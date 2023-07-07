@@ -4,6 +4,8 @@ import com.ece452.pillmaster.usecase.GetReminderUseCase
 import com.ece452.pillmaster.usecase.IGetReminderUseCase
 import com.ece452.pillmaster.repository.IAuthRepository
 import com.ece452.pillmaster.repository.AuthRepository
+import com.ece452.pillmaster.repository.CareReceiverContactRepository
+import com.ece452.pillmaster.repository.IContactRepository
 import com.ece452.pillmaster.repository.IPillRepository
 import com.ece452.pillmaster.repository.PillRepository
 import com.ece452.pillmaster.repository.IReminderRepository
@@ -60,6 +62,11 @@ class AppModule {
         @Binds
         @Singleton
         fun provideAuthRepository(repo: AuthRepository) : IAuthRepository
+
+        @Binds
+        @Singleton
+        fun provideCareReceiverContactRepository(repo: CareReceiverContactRepository) : IContactRepository
+
 
         @Binds
         @Singleton
