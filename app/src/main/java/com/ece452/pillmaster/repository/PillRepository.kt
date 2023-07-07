@@ -25,7 +25,7 @@ class PillRepository
     override val pills: Flow<List<Pill>>
         get() =
         auth.currentUserFlow.flatMapLatest { user ->
-            firestore.collection(PILL_COLLECTION).whereEqualTo(USER_ID_FIELD, user.id).dataObjects()
+            firestore.collection(PILL_COLLECTION).whereEqualTo(USER_ID_FIELD, user.userId).dataObjects()
         }
 
     override suspend fun getPill(pillId: String): Pill? =
