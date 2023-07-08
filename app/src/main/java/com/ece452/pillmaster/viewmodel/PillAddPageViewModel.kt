@@ -8,13 +8,11 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ece452.pillmaster.model.Reminder
 import com.ece452.pillmaster.repository.ReminderRepository
-import com.ece452.pillmaster.broadcast.AlarmReceiver
+import com.ece452.pillmaster.broadcast.ReminderReceiver
 import com.ece452.pillmaster.PillMasterApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +21,7 @@ import java.time.LocalDate
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -114,28 +113,19 @@ class PillAddPageViewModel @Inject constructor(
             cal.set(Calendar.MINUTE, minute)
             id?.let {
                 var res = it.replace("[^0-9]".toRegex(), "")
-                setAlarm(cal, 0, res.toLong() * Math.floor(Math.random() * 999).toLong(), pillName,hour,minute)
+                scheduleNotification(cal,res.toLong() * Math.floor(Math.random() * 999).toLong(), pillName,hour,minute)
             }
         }
     }
 
-    fun setAlarm(calender: Calendar, show: Int, id: Long, pillName: String, hour:Int, minute:Int) {
+    private fun scheduleNotification(calender: Calendar, id: Long, pillName: String, hour:Int, minute:Int) {
 
-        val alarmManager: AlarmManager = application.applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-//        if (alarmManager?.canScheduleExactAlarms() == false) {
-//            Intent().also { intent ->
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.action = Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
-//                context.startActivity(intent)
-//            }
-//        }
-        val intent = Intent(application.applicationContext, AlarmReceiver::class.java)
-//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        intent.setAction("android.intent.action.NOTIFY");
-//        intent.setAction("com.ece452.pillmaster.Broadcast");
-//        context.registerReceiver(AlarmReceiver(), IntentFilter())
+        val reminderAlarmManager: AlarmManager = application.applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val intent = Intent(application.applicationContext, ReminderReceiver::class.java)
+
         intent.putExtra("INTENT_NOTIFY", true)
-        intent.putExtra("isShow", show)
+
         intent.putExtra("id", id)
         intent.putExtra("title", "Pill Master")
         intent.putExtra("msg","Remember to take $pillName at $hour:$minute :)")
@@ -143,10 +133,13 @@ class PillAddPageViewModel @Inject constructor(
             PendingIntent.getBroadcast(application.applicationContext,
                 id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
-        if (show == 0) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,  System.currentTimeMillis() , pandingIntent)
+        val differenceInMillis = System.currentTimeMillis()  - calender.timeInMillis
+        val differenceInSeconds = TimeUnit.MILLISECONDS.toSeconds(differenceInMillis)
+
+        if (differenceInSeconds < 120 || calender.timeInMillis >= System.currentTimeMillis() ) {
+            reminderAlarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,  calender.timeInMillis , pandingIntent)
         } else {
-            alarmManager.cancel(pandingIntent)
+            reminderAlarmManager.cancel(pandingIntent)
         }
     }
 

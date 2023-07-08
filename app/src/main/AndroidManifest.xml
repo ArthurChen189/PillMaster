@@ -46,7 +46,7 @@
         </activity>
 
         <receiver
-            android:name=".broadcast.AlarmReceiver"
+            android:name=".broadcast.ReminderReceiver"
             android:enabled="true"/>
     </application>
 

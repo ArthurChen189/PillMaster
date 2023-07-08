@@ -1,11 +1,7 @@
 package com.ece452.pillmaster.screen.common
 
-import android.app.AlarmManager
 import android.app.DatePickerDialog
-import android.app.PendingIntent
 import android.app.TimePickerDialog
-import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.widget.DatePicker
 import android.widget.Toast
@@ -29,10 +25,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ece452.pillmaster.broadcast.AlarmReceiver
-import com.ece452.pillmaster.di.FirebaseModule
-import com.ece452.pillmaster.repository.AuthRepository
-import com.ece452.pillmaster.repository.ReminderRepository
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 import java.time.LocalDate
