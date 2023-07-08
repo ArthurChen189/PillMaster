@@ -21,10 +21,6 @@ import java.util.*
 
 
 class AlarmReceiver : BroadcastReceiver() {
-
-
-
-
     override fun onReceive(context: Context?, intent: Intent?) {
         val notificationManager: NotificationManager =
             context?.getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
@@ -42,7 +38,7 @@ class AlarmReceiver : BroadcastReceiver() {
         )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel =
-                NotificationChannel("Remainder", "My Notifications", NotificationManager.IMPORTANCE_HIGH)
+                NotificationChannel("Reminder", "My Notifications", NotificationManager.IMPORTANCE_HIGH)
             // Configure the notification channel.
             notificationChannel.setDescription("Sample Channel description")
             notificationChannel.enableLights(true)
@@ -64,7 +60,7 @@ class AlarmReceiver : BroadcastReceiver() {
 //                context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT
 //            )
 //        }
-        val notification = NotificationCompat.Builder(context, "Remainder")
+        val notification = NotificationCompat.Builder(context, "Reminder")
 //            .setContentIntent(contentIntent)
             .setSmallIcon(icon)
             .setContentTitle(title)
