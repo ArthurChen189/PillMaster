@@ -3,10 +3,9 @@ package com.ece452.pillmaster.screen.common
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,20 +15,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ece452.pillmaster.R
 import com.ece452.pillmaster.model.User
 import com.ece452.pillmaster.utils.NavigationPath
-import com.ece452.pillmaster.utils.UserRole
 
 @Composable
 fun DashboardScreen(
     navController: NavController
 ) {
-    val context = LocalContext.current
     var errorText by remember { mutableStateOf("") }
 
     Column(
@@ -49,28 +48,25 @@ fun DashboardScreen(
             painter = painterResource(id = R.drawable.pill),
             contentDescription = "Pill Image",
             modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
-                .padding(horizontal = 100.dp))
+                .size(150.dp)
+        )
+        Text(
+            text = "Pill Master",
+            style = TextStyle(
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            modifier = Modifier.padding(bottom = 50.dp)
+        )
         Button(
             onClick = { navController.navigate(NavigationPath.LOGIN.route) }
         ) {
-            Text("Login")
+            Text("Log In")
         }
         Button(
-            onClick = {
-                val user = User(
-                    id = "123",
-                    email = "example@example.com",
-                    name = "John Doe",
-                    password = "password",
-                    roles = listOf(UserRole.ADMIN)
-                )
-                val userString = user.toString()
-                navController.navigate("${NavigationPath.HOMEPAGE.route}/$userString")
-            }
+            onClick = { navController.navigate(NavigationPath.SIGNUP.route) }
         ) {
-            Text("Homepage Test")
+            Text(text = "Sign up")
         }
     }
 }

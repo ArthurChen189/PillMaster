@@ -30,10 +30,6 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -53,6 +49,7 @@ import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 import com.ece452.pillmaster.model.Reminder
 import com.ece452.pillmaster.viewmodel.ReminderViewModel
+import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -75,7 +72,21 @@ fun CareReceiverHomepageScreen(
     ) {
         // TODO - Build this screen as per the Figma file.
         LazyColumn(modifier = Modifier.weight(1f)) {
-            items(reminders.value) { reminderItem ->
+            val reminderList = reminders.value
+            val today = LocalDate.now()
+            val todayReminderList: List<Reminder> = reminderList.filter { reminder ->
+                val startDate = LocalDate.parse(reminder.startDate)
+                val endDate = if (reminder.endDate.isNotEmpty()) LocalDate.parse(reminder.endDate) else LocalDate.MAX
+                today.isEqual(startDate) || today.isEqual(endDate) ||
+                (today.isAfter(startDate) && (endDate == LocalDate.MAX || today.isBefore(endDate)))
+            }
+            val todayReminderListSorted = todayReminderList.sortedBy { reminder ->
+                val time = reminder.time.split(":")
+                time[0].toInt() * 60 + time[1].toInt()
+            }
+
+            items(todayReminderListSorted) { reminderItem ->
+                // TODO requested by Anna: show reminderTime below each SingleReminderItem's reminderName
                 SingleReminderItem(
                     reminder = reminderItem,
                 ) { viewModel.onReminderCheckChange(reminderItem) }
@@ -100,7 +111,7 @@ fun NavBar(
             navController.navigate(NavigationPath.CALENDAR.route)
         }
         NavItem(Icons.Rounded.Email,"Message" , Color(0xFF227EBA)) {
-
+            navController.navigate(NavigationPath.MESSAGE.route)
         }
         NavItem(Icons.Rounded.Face,"ChatBot", Color(0xFF227EBA) ) {
 
@@ -181,7 +192,7 @@ fun SingleReminderItem (
         ){
 
             Image( modifier =  Modifier.size(50.dp),
-                painter = rememberImagePainter(R.drawable.ic_launcher_background),
+                painter = rememberImagePainter(R.drawable.reminder_capture),
                 contentDescription = null
             )
 

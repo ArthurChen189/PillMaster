@@ -1,6 +1,5 @@
 package com.ece452.pillmaster.screen.common
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,18 +23,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.ece452.pillmaster.R
-import com.ece452.pillmaster.model.User
 import com.ece452.pillmaster.utils.NavigationPath
-import com.ece452.pillmaster.utils.UserRole
 import com.ece452.pillmaster.viewmodel.LoginViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -135,16 +129,8 @@ fun LoginScreen(
 
         LaunchedEffect(key1 = loginViewModel.hasUser) {
             if (loginViewModel.hasUser == true) {
-                // TODO: UPDATE THIS TO THE ACTUAL USER FROM DB
-                val user = User(
-                    id = "123",
-                    email = "example@example.com",
-                    name = "John Doe",
-                    password = "password",
-                    roles = listOf(UserRole.ADMIN)
-                )
-                val userString = user.toString()
-                navController.navigate("${NavigationPath.HOMEPAGE.route}/$userString")
+                val userId = loginViewModel.currentUserId
+                navController.navigate("${NavigationPath.HOMEPAGE.route}/$userId")
             }
         }
     }

@@ -1,13 +1,9 @@
 package com.ece452.pillmaster.repository
 
 import com.ece452.pillmaster.model.User
-import com.ece452.pillmaster.di.FirebaseModule
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.EmailAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -21,6 +17,8 @@ interface IAuthRepository {
     val currentUserFlow: Flow<User>
     fun hasUser(): Boolean
     fun getUserId(): String
+    suspend fun getUserProfileById(userId: String): User
+    suspend fun getUserProfileByEmail(email: String): User
     suspend fun login(
         email: String,
         password: String,
@@ -36,7 +34,10 @@ interface IAuthRepository {
 
 // Used Resources: https://www.youtube.com/watch?v=n7tUmLP6pdo
 class AuthRepository
-@Inject constructor(private val auth: FirebaseAuth) : IAuthRepository{
+@Inject constructor(
+    private val firestore: FirebaseFirestore,
+    private val auth: FirebaseAuth
+    ) : IAuthRepository{
 
     override val currentUser: FirebaseUser? = auth.currentUser
 
@@ -44,7 +45,7 @@ class AuthRepository
         get() = callbackFlow {
             val listener =
                 FirebaseAuth.AuthStateListener { auth ->
-                    this.trySend(auth.currentUser?.let { User(it.uid) } ?: User())
+                    this.trySend(auth.currentUser?.let { User(userId = it.uid) } ?: User())
                 }
             auth.addAuthStateListener(listener)
             awaitClose { auth.removeAuthStateListener(listener) }
@@ -53,6 +54,34 @@ class AuthRepository
     override fun hasUser(): Boolean = auth.currentUser != null
 
     override fun getUserId(): String = auth.currentUser?.uid.orEmpty()
+
+    override suspend fun getUserProfileById(userId: String): User {
+        val querySnapshot = firestore.collection(USER_COLLECTION)
+            .whereEqualTo(USER_ID_FIELD, userId)
+            .get()
+            .await()
+
+        val userDocument = querySnapshot.documents.firstOrNull()
+        if (userDocument != null) {
+            return userDocument.toObject(User::class.java) ?: throw Exception("User profile is null")
+        } else {
+            throw Exception("User profile not found")
+        }
+    }
+
+    override suspend fun getUserProfileByEmail(email: String): User {
+        val querySnapshot = firestore.collection(USER_COLLECTION)
+            .whereEqualTo(EMAIL_FIELD, email)
+            .get()
+            .await()
+
+        val userDocument = querySnapshot.documents.firstOrNull()
+        if (userDocument != null) {
+            return userDocument.toObject(User::class.java) ?: throw Exception("User profile is null")
+        } else {
+            throw Exception("User profile not found")
+        }
+    }
 
     override suspend fun login(
         email: String,
@@ -84,6 +113,11 @@ class AuthRepository
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        val user = User(
+                            userId = task.result?.user!!.uid,
+                            email = email
+                        )
+                        firestore.collection(USER_COLLECTION).add(user)
                         onComplete.invoke(true)
                     } else {
                         onComplete.invoke(false)
@@ -94,5 +128,11 @@ class AuthRepository
 
     override fun signout() {
         auth.signOut()
+    }
+
+    companion object {
+        private const val USER_COLLECTION = "users"
+        private const val USER_ID_FIELD = "userId"
+        private const val EMAIL_FIELD = "email"
     }
 }
