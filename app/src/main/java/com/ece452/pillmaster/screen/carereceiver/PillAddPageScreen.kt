@@ -25,9 +25,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ece452.pillmaster.di.FirebaseModule
-import com.ece452.pillmaster.repository.AuthRepository
-import com.ece452.pillmaster.repository.ReminderRepository
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 import java.time.LocalDate
@@ -35,7 +32,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.S)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PillAddPageScreen(
@@ -167,6 +164,7 @@ fun PillAddPageScreen(
 
 
     }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -221,12 +219,13 @@ fun CareGiverDropdownMenu(
 }
 
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.S)
 @Composable
 fun DatePicker(
     date: String,
     onDateChange: (String) -> Unit,
-    dateTitle: String
+    dateTitle: String,
+    viewModel: PillAddPageViewModel = hiltViewModel()
 ){
     val mContext = LocalContext.current
     val mYear: Int
@@ -242,6 +241,9 @@ fun DatePicker(
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
             val selectedDate = LocalDate.of(mYear, mMonth + 1, mDayOfMonth)
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            viewModel.month = mMonth
+            viewModel.year = mYear
+            viewModel.day = mDayOfMonth
             onDateChange(selectedDate.format(formatter).toString())
         }, mYear, mMonth, mDay
     )
@@ -260,11 +262,13 @@ fun DatePicker(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.S)
 @Composable
 fun TimePicker(
     reminderTime: String,
     onReminderTimeChange: (String) -> Unit,
-    reminderTimeTitle: String
+    reminderTimeTitle: String,
+    viewModel: PillAddPageViewModel = hiltViewModel()
 ){
     val mContext = LocalContext.current
     val mCalendar = Calendar.getInstance()
@@ -274,6 +278,8 @@ fun TimePicker(
         mContext,
         {_, mHour : Int, mMinute: Int ->
             onReminderTimeChange("$mHour:$mMinute")
+            viewModel.hour = mHour
+            viewModel.minute = mMinute
         }, mHour, mMinute, false
     )
 
@@ -290,6 +296,10 @@ fun TimePicker(
         Text(text = "$reminderTimeTitle $reminderTime", fontSize = 20.sp)
     }
 }
+
+
+
+
 
 
 

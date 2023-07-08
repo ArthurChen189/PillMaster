@@ -55,10 +55,25 @@ class ScanUtils @Inject constructor(): ViewModel() {
             if(blockText.startsWith("Date", ignoreCase = true)){
                 startDate = blockText.substring(5)
             }
-            if(blockText.contains("Disp:") || blockText.contains("Sig:")){
-                pillName = block.lines[0].text
-                discription = block.lines[1].text + "\n" + block.lines[2].text
-                val matcher = pattern.matcher(block.lines[2].text)
+            if(blockText.contains("Disp:")){
+                if(block.lines.size>=1){
+                    pillName = block.lines[0].text
+                }
+                if(block.lines.size>=2){
+                    discription = block.lines[1].text
+                }
+                if(block.lines.size>=3){
+                    discription += "\n" + block.lines[2].text
+                    val matcher = pattern.matcher(block.lines[2].text)
+                    if(matcher.find()){
+                        reminderTime = matcher.group()
+                    }
+                }
+            }
+
+            if (blockText.startsWith("Sig:", ignoreCase = true)) {
+                discription += "\n" + blockText
+                val matcher = pattern.matcher(blockText)
                 if(matcher.find()){
                     reminderTime = matcher.group()
                 }

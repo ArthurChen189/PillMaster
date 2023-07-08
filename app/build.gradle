@@ -52,6 +52,8 @@ android {
 }
 
 dependencies {
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation platform("org.jetbrains.kotlin:kotlin-bom:1.8.10")
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
@@ -122,4 +124,10 @@ dependencies {
     // Firebase UI Library
     implementation("com.firebaseui:firebase-ui-auth:8.0.2")
     implementation("com.firebaseui:firebase-ui-database:8.0.2")
+
+    implementation 'androidx.work:work-runtime-ktx:2.7.0'
+//    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+//    implementation 'androidx.cardview:cardview:1.0.0'
+//    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+//    implementation "org.jetbrains.anko:anko-commons:0.10.8"
 }
