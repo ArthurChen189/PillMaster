@@ -9,3 +9,9 @@ data class Pill(
     var description: String = "", // description of Pill user enters, generated from AddReminder
     var info: String = "TODO", // detailed info, compatibility info of the Pill, TODO: Retrieve from Cloud Function
 )
+
+data class ReminderTime(
+    var hour: Int = 0,
+    var min: Int = 0,
+    var timeString: String = "",
+)

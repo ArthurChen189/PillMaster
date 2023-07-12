@@ -14,6 +14,7 @@ import com.ece452.pillmaster.model.Reminder
 import com.ece452.pillmaster.repository.ReminderRepository
 import com.ece452.pillmaster.broadcast.ReminderReceiver
 import com.ece452.pillmaster.PillMasterApplication
+import com.ece452.pillmaster.model.ReminderTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -81,12 +82,37 @@ class PillAddPageViewModel @Inject constructor(
         testList.addAll(futurePills)
     }
 
+
+
+    // submit a reminderList
+    fun pillListSubmit(
+        pillName: (String),
+        direction: (String),
+        reminderTimeList: (List<ReminderTime>),
+        startDate: (String),
+        endDate: (String),
+        selectedOption: (String),
+        isChecked: (Boolean)
+    ){
+        for (reminderTime in reminderTimeList){
+            newPillSubmit(pillName,
+                direction,
+                reminderTime,
+                startDate,
+                endDate,
+                selectedOption,
+                isChecked
+            )
+        }
+
+    }
+
     // submit a new pill
     @RequiresApi(Build.VERSION_CODES.S)
     fun newPillSubmit(
         pillName: (String),
         direction: (String),
-        reminderTime: (String),
+        reminderTime: (ReminderTime),
         startDate: (String),
         endDate: (String),
         selectedOption: (String),
@@ -94,7 +120,7 @@ class PillAddPageViewModel @Inject constructor(
         val reminder = Reminder()
         reminder.name = pillName
         reminder.description = direction
-        reminder.time = reminderTime
+        reminder.time = reminderTime.timeString
         reminder.startDate = startDate
         reminder.endDate = endDate
         reminder.giverId = selectedOption
@@ -109,8 +135,8 @@ class PillAddPageViewModel @Inject constructor(
             cal.set(Calendar.DAY_OF_MONTH, day)
 
             cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.HOUR_OF_DAY, hour)
-            cal.set(Calendar.MINUTE, minute)
+            cal.set(Calendar.HOUR_OF_DAY, reminderTime.hour)
+            cal.set(Calendar.MINUTE, reminderTime.min)
             id?.let {
                 var res = it.replace("[^0-9]".toRegex(), "")
                 scheduleNotification(cal,res.toLong() * Math.floor(Math.random() * 999).toLong(), pillName,hour,minute)
