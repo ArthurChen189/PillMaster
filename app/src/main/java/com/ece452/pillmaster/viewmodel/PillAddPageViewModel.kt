@@ -139,7 +139,7 @@ class PillAddPageViewModel @Inject constructor(
             cal.set(Calendar.MINUTE, reminderTime.min)
             id?.let {
                 var res = it.replace("[^0-9]".toRegex(), "")
-                scheduleNotification(cal,res.toLong() * Math.floor(Math.random() * 999).toLong(), pillName,hour,minute)
+                scheduleNotification(cal,res.toLong() * Math.floor(Math.random() * 999).toLong(), pillName, reminderTime.hour, reminderTime.min)
             }
         }
     }
