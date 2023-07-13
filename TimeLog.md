@@ -1,7 +1,7 @@
 | Date       | Arthur Chen | Handong Xu | Minhui Zhang | Selina Li | Tianyu Zhai | Yiwen Wu | Task                                                                                                                             |
 |------------|-------------|------------|--------------|-----------|-------------|----------|----------------------------------------------------------------------------------------------------------------------------------|
 |Github Usernames|ArthurChen189|ScottXu0098 |   icepeaks   |Selinaqianli|DixMilleJours, lowdrag-zty, De Nolan|Yiwen0612|                                                                                                       |
-|Total number of hours|    |            |              |           |             |          |                                                                                                                                  |
+|Total number of hours|54.5|     27     |       53.5   |     57    |      33.5   |     62.7 |                                                                                                                                  |
 | 2023/05/11 | 0.5         |            |              |           |             |          | Setup Github repo                                                                                                                |
 | 2023/05/11 |             |            | 0.5          |           |             |          | Setup notions teamspace                                                                                                          |
 | 2023/05/11 |             |            | 0.5          |           |             |          | Summarize project and proposal requirements                                                                                      |
@@ -94,3 +94,4 @@
 | 2023/07/12 |             |            |              |           |             | 1        | Help to integrate addReminderlist feature with original notification and auto fill functionality                                                                    |
 | 2023/07/13 | 4.0         |            |              |           |             |          | Implement Healthcare Bot user display                                                                                                                               |
 | 2023/07/13 |             |            | 0.5          |           |  0.5        |          | Add Github usernames to timelog, make timelog fit one screen, revise date format                                                  |
+| 2023/07/13 |             |            | 0.5          |           |             |          | Export Markdown to Excel to calculate total number of hours in TimeLog.md          |
