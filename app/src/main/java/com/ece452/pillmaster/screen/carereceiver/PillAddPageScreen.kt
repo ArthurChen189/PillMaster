@@ -67,7 +67,7 @@ fun PillAddPageScreen(
     if (reminderTime != "") {
         val hour = reminderTime.substringBefore(":").toInt()
         val min = reminderTime.substringAfter(":").toInt()
-
+        reminderTimeList.clear()
         reminderTimeList.add(ReminderTime(hour = hour, min = min, timeString = reminderTime))
     }
     Column(
