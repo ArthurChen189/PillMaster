@@ -6,8 +6,10 @@ import android.os.Build
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,7 +28,9 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.resolveDefaults
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
@@ -60,12 +64,19 @@ fun PillAddPageScreen(
     val context = LocalContext.current
     var description by remember { mutableStateOf(savedStateHandle?.get<String>("description") ?: "") }
     val reminderTimeList = remember { mutableStateListOf<ReminderTime>() }
+    if (reminderTime != "") {
+        val hour = reminderTime.substringBefore(":").toInt()
+        val min = reminderTime.substringAfter(":").toInt()
+
+        reminderTimeList.add(ReminderTime(hour = hour, min = min, timeString = reminderTime))
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
+
         TextField(
             value = pillName,
             onValueChange = { pillName = it },
@@ -94,15 +105,15 @@ fun PillAddPageScreen(
             }
         }
 
-        // TODO requested by Anna: Allow user to add multiple reminderTimes, 
+        // TODO requested by Anna: Allow user to add multiple reminderTimes,
         // and when user clicks submit, newPillSubmit to reminder repository for each reminderTime
         Column(){
             Text("Selected Reminder Times:", fontSize = 20.sp)
             Spacer(modifier = Modifier.size(5.dp))
-            LazyColumn {
+            LazyRow {
                 items(reminderTimeList) {reminderTime  ->
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.width(150.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
 
@@ -117,8 +128,6 @@ fun PillAddPageScreen(
                                 )
                         }
                     }
-                    
-                    
                 }
             }
             TimePicker2(
