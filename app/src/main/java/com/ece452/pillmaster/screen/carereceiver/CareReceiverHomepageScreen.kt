@@ -1,6 +1,7 @@
 package com.ece452.pillmaster.screen.common
 
 import android.os.Build
+import android.speech.tts.TextToSpeech
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -29,27 +30,31 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ece452.pillmaster.R
+import com.ece452.pillmaster.model.Reminder
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
-import com.ece452.pillmaster.model.Reminder
 import com.ece452.pillmaster.viewmodel.ReminderViewModel
 import java.time.LocalDate
+import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -60,7 +65,7 @@ fun CareReceiverHomepageScreen(
     viewModel: ReminderViewModel = hiltViewModel(),
 ) {
     val reminders = viewModel.reminders.collectAsStateWithLifecycle(emptyList())
-
+    var reminderText by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -76,15 +81,19 @@ fun CareReceiverHomepageScreen(
             val today = LocalDate.now()
             val todayReminderList: List<Reminder> = reminderList.filter { reminder ->
                 val startDate = LocalDate.parse(reminder.startDate)
-                val endDate = if (reminder.endDate.isNotEmpty()) LocalDate.parse(reminder.endDate) else LocalDate.MAX
+                val endDate =
+                    if (reminder.endDate.isNotEmpty()) LocalDate.parse(reminder.endDate) else LocalDate.MAX
                 today.isEqual(startDate) || today.isEqual(endDate) ||
-                (today.isAfter(startDate) && (endDate == LocalDate.MAX || today.isBefore(endDate)))
+                        (today.isAfter(startDate) && (endDate == LocalDate.MAX || today.isBefore(
+                            endDate
+                        )))
             }
             val todayReminderListSorted = todayReminderList.sortedBy { reminder ->
                 val time = reminder.time.split(":")
                 time[0].toInt() * 60 + time[1].toInt()
             }
 
+            reminderText = viewModel.buildReminderText(todayReminderListSorted)
             items(todayReminderListSorted) { reminderItem ->
                 // TODO requested by Anna: show reminderTime below each SingleReminderItem's reminderName
                 SingleReminderItem(
@@ -92,7 +101,7 @@ fun CareReceiverHomepageScreen(
                 ) { viewModel.onReminderCheckChange(reminderItem) }
             }
         }
-        AddPillButton(navController)
+        AddPillButton(navController, reminderText)
         NavBar(navController)
     }
 }
@@ -100,23 +109,23 @@ fun CareReceiverHomepageScreen(
 @Composable
 fun NavBar(
     navController: NavController,
-){
+) {
     Row(
         Modifier
             .height(80.dp)
             .padding(0.dp, 0.dp),
         verticalAlignment = Alignment.CenterVertically
-        ){
-        NavItem(Icons.Rounded.DateRange,"Calender", Color(0xFF227EBA)) {
+    ) {
+        NavItem(Icons.Rounded.DateRange, "Calender", Color(0xFF227EBA)) {
             navController.navigate(NavigationPath.CALENDAR.route)
         }
-        NavItem(Icons.Rounded.Email,"Message" , Color(0xFF227EBA)) {
+        NavItem(Icons.Rounded.Email, "Message", Color(0xFF227EBA)) {
             navController.navigate(NavigationPath.MESSAGE.route)
         }
-        NavItem(Icons.Rounded.Face,"ChatBot", Color(0xFF227EBA) ) {
+        NavItem(Icons.Rounded.Face, "ChatBot", Color(0xFF227EBA)) {
 
         }
-        NavItem(Icons.Rounded.Settings,"Setting", Color(0xFF227EBA) ) {
+        NavItem(Icons.Rounded.Settings, "Setting", Color(0xFF227EBA)) {
 
         }
     }
@@ -124,18 +133,20 @@ fun NavBar(
 
 @Composable
 fun RowScope.NavItem(
-    icon: ImageVector,description: String,
+    icon: ImageVector, description: String,
     tint: Color,
     navigateTo: () -> Unit = {},
-){
-    Button(onClick = navigateTo,
+) {
+    Button(
+        onClick = navigateTo,
         Modifier
             .weight(1f)
             .fillMaxHeight(),
         shape = RectangleShape,
         colors = ButtonDefaults.outlinedButtonColors()
-    ){
-        Icon(icon, description,
+    ) {
+        Icon(
+            icon, description,
             Modifier
                 .size(40.dp)
                 .weight(1f),
@@ -147,8 +158,26 @@ fun RowScope.NavItem(
 
 @Composable
 fun AddPillButton(
-    navController: NavController
-){
+    navController: NavController,
+    reminderText: String
+) {
+    val context = LocalContext.current
+    var isSpeaking by remember { mutableStateOf(false) }
+    var tts by remember { mutableStateOf<TextToSpeech?>(null) }
+
+    //TextToSpeech init
+    DisposableEffect(Unit) {
+        tts = TextToSpeech(context) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                val result = tts?.setLanguage(Locale.US)
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                }
+            }
+        }
+        onDispose {
+            tts?.shutdown()
+        }
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -160,7 +189,7 @@ fun AddPillButton(
             },
             Modifier
                 .padding(horizontal = 5.dp)
-                .fillMaxWidth(),
+                .weight(3.5f),
             shape = RoundedCornerShape(10.dp)
         ) {
             Icon(
@@ -168,6 +197,30 @@ fun AddPillButton(
                 contentDescription = "Add",
                 Modifier.size((40.dp)),
 
+                )
+        }
+
+        //read/pause all reminders
+        Button(
+            onClick = {
+                if (isSpeaking) {
+                    tts?.stop()
+                } else {
+                    tts?.setSpeechRate(0.5f)
+                    tts?.speak(reminderText, TextToSpeech.QUEUE_ADD, null, null)
+                }
+                isSpeaking = !isSpeaking
+            },
+            modifier = Modifier
+                .padding(horizontal = 5.dp)
+                .weight(1.5f),
+            shape = RoundedCornerShape(10.dp)
+        ) {
+            val speakerIcon: Painter = painterResource(id = R.drawable.ic_speaker)
+            Icon(
+                painter = speakerIcon,
+                contentDescription = "Speaker",
+                modifier = Modifier.size(40.dp)
             )
         }
     }
@@ -178,38 +231,48 @@ fun AddPillButton(
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun SingleReminderItem (
+fun SingleReminderItem(
     reminder: Reminder,
     onCheckChange: () -> Unit,
-){
+) {
 
-    Card(  shape = RoundedCornerShape(10.dp), modifier = Modifier
-        .padding(5.dp)
-        .fillMaxWidth(),
+    Card(
+        shape = RoundedCornerShape(10.dp),
+        modifier = Modifier
+            .padding(5.dp)
+            .fillMaxWidth(),
     ) {
-        Row (modifier = Modifier.padding(10.dp),
+        Row(
+            modifier = Modifier.padding(10.dp, bottom = 0.dp),
             verticalAlignment = Alignment.CenterVertically,
-        ){
+        ) {
 
-            Image( modifier =  Modifier.size(50.dp),
+            Image(
+                modifier = Modifier.size(50.dp),
                 painter = rememberImagePainter(R.drawable.reminder_capture),
                 contentDescription = null
             )
 
             Text(text = reminder.name, fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
-
             Spacer(modifier = Modifier.weight(1f))
 
             Checkbox(
                 // below line we are setting
                 // the state of checkbox.
-               checked = reminder.completed,
+                checked = reminder.completed,
                 // below line is use to add padding
                 // to our checkbox.
                 modifier = Modifier.padding(16.dp),
                 // below line is use to add on check
                 // change to our checkbox.
                 onCheckedChange = { onCheckChange() },
+            )
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = "    Pill Time: " + reminder.time,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(start = 10.dp)
             )
         }
     }
