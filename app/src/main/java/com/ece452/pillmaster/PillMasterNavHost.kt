@@ -12,7 +12,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.ece452.pillmaster.screen.carereceiver.CalendarScreen
+import com.ece452.pillmaster.screen.carereceiver.CaregiverManageScreen
 import com.ece452.pillmaster.screen.carereceiver.MessageScreen
+import com.ece452.pillmaster.screen.carereceiver.PillManageScreen
+import com.ece452.pillmaster.screen.carereceiver.ReceiverSettingScreen
 import com.ece452.pillmaster.screen.common.CareGiverHomeScreen
 import com.ece452.pillmaster.screen.common.CareReceiverHomepageScreen
 import com.ece452.pillmaster.screen.common.DashboardScreen
@@ -76,6 +79,21 @@ fun PillMasterNavHost(
         }
         composable(NavigationPath.MESSAGE.route) {
             MessageScreen(
+                navController = navController,
+            )
+        }
+        composable(NavigationPath.RECEIVER_SETTING.route) {
+            ReceiverSettingScreen(
+                navController = navController,
+            )
+        }
+        composable(NavigationPath.PILL_MANAGE.route) {
+            PillManageScreen(
+                navController = navController,
+            )
+        }
+        composable(NavigationPath.CAREGIVER_MANAGE.route) {
+            CaregiverManageScreen(
                 navController = navController,
             )
         }

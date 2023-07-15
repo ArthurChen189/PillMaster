@@ -125,8 +125,8 @@ fun NavBar(
         NavItem(Icons.Rounded.Face, "ChatBot", Color(0xFF227EBA)) {
 
         }
-        NavItem(Icons.Rounded.Settings, "Setting", Color(0xFF227EBA)) {
-
+        NavItem(Icons.Rounded.Settings,"Setting", Color(0xFF227EBA) ) {
+            navController.navigate(NavigationPath.RECEIVER_SETTING.route)
         }
     }
 }

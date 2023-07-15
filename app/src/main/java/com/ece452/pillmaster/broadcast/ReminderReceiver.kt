@@ -46,7 +46,7 @@ class ReminderReceiver : BroadcastReceiver() {
         }
 
         val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val notification = NotificationCompat.Builder(context, "Reminder")
+        val notification = NotificationCompat.Builder(context, "PillMasterReminder")
 //            .setContentIntent(contentIntent)
             .setSmallIcon(icon)
             .setContentTitle(title)
