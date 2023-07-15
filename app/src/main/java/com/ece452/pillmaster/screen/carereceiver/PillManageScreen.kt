@@ -132,6 +132,7 @@ fun ItemDescriptionPopup(
                     Text(text = "Close")
                 }
                 Spacer(modifier = Modifier.weight(1f))
+                // Todo need to delete not only the pill in database, also those reminders relating this pill
                 Button(
                     onClick = {
                         onDeleteChange()
