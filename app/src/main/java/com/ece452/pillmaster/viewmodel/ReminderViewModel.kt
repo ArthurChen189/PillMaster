@@ -28,6 +28,17 @@ class ReminderViewModel @Inject constructor(
             repository.update(reminder.copy(completed = !reminder.completed))
         }
     }
+
+    fun buildReminderText(reminderList: List<Reminder>): String {
+        val stringBuilder = StringBuilder()
+        stringBuilder.append("Today you need to")
+        for (reminder in reminderList) {
+            if (!reminder.completed){
+                stringBuilder.append("take ${reminder.name} at Time ${reminder.time},")
+            }
+        }
+        return stringBuilder.toString()
+    }
     
 //     private val _listofReminders: MutableState<List<Reminder>> = mutableStateOf(emptyList())
 //     val listOfReminders: State<List<Reminder>> = _listofReminders
