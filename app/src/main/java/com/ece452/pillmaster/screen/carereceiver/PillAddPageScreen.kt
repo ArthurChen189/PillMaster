@@ -6,25 +6,38 @@ import android.os.Build
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.resolveDefaults
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ece452.pillmaster.model.ReminderTime
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillAddPageViewModel
 import java.time.LocalDate
@@ -50,13 +63,20 @@ fun PillAddPageScreen(
     var isChecked by remember { mutableStateOf(false) }
     val context = LocalContext.current
     var description by remember { mutableStateOf(savedStateHandle?.get<String>("description") ?: "") }
-
+    val reminderTimeList = remember { mutableStateListOf<ReminderTime>() }
+    if (reminderTime != "") {
+        val hour = reminderTime.substringBefore(":").toInt()
+        val min = reminderTime.substringAfter(":").toInt()
+        reminderTimeList.clear()
+        reminderTimeList.add(ReminderTime(hour = hour, min = min, timeString = reminderTime))
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
+
         TextField(
             value = pillName,
             onValueChange = { pillName = it },
@@ -85,13 +105,40 @@ fun PillAddPageScreen(
             }
         }
 
-        // TODO requested by Anna: Allow user to add multiple reminderTimes, 
+        // TODO requested by Anna: Allow user to add multiple reminderTimes,
         // and when user clicks submit, newPillSubmit to reminder repository for each reminderTime
-        TimePicker(
-            reminderTime = reminderTime,
-            onReminderTimeChange = { reminderTime = it },
-            reminderTimeTitle = "*Reminder Time"
-        )
+        Column(){
+            Text("Selected Reminder Times:", fontSize = 20.sp)
+            Spacer(modifier = Modifier.size(5.dp))
+            LazyRow {
+                items(reminderTimeList) {reminderTime  ->
+                    Row(
+                        modifier = Modifier.width(150.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+
+                    ) {
+                        Text(reminderTime.timeString, fontSize = 25.sp)
+                        Spacer(modifier = Modifier.weight(1f))
+                        Button(onClick = {reminderTimeList.remove(reminderTime)},
+                            shape = RoundedCornerShape(10.dp)) {
+                            Icon(
+                                imageVector = Icons.Filled.Delete,
+                                contentDescription = "Delete",
+                                )
+                        }
+                    }
+                }
+            }
+            TimePicker2(
+                selectedTimes = reminderTimeList,
+                onSelectedTimesChange = { times ->
+                    reminderTimeList.clear()
+                    reminderTimeList.addAll(times)
+                }
+
+            )
+        }
 
         DatePicker(
             date = startDate,
@@ -147,7 +194,15 @@ fun PillAddPageScreen(
                     ) {
                         // All required fields are filled
                         // submit the input data here
-                        viewModel.newPillSubmit(pillName,description, reminderTime, startDate, endDate, selectedOption, isChecked)
+                        viewModel.pillListSubmit(
+                            pillName,
+                            description,
+                            reminderTimeList,
+                            startDate,
+                            endDate,
+                            selectedOption,
+                            isChecked
+                        )
                         navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
                     } else {
                         Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
@@ -294,6 +349,47 @@ fun TimePicker(
         )
     {
         Text(text = "$reminderTimeTitle $reminderTime", fontSize = 20.sp)
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.S)
+@Composable
+fun TimePicker2(
+    selectedTimes: List<ReminderTime>,
+    onSelectedTimesChange: (List<ReminderTime>) -> Unit,
+) {
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
+
+    val timePickerDialog = remember {
+        TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
+            val formattedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+            val updatedTimes = selectedTimes.toMutableList()
+            updatedTimes.add(ReminderTime(hour = selectedHour, min = selectedMinute, timeString = formattedTime))
+            onSelectedTimesChange(updatedTimes)
+        }
+    }
+
+    Button(
+        onClick = {
+            TimePickerDialog(
+                context,
+                timePickerDialog,
+                calendar[Calendar.HOUR_OF_DAY],
+                calendar[Calendar.MINUTE],
+                false
+            ).show()
+        },
+        modifier = Modifier
+            .height(40.dp),
+        shape = RoundedCornerShape(10.dp)
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Add,
+            contentDescription = "Add",
+            Modifier.size((30.dp)),
+
+            )
     }
 }
 
