@@ -31,12 +31,21 @@ class PillRepository
     override suspend fun getPill(pillId: String): Pill? =
         firestore.collection(PILL_COLLECTION).document(pillId).get().await().toObject()
 
+    // When delete a pill, delete all reminders of that pill
     override suspend fun delete(pillId: String) {
+        val pillName = getPill(pillId)?.name
+        val userid = auth.getUserId()
+        val batch = firestore.batch() // Use batch write to improve performance
+        val remindersToDelete = firestore.collection(REMINDER_COLLECTION).whereEqualTo(USER_ID_FIELD, userid).whereEqualTo(NAME_FIELD, pillName).get().await().documents
+        remindersToDelete.forEach { batch.delete(it.reference) }
+        batch.commit().await()
         firestore.collection(PILL_COLLECTION).document(pillId).delete().await()
     }
 
     companion object {
         private const val USER_ID_FIELD = "userId"
+        private const val NAME_FIELD = "name"
+        private const val REMINDER_COLLECTION = "reminders"
         private const val PILL_COLLECTION = "pills"
     }
 }
