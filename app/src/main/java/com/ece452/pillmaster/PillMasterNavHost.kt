@@ -1,5 +1,6 @@
 package com.ece452.pillmaster
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.ece452.pillmaster.screen.carereceiver.AutoFillEntry
@@ -11,6 +12,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.ece452.pillmaster.screen.caregiver.CareGiverMessageScreen
 import com.ece452.pillmaster.screen.carereceiver.CalendarScreen
 import com.ece452.pillmaster.screen.carereceiver.CaregiverManageScreen
 import com.ece452.pillmaster.screen.carereceiver.MessageScreen
@@ -25,6 +27,7 @@ import com.ece452.pillmaster.screen.common.PillAddPageScreen
 import com.ece452.pillmaster.screen.common.SignupScreen
 import com.ece452.pillmaster.utils.NavigationPath
 
+@SuppressLint("NewApi")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PillMasterNavHost(
@@ -63,7 +66,14 @@ fun PillMasterNavHost(
             )
         }
         composable(NavigationPath.CARE_GIVER_HOMEPAGE.route) {
-            CareGiverHomeScreen()
+            CareGiverHomeScreen(
+                navController = navController
+            )
+        }
+        composable(NavigationPath.CARE_GIVER_MESSAGE.route) {
+            CareGiverMessageScreen(
+                navController = navController
+            )
         }
         composable(NavigationPath.PILL_ADD_PAGE.route) { entry ->
             PillAddPageScreen(navController = navController, entry)

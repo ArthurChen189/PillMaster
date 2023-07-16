@@ -6,6 +6,7 @@ import com.ece452.pillmaster.usecase.GetReminderUseCase
 import com.ece452.pillmaster.usecase.IGetReminderUseCase
 import com.ece452.pillmaster.repository.IAuthRepository
 import com.ece452.pillmaster.repository.AuthRepository
+import com.ece452.pillmaster.repository.CareGiverContactRepository
 import com.ece452.pillmaster.repository.CareReceiverContactRepository
 import com.ece452.pillmaster.repository.IContactRepository
 import com.ece452.pillmaster.repository.IPillRepository
@@ -21,6 +22,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 // this is the place we tell Hilt how to make some of our dependencies
@@ -72,7 +74,14 @@ class AppModule {
 
         @Binds
         @Singleton
+        @Named("careReceiver")
         fun provideCareReceiverContactRepository(repo: CareReceiverContactRepository) : IContactRepository
+
+        @Binds
+        @Singleton
+        @Named("careGiver")
+        fun provideCareGiverContactRepository(repo: CareGiverContactRepository) : IContactRepository
+
 
 
         @Binds
