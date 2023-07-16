@@ -99,7 +99,6 @@ fun CareGiverMessageScreen(
                 }
                 // TODO: be able to select one contact to accept request
             },
-            modifier = Modifier.fillMaxWidth()
         ) {
             Text("Accept first contact request")
         }
@@ -114,7 +113,6 @@ fun CareGiverMessageScreen(
                 }
                 // TODO: be able to select one contact to accept request
             },
-            modifier = Modifier.size(width = 100.dp, height = 50.dp)
         ) {
             Text("refuse first contact request")
         }

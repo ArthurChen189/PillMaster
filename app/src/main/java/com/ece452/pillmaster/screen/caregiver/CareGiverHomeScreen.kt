@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,6 +19,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -33,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -136,8 +140,6 @@ fun CareGiverHomeScreen(
         Button(
             onClick = {
                       showDialog = true
-                // TODO moves this
-//                navController.navigate(NavigationPath.CARE_GIVER_MESSAGE.route)
             },
             Modifier
                 .padding(horizontal = 5.dp),
@@ -149,6 +151,7 @@ fun CareGiverHomeScreen(
                 Modifier.size((40.dp)),
                 )
         }
+        ShortNavBar(navController)
         if (showDialog) {
             AlertDialog(
                 onDismissRequest = { showDialog = false },
@@ -172,11 +175,6 @@ fun CareGiverHomeScreen(
                         Text("Send contact request")
                     }
                 },
-                dismissButton = {
-                    Button(onClick = { showDialog = false }) {
-                        Text("Cancel")
-                    }
-                }
             )
         }
         if (isError) {
@@ -216,6 +214,26 @@ fun SingleReceiverItem(
                 Modifier.
                 padding(start = 10.dp)
             )
+        }
+    }
+}
+
+@Composable
+fun ShortNavBar(
+    navController: NavController,
+) {
+    Row(
+        Modifier
+            .height(80.dp)
+            .padding(0.dp, 0.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        NavItem(Icons.Rounded.Email, "Message", Color(0xFF227EBA)) {
+            navController.navigate(NavigationPath.CARE_GIVER_MESSAGE.route)
+        }
+        NavItem(Icons.Rounded.Settings,"Setting", Color(0xFF227EBA) ) {
+            // TODO go to care giver's manage page + sign out.
+//            navController.navigate(NavigationPath.RECEIVER_SETTING.route)
         }
     }
 }
