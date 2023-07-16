@@ -13,5 +13,6 @@ enum class NavigationPath(val route: String) {
     MESSAGE("message"),
     RECEIVER_SETTING("receiver_setting"),
     PILL_MANAGE("pill_manage"),
-    CAREGIVER_MANAGE("caregiver_manage")
+    CAREGIVER_MANAGE("caregiver_manage"),
+    CARE_GIVER_MESSAGE("care_giver_message"),
 }

@@ -30,14 +30,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.ece452.pillmaster.model.Contact
 import com.ece452.pillmaster.screen.common.NavBar
-import com.ece452.pillmaster.viewmodel.MessageViewModel
+import com.ece452.pillmaster.viewmodel.CareReceiverMessageViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MessageScreen(
     navController: NavController,
-    messageViewModel: MessageViewModel = hiltViewModel()
+    messageViewModel: CareReceiverMessageViewModel = hiltViewModel()
 ) {
     val connectedContacts = messageViewModel.connectedContacts.collectAsStateWithLifecycle(emptyList())
     val sentContactRequests = messageViewModel.sentContactRequests.collectAsStateWithLifecycle(emptyList())

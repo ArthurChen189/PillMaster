@@ -15,6 +15,10 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
+private const val CARE_RECEIVER_ID_FIELD = "careReceiverId"
+private const val CARE_GIVER_ID_FIELD = "careGiverId"
+private const val CONTACT_COLLECTION = "contacts"
+
 interface IContactRepository {
     val sentContactRequests: Flow<List<Contact>>
     val pendingContactRequests: Flow<List<Contact>>
@@ -67,10 +71,50 @@ class CareReceiverContactRepository
         contact.careReceiverConnected = true
         firestore.collection(CONTACT_COLLECTION).document(contact.id).set(contact).await()
     }
+}
 
-    companion object {
-        private const val CARE_RECEIVER_ID_FIELD = "careReceiverId"
-        private const val CARE_GIVER_ID_FIELD = "careGiverId"
-        private const val CONTACT_COLLECTION = "contacts"
+class CareGiverContactRepository
+@Inject constructor (
+    private val firestore: FirebaseFirestore,
+    private val auth: AuthRepository)
+    : IContactRepository
+{
+    private var careReceiverContactGroup: CareReceiverContactGroup = CareReceiverContactGroup()
+
+    override val sentContactRequests: Flow<List<Contact>>
+        get() = careReceiverContactGroup.getSentContactRequests(getContacts())
+
+    override val pendingContactRequests: Flow<List<Contact>>
+        get() = careReceiverContactGroup.getPendingContactRequests(getContacts())
+
+    override val connectedContacts: Flow<List<Contact>>
+        get() = careReceiverContactGroup.getConnectedContacts(getContacts())
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun getContacts(): Flow<List<Contact>> =
+        auth.currentUserFlow.flatMapLatest { user ->
+            firestore.collection(CONTACT_COLLECTION)
+                .whereEqualTo(CARE_GIVER_ID_FIELD, user.userId)
+                .dataObjects()
+        }
+
+    override suspend fun addContact(currentUserId: String, targetUserEmail: String) {
+        val currentUser = auth.getUserProfileById(currentUserId)
+        val targetUser = auth.getUserProfileByEmail(targetUserEmail)
+        if (currentUser.userId == targetUser.userId) {
+            throw Exception("Cannot add yourself as a contact.")
+        }
+        val contact = careReceiverContactGroup.createContactRequest(currentUser = currentUser, targetUser = targetUser)
+        contact.id = firestore.collection(CONTACT_COLLECTION).add(contact).await().id
+    }
+
+    override suspend fun removeContact(contact: Contact) {
+        firestore.collection(CONTACT_COLLECTION).document(contact.id).delete().await()
+    }
+
+    override suspend fun acceptContactRequest(contact: Contact) {
+        contact.careGiverConnected = true
+        firestore.collection(CONTACT_COLLECTION).document(contact.id).set(contact).await()
     }
 }
+
