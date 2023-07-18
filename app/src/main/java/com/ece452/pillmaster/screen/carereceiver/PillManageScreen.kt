@@ -1,6 +1,7 @@
 package com.ece452.pillmaster.screen.carereceiver
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,14 +14,19 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,12 +54,13 @@ fun PillManageScreen(
         LazyColumn(modifier = Modifier.weight(1f)){
             val pillList = pills.value
             items(pillList) { pillItem ->
-                // TODO requested by Anna: show reminderTime below each SingleReminderItem's reminderName
                 Button(
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF85CED4)),
                     modifier = Modifier
                         .fillMaxWidth()
                         .size(80.dp)
                         .padding(10.dp),
+
                     shape = RoundedCornerShape(10.dp),
                     onClick = {
                         viewModel.onGetPill(pillItem.id)
@@ -70,6 +77,7 @@ fun PillManageScreen(
                 onDeleteChange = { viewModel.onPillDelete(viewModel.pill.value.id)}
             )
         }
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -85,7 +93,22 @@ fun PillManageScreen(
             ) {
                 Text("Back")
             }
+            Spacer(modifier = Modifier.weight(1f))
+            Button(
+                onClick = {
+                    navController.navigate(NavigationPath.PILL_ADD_PAGE.route)
+                },
+                Modifier.size(width = 120.dp, height = 50.dp),
 
+
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Add",
+                    Modifier.size((30.dp)),
+
+                    )
+            }
 
         }
     }
