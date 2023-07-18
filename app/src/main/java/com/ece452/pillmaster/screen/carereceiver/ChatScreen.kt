@@ -20,7 +20,8 @@ import com.ece452.pillmaster.utils.HealthBotSearch
 fun ChatScreen(
     // TODO - Expose an action if this action takes the user to another screen.
     navController: NavController,
-    viewModel: HealthBotSearch = hiltViewModel(),
+//    viewModel: HealthBotSearch = hiltViewModel(),
+// this viewModel is injected into ChatSendMessage.
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),

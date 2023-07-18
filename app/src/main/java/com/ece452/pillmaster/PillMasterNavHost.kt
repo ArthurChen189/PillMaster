@@ -15,6 +15,7 @@ import androidx.navigation.navArgument
 import com.ece452.pillmaster.screen.caregiver.CareGiverMessageScreen
 import com.ece452.pillmaster.screen.carereceiver.CalendarScreen
 import com.ece452.pillmaster.screen.carereceiver.CaregiverManageScreen
+import com.ece452.pillmaster.screen.carereceiver.ChatScreen
 import com.ece452.pillmaster.screen.carereceiver.MessageScreen
 import com.ece452.pillmaster.screen.carereceiver.PillManageScreen
 import com.ece452.pillmaster.screen.carereceiver.ReceiverSettingScreen

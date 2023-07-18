@@ -1,6 +1,9 @@
 package com.ece452.pillmaster.utils
 
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.aallam.openai.api.completion.CompletionRequest
 import com.aallam.openai.api.completion.TextCompletion
@@ -17,8 +20,14 @@ import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 class HealthBotSearch @Inject constructor(
-    private val _messages: Message
+//    private val _messages: Message
+// Message data class has provided no constructor
 ): ViewModel() {
+
+    // directly use the data class
+    var _messages by mutableStateOf(Message())
+        private set
+
     val PROMPT = "You are a helpful AI assistant that does not hallucinate. You only provide information that is true and factual.\n" +
             "Generate 10 documents that will answer the following the questions:\n";
     val config = OpenAIConfig(
@@ -29,20 +38,21 @@ class HealthBotSearch @Inject constructor(
 
     val openAI = OpenAI(config)
 
-    suspend fun getResponse(message: Message) {
-        if (_messages!= null && _messages.question != "") {
+    suspend fun getResponse() {
+        if (_messages.question != "") {
             val completionRequest = CompletionRequest(
                 model = ModelId("text-davinci-003"),
                 prompt = PROMPT + _messages.question,
                 echo = true
             )
             val completion: TextCompletion = openAI.completion(completionRequest)
-            _messages.answer = completion.choices[0].text
+            _messages = _messages.copy(answer = completion.choices[0].text)
         }
     }
 
     suspend fun sendMessage(message: String) {
-        _messages.question = message
+        _messages = _messages.copy(question = message)
+        getResponse()
     }
 
 }

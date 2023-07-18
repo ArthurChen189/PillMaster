@@ -63,9 +63,10 @@ fun ChatSendMessage(
                     )
                     IconButton(onClick = {
                         scope.launch {
-                            val textClone = text.text.toString()
+                            val textClone = text.text
                             text = TextFieldValue("")
                             healthBotSearch.sendMessage(textClone)
+                            // Called getResponse inside sendMessage.
                         }
                     }) {
                         Icon(
@@ -77,6 +78,9 @@ fun ChatSendMessage(
                     }
                 }
             }
+            // TODO Might move it into the box.
+            // Try to display the gpt's response.
+            Text(text = "Response: ${healthBotSearch._messages.answer}")
         }
     }
 }
