@@ -77,10 +77,10 @@ fun ChatSendMessage(
                         )
                     }
                 }
+                // TODO Might move it into the box.
+                // Try to display the gpt's response.
+                Text(text = "Response: ${healthBotSearch._messages.answer}")
             }
-            // TODO Might move it into the box.
-            // Try to display the gpt's response.
-            Text(text = "Response: ${healthBotSearch._messages.answer}")
         }
     }
 }

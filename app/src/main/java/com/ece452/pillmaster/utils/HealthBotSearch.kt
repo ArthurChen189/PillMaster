@@ -31,8 +31,8 @@ class HealthBotSearch @Inject constructor(
     val PROMPT = "You are a helpful AI assistant that does not hallucinate. You only provide information that is true and factual.\n" +
             "Generate 10 documents that will answer the following the questions:\n";
     val config = OpenAIConfig(
-        token = "api-token",
-        timeout = Timeout(socket = 60.seconds),
+        token = "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"
+//        timeout = Timeout(socket = 60.seconds),
         // additional configurations...
     )
 
