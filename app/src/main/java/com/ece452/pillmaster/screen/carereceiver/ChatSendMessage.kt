@@ -11,7 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ece452.pillmaster.utils.HealthBotSearch
+import com.ece452.pillmaster.viewmodel.HealthBotSearch
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -64,7 +64,7 @@ fun ChatSendMessage(
                     IconButton(onClick = {
                         scope.launch {
                             val textClone = text.text
-                            text = TextFieldValue("")
+//                            text = TextFieldValue("")
                             healthBotSearch.sendMessage(textClone)
                             // Called getResponse inside sendMessage.
                         }
@@ -78,9 +78,9 @@ fun ChatSendMessage(
                     }
                 }
                 // TODO Might move it into the box.
-                // Try to display the gpt's response.
-                Text(text = "Response: ${healthBotSearch._messages.answer}")
             }
+            // Try to display the gpt's response.
+            Text(text = "${healthBotSearch._messages.answer}")
         }
     }
 }
