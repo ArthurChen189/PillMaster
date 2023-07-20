@@ -74,14 +74,13 @@ class AppModule {
 
         @Binds
         @Singleton
-        @Named("careReceiver")
+        @Named("careReceiverContact")
         fun provideCareReceiverContactRepository(repo: CareReceiverContactRepository) : IContactRepository
 
         @Binds
         @Singleton
-        @Named("careGiver")
+        @Named("careGiverContact")
         fun provideCareGiverContactRepository(repo: CareGiverContactRepository) : IContactRepository
-
 
 
         @Binds
