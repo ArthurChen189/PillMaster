@@ -2,6 +2,7 @@ package com.ece452.pillmaster.screen.carereceiver
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.imePadding
@@ -13,13 +14,18 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ece452.pillmaster.viewmodel.HealthBotSearch
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ece452.pillmaster.R
 import kotlinx.coroutines.launch
+import java.time.format.TextStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -77,11 +83,27 @@ fun ChatSendMessage(
                         )
                     }
                 }
-                // TODO Might move it into the box.
             }
-            // Try to display the gpt's response.
-            Text(text = "${healthBotSearch._messages.answer}")
+            // Try to display the gpt's response in a scrollable box.
+            Row(
+                // center the text content in the column
+//            verticalArrangement = Arrangement.Center,
+//            horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .verticalScroll(rememberScrollState())
+                .padding(8.dp)
+
+            ) {
+                Text(text = "${healthBotSearch._messages.answer}",
+                    modifier = Modifier
+                        .background(Color(R.color.teal_200))
+                )
+
+            }
         }
+
     }
 }
 

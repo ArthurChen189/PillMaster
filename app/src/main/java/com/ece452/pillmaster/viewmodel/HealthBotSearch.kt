@@ -30,10 +30,13 @@ class HealthBotSearch @Inject constructor(
     var _messages by mutableStateOf(Message())
         private set
 
-    val PROMPT = "You are a helpful AI assistant that does not hallucinate. You only provide information that is true and factual.\n" +
-            "Generate 10 documents that will answer the following the questions:\n";
+//    val PROMPT = "You are a helpful AI assistant that does not hallucinate. You only provide information that is true and factual.\n" +
+//            "Generate 10 passages that will answer the following the questions:\n";
+    val PROMPT = "You are a helpful AI healthcare assistant that does not hallucinate.\n" +
+        "Answer the following the question and give your confident score out of 10 in format of <Confidence: x/10> at the beginning" +
+        ", 1 means you are very unsure, 10 means you are very sure about your knowledge:\n";
     val config = OpenAIConfig(
-        token = " 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"
+        token = "openai-token"
 //        timeout = Timeout(socket = 60.seconds),
         // additional configurations...
     )
@@ -45,6 +48,7 @@ class HealthBotSearch @Inject constructor(
             val completionRequest = CompletionRequest(
                 model = ModelId("text-davinci-003"),
                 prompt = PROMPT + _messages.question,
+                maxTokens = 200,
                 echo = false
             )
             val completion: TextCompletion = openAI.completion(completionRequest)
