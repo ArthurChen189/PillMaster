@@ -42,14 +42,14 @@ import com.ece452.pillmaster.viewmodel.CareReceiverContactViewModel
 @Composable
 inline fun<reified T : BaseContactViewModel> ContactScreen(
     navController: NavController,
-    messageViewModel: T = hiltViewModel()
+    contactViewModel: T = hiltViewModel()
 ) {
-    val connectedContacts = messageViewModel.connectedContacts.collectAsStateWithLifecycle(emptyList())
-    val sentContactRequests = messageViewModel.sentContactRequests.collectAsStateWithLifecycle(emptyList())
-    val pendingContactRequests = messageViewModel.pendingContactRequests.collectAsStateWithLifecycle(emptyList())
-    val messageUiState = messageViewModel.messageUiState
-    val isCareReceiver = messageViewModel is CareReceiverContactViewModel
-    val isError = messageUiState.error != null
+    val connectedContacts = contactViewModel.connectedContacts.collectAsStateWithLifecycle(emptyList())
+    val sentContactRequests = contactViewModel.sentContactRequests.collectAsStateWithLifecycle(emptyList())
+    val pendingContactRequests = contactViewModel.pendingContactRequests.collectAsStateWithLifecycle(emptyList())
+    val contactUiState = contactViewModel.contactUiState
+    val isCareReceiver = contactViewModel is CareReceiverContactViewModel
+    val isError = contactUiState.error != null
     val context = LocalContext.current
 
     Row(
@@ -79,7 +79,7 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
         // TODO - Build this screen as per the Figma file.
         if (isError) {
             Text(
-                text = messageUiState.error ?: "unknown error",
+                text = contactUiState.error ?: "unknown error",
                 modifier = Modifier.padding(bottom = 16.dp)
             )
         }
@@ -104,8 +104,8 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
                     contact = sentContactRequest,
                     isCareReceiver = isCareReceiver,
                     onButtonClick = {
-                        messageViewModel.onContactToRemoveChange(sentContactRequest)
-                        messageViewModel.removeContact()
+                        contactViewModel.onContactToRemoveChange(sentContactRequest)
+                        contactViewModel.removeContact()
                     }
                 )
             }
@@ -119,29 +119,29 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
                     isCareReceiver = isCareReceiver,
                     onAcceptButtonClick = {
                         // Implement the action to accept the contact request
-                        messageViewModel.onContactToAcceptChange(pendingContactRequest)
-                        messageViewModel.acceptContact()
+                        contactViewModel.onContactToAcceptChange(pendingContactRequest)
+                        contactViewModel.acceptContact()
                     },
                     onRefuseButtonClick = {
                         // Implement the action to refuse the contact request
-                        messageViewModel.onContactToRemoveChange(pendingContactRequest)
-                        messageViewModel.removeContact()
+                        contactViewModel.onContactToRemoveChange(pendingContactRequest)
+                        contactViewModel.removeContact()
                     }
                 )
             }
         }
 
         TextField(
-            value = messageUiState.newContactEmail,
-            onValueChange = { messageViewModel.onNewContactEmailChange(it) },
+            value = contactUiState.newContactEmail,
+            onValueChange = { contactViewModel.onNewContactEmailChange(it) },
             label = { Text("Add new contact") },
             modifier = Modifier.fillMaxWidth()
         )
 
         Button(
             onClick = {
-                if (messageUiState.newContactEmail.isNotEmpty()) {
-                    messageViewModel.addNewContact()
+                if (contactUiState.newContactEmail.isNotEmpty()) {
+                    contactViewModel.addNewContact()
                 } else {
                     Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
                 }

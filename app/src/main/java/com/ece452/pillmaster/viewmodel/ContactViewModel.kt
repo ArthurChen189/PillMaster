@@ -20,7 +20,7 @@ abstract class BaseContactViewModel constructor(
     private val authRepository: AuthRepository,
     protected val contactRepository: IContactRepository
 ) : ViewModel() {
-    var messageUiState by mutableStateOf(MessageUiState())
+    var contactUiState by mutableStateOf(ContactUiState())
         protected set
 
     val currentUserId: String
@@ -35,36 +35,36 @@ abstract class BaseContactViewModel constructor(
 
     fun removeContact() = viewModelScope.launch {
         try {
-            messageUiState.contactToRemove?.let {
+            contactUiState.contactToRemove?.let {
                 contactRepository.removeContact(it)
             }
         } catch (e: Exception) {
-            messageUiState = messageUiState.copy(error = e.message ?: "unknown error")
+            contactUiState = contactUiState.copy(error = e.message ?: "unknown error")
             e.printStackTrace()
         }
     }
 
     fun acceptContact() = viewModelScope.launch {
         try {
-            messageUiState.contactToAccept?.let {
+            contactUiState.contactToAccept?.let {
                 contactRepository.acceptContactRequest(it)
             }
         } catch (e: Exception) {
-            messageUiState = messageUiState.copy(error = e.message ?: "unknown error")
+            contactUiState = contactUiState.copy(error = e.message ?: "unknown error")
             e.printStackTrace()
         }
     }
 
     fun onNewContactEmailChange(email: String) {
-        messageUiState = messageUiState.copy(newContactEmail = email)
+        contactUiState = contactUiState.copy(newContactEmail = email)
     }
 
     fun onContactToRemoveChange(contact: Contact?) {
-        messageUiState = messageUiState.copy(contactToRemove = contact)
+        contactUiState = contactUiState.copy(contactToRemove = contact)
     }
 
     fun onContactToAcceptChange(contact: Contact?) {
-        messageUiState = messageUiState.copy(contactToAccept = contact)
+        contactUiState = contactUiState.copy(contactToAccept = contact)
     }
 }
 
@@ -75,7 +75,7 @@ class CareGiverContactViewModel @Inject constructor(
 ) : BaseContactViewModel(authRepository, contactRepository) {
     override fun addNewContact(): Job = viewModelScope.launch {
         try {
-            val newContactEmail = messageUiState.newContactEmail
+            val newContactEmail = contactUiState.newContactEmail
 
             // Check if the new contact email already exists in connectedContacts
             val connectedContactExists = contactRepository.connectedContacts.first().any { contact ->
@@ -102,9 +102,9 @@ class CareGiverContactViewModel @Inject constructor(
             }
 
             // Add the new contact if it doesn't exist in any of the lists
-            contactRepository.addContact(currentUserId, messageUiState.newContactEmail)
+            contactRepository.addContact(currentUserId, contactUiState.newContactEmail)
         } catch (e: Exception) {
-            messageUiState = messageUiState.copy(error = e.message ?: "unknown error")
+            contactUiState = contactUiState.copy(error = e.message ?: "unknown error")
             e.printStackTrace()
         }
     }
@@ -117,7 +117,7 @@ class CareReceiverContactViewModel @Inject constructor(
 ): BaseContactViewModel(authRepository, contactRepository) {
     override fun addNewContact() = viewModelScope.launch {
         try {
-            val newContactEmail = messageUiState.newContactEmail
+            val newContactEmail = contactUiState.newContactEmail
 
             // Check if the new contact email already exists in connectedContacts
             val connectedContactExists = contactRepository.connectedContacts.first().any { contact ->
@@ -144,15 +144,15 @@ class CareReceiverContactViewModel @Inject constructor(
             }
 
             // Add the new contact if it doesn't exist in any of the lists
-            contactRepository.addContact(currentUserId, messageUiState.newContactEmail)
+            contactRepository.addContact(currentUserId, contactUiState.newContactEmail)
         } catch (e: Exception) {
-            messageUiState = messageUiState.copy(error = e.message ?: "unknown error")
+            contactUiState = contactUiState.copy(error = e.message ?: "unknown error")
             e.printStackTrace()
         }
     }
 }
 
-data class MessageUiState(
+data class ContactUiState(
     var newContactEmail: String = "",
     var contactToRemove: Contact? = null,
     var contactToAccept: Contact? = null,

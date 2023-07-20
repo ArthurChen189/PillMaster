@@ -76,7 +76,7 @@ fun PillMasterNavHost(
         composable(NavigationPath.CARE_GIVER_CONTACT.route) {
             ContactScreen(
                 navController = navController,
-                messageViewModel = hiltViewModel<CareGiverContactViewModel>()
+                contactViewModel = hiltViewModel<CareGiverContactViewModel>()
             )
         }
         composable(NavigationPath.PILL_ADD_PAGE.route) { entry ->
@@ -94,7 +94,7 @@ fun PillMasterNavHost(
         composable(NavigationPath.CARE_RECEIVER_CONTACT.route) {
             ContactScreen(
                 navController = navController,
-                messageViewModel = hiltViewModel<CareReceiverContactViewModel>()
+                contactViewModel = hiltViewModel<CareReceiverContactViewModel>()
             )
         }
         composable(NavigationPath.RECEIVER_SETTING.route) {
