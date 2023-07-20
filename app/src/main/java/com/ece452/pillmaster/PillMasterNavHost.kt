@@ -107,6 +107,12 @@ fun PillMasterNavHost(
                 navController = navController,
             )
         }
+
+        composable(NavigationPath.HEALTH_BOT_PATH.route) {
+            ChatScreen(
+                navController = navController,
+            )
+        }
     }
 }
 
