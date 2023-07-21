@@ -66,6 +66,10 @@ abstract class BaseContactViewModel constructor(
     fun onContactToAcceptChange(contact: Contact?) {
         contactUiState = contactUiState.copy(contactToAccept = contact)
     }
+
+    fun onErrorChange(error: String) {
+        contactUiState = contactUiState.copy(error = error)
+    }
 }
 
 @HiltViewModel
@@ -156,5 +160,5 @@ data class ContactUiState(
     var newContactEmail: String = "",
     var contactToRemove: Contact? = null,
     var contactToAccept: Contact? = null,
-    var error: String? = null
+    var error: String = ""
 )

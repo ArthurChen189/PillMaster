@@ -12,6 +12,8 @@ enum class NavigationPath(val route: String) {
     CALENDAR("calendar"),
     CARE_GIVER_CONTACT("care_giver_contact"),
     CARE_RECEIVER_CONTACT("care_receiver_contact"),
+    CARE_GIVER_USER_CHAT("care_giver_user_chat/receiverId={receiverId}/receiverEmail={receiverEmail}"),
+    CARE_RECEIVER_USER_CHAT("care_receiver_user_chat/receiverId={receiverId}/receiverEmail={receiverEmail}"),
     RECEIVER_SETTING("receiver_setting"),
     PILL_MANAGE("pill_manage"),
     CAREGIVER_MANAGE("caregiver_manage"),
