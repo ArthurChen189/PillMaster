@@ -26,9 +26,12 @@ import com.ece452.pillmaster.screen.common.HomeScreen
 import com.ece452.pillmaster.screen.common.LoginScreen
 import com.ece452.pillmaster.screen.common.PillAddPageScreen
 import com.ece452.pillmaster.screen.common.SignupScreen
+import com.ece452.pillmaster.screen.common.UserChatScreen
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.CareGiverContactViewModel
+import com.ece452.pillmaster.viewmodel.CareGiverUserChatViewModel
 import com.ece452.pillmaster.viewmodel.CareReceiverContactViewModel
+import com.ece452.pillmaster.viewmodel.CareReceiverUserChatViewModel
 
 @SuppressLint("NewApi")
 @RequiresApi(Build.VERSION_CODES.O)
@@ -73,12 +76,6 @@ fun PillMasterNavHost(
                 navController = navController
             )
         }
-        composable(NavigationPath.CARE_GIVER_CONTACT.route) {
-            ContactScreen(
-                navController = navController,
-                messageViewModel = hiltViewModel<CareGiverContactViewModel>()
-            )
-        }
         composable(NavigationPath.PILL_ADD_PAGE.route) { entry ->
             PillAddPageScreen(navController = navController, entry)
         }
@@ -91,10 +88,36 @@ fun PillMasterNavHost(
                 navController = navController,
             )
         }
+        composable(NavigationPath.CARE_GIVER_CONTACT.route) {
+            ContactScreen(
+                navController = navController,
+                contactViewModel = hiltViewModel<CareGiverContactViewModel>()
+            )
+        }
         composable(NavigationPath.CARE_RECEIVER_CONTACT.route) {
             ContactScreen(
                 navController = navController,
-                messageViewModel = hiltViewModel<CareReceiverContactViewModel>()
+                contactViewModel = hiltViewModel<CareReceiverContactViewModel>()
+            )
+        }
+        composable(NavigationPath.CARE_GIVER_USER_CHAT.route) { backStackEntry ->
+            val receiverId = backStackEntry.arguments?.getString("receiverId") ?: ""
+            val receiverEmail = backStackEntry.arguments?.getString("receiverEmail") ?: ""
+            UserChatScreen(
+                navController = navController,
+                receiverId = receiverId,
+                receiverEmail = receiverEmail,
+                userChatViewModel = hiltViewModel<CareGiverUserChatViewModel>()
+            )
+        }
+        composable(NavigationPath.CARE_RECEIVER_USER_CHAT.route) { backStackEntry ->
+            val receiverId = backStackEntry.arguments?.getString("receiverId") ?: ""
+            val receiverEmail = backStackEntry.arguments?.getString("receiverEmail") ?: ""
+            UserChatScreen(
+                navController = navController,
+                receiverId = receiverId,
+                receiverEmail = receiverEmail,
+                userChatViewModel = hiltViewModel<CareReceiverUserChatViewModel>()
             )
         }
         composable(NavigationPath.RECEIVER_SETTING.route) {

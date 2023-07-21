@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +36,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.ece452.pillmaster.model.Contact
+import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.BaseContactViewModel
 import com.ece452.pillmaster.viewmodel.CareReceiverContactViewModel
 
@@ -42,30 +45,28 @@ import com.ece452.pillmaster.viewmodel.CareReceiverContactViewModel
 @Composable
 inline fun<reified T : BaseContactViewModel> ContactScreen(
     navController: NavController,
-    messageViewModel: T = hiltViewModel()
+    contactViewModel: T = hiltViewModel()
 ) {
-    val connectedContacts = messageViewModel.connectedContacts.collectAsStateWithLifecycle(emptyList())
-    val sentContactRequests = messageViewModel.sentContactRequests.collectAsStateWithLifecycle(emptyList())
-    val pendingContactRequests = messageViewModel.pendingContactRequests.collectAsStateWithLifecycle(emptyList())
-    val messageUiState = messageViewModel.messageUiState
-    val isCareReceiver = messageViewModel is CareReceiverContactViewModel
-    val isError = messageUiState.error != null
+    val connectedContacts = contactViewModel.connectedContacts.collectAsStateWithLifecycle(emptyList())
+    val sentContactRequests = contactViewModel.sentContactRequests.collectAsStateWithLifecycle(emptyList())
+    val pendingContactRequests = contactViewModel.pendingContactRequests.collectAsStateWithLifecycle(emptyList())
+    val contactUiState = contactViewModel.contactUiState
+    val isCareReceiver = contactViewModel is CareReceiverContactViewModel
     val context = LocalContext.current
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.Top
-    ) {
-        IconButton(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier.padding(top = 8.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back"
-            )
-        }
+    if (contactUiState.error.isNotEmpty()) {
+        AlertDialog(
+            onDismissRequest = { contactViewModel.onErrorChange("") },
+            title = { Text("Error") },
+            text = { Text(contactUiState.error) },
+            confirmButton = {
+                Button(
+                    onClick = { contactViewModel.onErrorChange("") }
+                ) {
+                    Text("OK")
+                }
+            }
+        )
     }
 
     Column(
@@ -77,23 +78,32 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         // TODO - Build this screen as per the Figma file.
-        if (isError) {
-            Text(
-                text = messageUiState.error ?: "unknown error",
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-        }
-
+        TopAppBar(
+            title = { Text("Contacts") },
+            navigationIcon = {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                }
+            }
+        )
         Text(text = "Connected Contacts", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(connectedContacts.value) { connectedContactItem ->
+                val receiverId = if (isCareReceiver) connectedContactItem.careGiverId else connectedContactItem.careReceiverId
+                val receiverEmail = if (isCareReceiver) connectedContactItem.careGiverEmail else connectedContactItem.careReceiverEmail
+
                 SingleConnectedContactItem(
                     contact = connectedContactItem,
-                    isCareReceiver = isCareReceiver,
-                    onButtonClick = {
-                        //
+                    isCareReceiver = isCareReceiver
+                ) {
+                    val route = if (isCareReceiver) {
+                        NavigationPath.CARE_RECEIVER_USER_CHAT.route.replace("{receiverId}", receiverId).replace("{receiverEmail}", receiverEmail)
+                    } else {
+                        NavigationPath.CARE_GIVER_USER_CHAT.route.replace("{receiverId}", receiverId).replace("{receiverEmail}", receiverEmail)
                     }
-                )
+
+                    navController.navigate(route)
+                }
             }
         }
 
@@ -104,8 +114,8 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
                     contact = sentContactRequest,
                     isCareReceiver = isCareReceiver,
                     onButtonClick = {
-                        messageViewModel.onContactToRemoveChange(sentContactRequest)
-                        messageViewModel.removeContact()
+                        contactViewModel.onContactToRemoveChange(sentContactRequest)
+                        contactViewModel.removeContact()
                     }
                 )
             }
@@ -119,29 +129,29 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
                     isCareReceiver = isCareReceiver,
                     onAcceptButtonClick = {
                         // Implement the action to accept the contact request
-                        messageViewModel.onContactToAcceptChange(pendingContactRequest)
-                        messageViewModel.acceptContact()
+                        contactViewModel.onContactToAcceptChange(pendingContactRequest)
+                        contactViewModel.acceptContact()
                     },
                     onRefuseButtonClick = {
                         // Implement the action to refuse the contact request
-                        messageViewModel.onContactToRemoveChange(pendingContactRequest)
-                        messageViewModel.removeContact()
+                        contactViewModel.onContactToRemoveChange(pendingContactRequest)
+                        contactViewModel.removeContact()
                     }
                 )
             }
         }
 
         TextField(
-            value = messageUiState.newContactEmail,
-            onValueChange = { messageViewModel.onNewContactEmailChange(it) },
+            value = contactUiState.newContactEmail,
+            onValueChange = { contactViewModel.onNewContactEmailChange(it) },
             label = { Text("Add new contact") },
             modifier = Modifier.fillMaxWidth()
         )
 
         Button(
             onClick = {
-                if (messageUiState.newContactEmail.isNotEmpty()) {
-                    messageViewModel.addNewContact()
+                if (contactUiState.newContactEmail.isNotEmpty()) {
+                    contactViewModel.addNewContact()
                 } else {
                     Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
                 }

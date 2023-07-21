@@ -12,7 +12,9 @@ import com.ece452.pillmaster.repository.IContactRepository
 import com.ece452.pillmaster.repository.IPillRepository
 import com.ece452.pillmaster.repository.PillRepository
 import com.ece452.pillmaster.repository.IReminderRepository
+import com.ece452.pillmaster.repository.IUserChatRepository
 import com.ece452.pillmaster.repository.ReminderRepository
+import com.ece452.pillmaster.repository.UserChatRepository
 import com.ece452.pillmaster.service.IReminderService
 import dagger.Binds
 import dagger.Module
@@ -82,6 +84,9 @@ class AppModule {
         @Named("careGiverContact")
         fun provideCareGiverContactRepository(repo: CareGiverContactRepository) : IContactRepository
 
+        @Binds
+        @Singleton
+        fun provideUserChatRepository(repo: UserChatRepository) : IUserChatRepository
 
         @Binds
         @Singleton
