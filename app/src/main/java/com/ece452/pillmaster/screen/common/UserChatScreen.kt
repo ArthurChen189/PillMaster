@@ -44,7 +44,7 @@ inline fun<reified T : BaseUserChatViewModel> UserChatScreen(
 ) {
     val chatHistory = userChatViewModel.chatHistory.collectAsStateWithLifecycle(emptyList())
     val chatUiState = userChatViewModel.chatUiState
-    var currentUserId = userChatViewModel.currentUserId
+    val currentUserId = userChatViewModel.currentUserId
     val role = if (userChatViewModel is CareGiverUserChatViewModel) {
         UserRole.CARE_GIVER
     } else {
@@ -84,7 +84,6 @@ inline fun<reified T : BaseUserChatViewModel> UserChatScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp)
         ) {
             // Display chat history
             LazyColumn(

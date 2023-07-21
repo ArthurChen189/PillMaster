@@ -1,5 +1,7 @@
 package com.ece452.pillmaster.viewmodel
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ece452.pillmaster.model.UserChatMessage
 import com.ece452.pillmaster.repository.AuthRepository
-import com.ece452.pillmaster.repository.IUserChatRepository
 import com.ece452.pillmaster.repository.UserChatRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 abstract class BaseUserChatViewModel constructor(
     private val authRepository: AuthRepository,
-    private val chatRepository: IUserChatRepository
+    private val chatRepository: UserChatRepository
 ) : ViewModel() {
     var chatUiState by mutableStateOf(ChatUiState())
         protected set
@@ -25,10 +26,18 @@ abstract class BaseUserChatViewModel constructor(
 
     val currentUserId: String = authRepository.getUserId()
 
+    init {
+        viewModelScope.launch {
+            chatRepository.updateChatMessages()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     fun sendMessage(receiverId: String) = viewModelScope.launch {
         try {
             chatUiState.newMessage.let {
                 chatRepository.sendUserChatMessage(receiverId = receiverId, message = it)
+                onNewMessageChange("")
             }
         } catch (e: Exception) {
             onErrorChange(error = e.message ?: "unknown error")
