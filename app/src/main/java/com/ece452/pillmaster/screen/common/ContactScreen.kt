@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +36,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.ece452.pillmaster.model.Contact
+import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.BaseContactViewModel
 import com.ece452.pillmaster.viewmodel.CareReceiverContactViewModel
 
@@ -49,23 +52,21 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
     val pendingContactRequests = contactViewModel.pendingContactRequests.collectAsStateWithLifecycle(emptyList())
     val contactUiState = contactViewModel.contactUiState
     val isCareReceiver = contactViewModel is CareReceiverContactViewModel
-    val isError = contactUiState.error != null
     val context = LocalContext.current
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.Top
-    ) {
-        IconButton(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier.padding(top = 8.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back"
-            )
-        }
+    if (contactUiState.error.isNotEmpty()) {
+        AlertDialog(
+            onDismissRequest = { contactViewModel.onErrorChange("") },
+            title = { Text("Error") },
+            text = { Text(contactUiState.error) },
+            confirmButton = {
+                Button(
+                    onClick = { contactViewModel.onErrorChange("") }
+                ) {
+                    Text("OK")
+                }
+            }
+        )
     }
 
     Column(
@@ -77,23 +78,32 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         // TODO - Build this screen as per the Figma file.
-        if (isError) {
-            Text(
-                text = contactUiState.error ?: "unknown error",
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-        }
-
+        TopAppBar(
+            title = { Text("Contacts") },
+            navigationIcon = {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                }
+            }
+        )
         Text(text = "Connected Contacts", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(connectedContacts.value) { connectedContactItem ->
+                val receiverId = if (isCareReceiver) connectedContactItem.careGiverId else connectedContactItem.careReceiverId
+                val receiverEmail = if (isCareReceiver) connectedContactItem.careGiverEmail else connectedContactItem.careReceiverEmail
+
                 SingleConnectedContactItem(
                     contact = connectedContactItem,
-                    isCareReceiver = isCareReceiver,
-                    onButtonClick = {
-                        //
+                    isCareReceiver = isCareReceiver
+                ) {
+                    val route = if (isCareReceiver) {
+                        NavigationPath.CARE_RECEIVER_USER_CHAT.route.replace("{receiverId}", receiverId).replace("{receiverEmail}", receiverEmail)
+                    } else {
+                        NavigationPath.CARE_GIVER_USER_CHAT.route.replace("{receiverId}", receiverId).replace("{receiverEmail}", receiverEmail)
                     }
-                )
+
+                    navController.navigate(route)
+                }
             }
         }
 
