@@ -71,7 +71,7 @@ fun PillManageScreen(
             }
         }
         if (showDialog.value) {
-            ItemDescriptionPopup(
+            PillDescriptionPopup(
                 pill = viewModel.pill.value,
                 onClose = { showDialog.value = false },
                 onDeleteChange = { viewModel.onPillDelete(viewModel.pill.value.id)}
@@ -117,7 +117,7 @@ fun PillManageScreen(
 
 
 @Composable
-fun ItemDescriptionPopup(
+fun PillDescriptionPopup(
     pill: Pill,
     onClose: () -> Unit,
     onDeleteChange: () -> Unit,
@@ -155,7 +155,6 @@ fun ItemDescriptionPopup(
                     Text(text = "Close")
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                // Todo need to delete not only the pill in database, also those reminders relating this pill
                 Button(
                     onClick = {
                         onDeleteChange()

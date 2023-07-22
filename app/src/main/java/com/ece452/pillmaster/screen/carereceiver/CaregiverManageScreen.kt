@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -32,17 +33,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.ece452.pillmaster.model.Contact
 import com.ece452.pillmaster.model.Pill
 import com.ece452.pillmaster.utils.NavigationPath
+import com.ece452.pillmaster.viewmodel.MessageViewModel
+import com.ece452.pillmaster.viewmodel.PillManagementViewModel
 
 @Composable
 fun CaregiverManageScreen(
     navController: NavController,
-
+    viewModel: MessageViewModel = hiltViewModel(),
     ){
+    val connectedContacts = viewModel.connectedContacts.collectAsStateWithLifecycle(emptyList())
     val showDialog = remember { mutableStateOf(false) }
-    val userId = remember { mutableStateOf("") }
+    val contact = remember { mutableStateOf(Contact())}
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -51,26 +58,28 @@ fun CaregiverManageScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         LazyColumn(modifier = Modifier.weight(1f)){
-
-//            items(pillList) { pillItem ->
-//                Button(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .size(80.dp)
-//                        .padding(10.dp),
-//                    shape = RoundedCornerShape(10.dp),
-//                    onClick = {
-//
-//                    }) {
-//                    Text(text = "", fontSize = 30.sp)
-//                }
-//            }
+            val connectedContactsList = connectedContacts.value
+            items(connectedContactsList) { connectedContactsItem ->
+                Button(
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF85CED4)),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .size(80.dp)
+                        .padding(10.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    onClick = {
+                        contact.value = connectedContactsItem
+                        showDialog.value = true
+                    }) {
+                    Text(text = connectedContactsItem.careGiverId, fontSize = 30.sp)
+                }
+            }
         }
         if (showDialog.value) {
-            FloatingWindow(
-                userId = userId.value,
-                onUserIdChange = { userId.value = it },
-                onDismiss = { showDialog.value = false }
+            CaregiverDescriptionPopup(
+                contact = contact.value,
+                onClose = { showDialog.value = false },
+                onDeleteChange = { viewModel.onContactToRemoveChange(contact.value)}
             )
         }
         Row(
@@ -83,75 +92,61 @@ fun CaregiverManageScreen(
                 },
                 modifier = Modifier.size(width = 120.dp, height = 50.dp)
 
-                //.padding(start = 16.dp)
+
             ) {
                 Text("Back")
             }
-            Spacer(modifier = Modifier.weight(1f))
-            Button(
-                onClick = {
-                    showDialog.value = true
-                },
-                Modifier.size(width = 120.dp, height = 50.dp),
 
 
-                ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Add",
-                    Modifier.size((30.dp)),
-
-                    )
-            }
 
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+
+
 @Composable
-fun FloatingWindow(
-    userId: String,
-    onUserIdChange: (String) -> Unit,
-    onDismiss: () -> Unit
+fun CaregiverDescriptionPopup(
+    contact: Contact,
+    onClose: () -> Unit,
+    onDeleteChange: () -> Unit,
 ) {
-    Column(
+    AlertDialog(
         modifier = Modifier
-            .background(Color.LightGray)
-            .padding(16.dp)
-    ) {
-        Text(text = "Enter Caregiver ID:", fontWeight = FontWeight.Bold)
-        TextField(
-            value = userId,
-            onValueChange = onUserIdChange,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Row() {
-            Button(
-                onClick = {
-                    onDismiss.invoke()
-                },
-                modifier = Modifier
-                    .padding(top = 16.dp)
-            ) {
-                Text("Cancel")
+            .size(200.dp)
+            .padding(16.dp),
+        onDismissRequest = { onClose() },
+        title = { Text(text = contact.careGiverId) },
+        text = {
+            Column(modifier = Modifier.fillMaxSize()) {
+                Text(text = "Email:")
+                Text(text = contact.careGiverId, fontWeight = FontWeight.Bold)
+
             }
-            Spacer(modifier = Modifier.weight(1f))
-            Button(
-                onClick = {
-                    // Todo request by Scott: we need to add caregiver viewModel to help to read, submit and delete caregiver
-                    // Handle submission logic here
-                    // You can perform any necessary operations
-                    // with the user ID and then dismiss the window.
-                    onDismiss.invoke()
-                },
-                modifier = Modifier
-                    .padding(top = 16.dp)
-            ) {
-                Text("Submit")
+        },
+
+        confirmButton = {
+            Row(
+                Modifier.padding(top = 8.dp),
+
+                ) {
+                Button(
+                    onClick = { onClose() },
+                    modifier = Modifier.width(100.dp)
+                ) {
+                    Text(text = "Close")
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                Button(
+                    onClick = {
+                        onDeleteChange()
+                        onClose()
+                    },
+                    modifier = Modifier.width(100.dp)
+                ) {
+                    Text(text = "Delete")
+                }
             }
         }
-
-
-    }
+    )
 }
