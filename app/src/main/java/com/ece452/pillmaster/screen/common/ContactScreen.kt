@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -145,7 +146,10 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
             value = contactUiState.newContactEmail,
             onValueChange = { contactViewModel.onNewContactEmailChange(it) },
             label = { Text("Add new contact") },
-            modifier = Modifier.fillMaxWidth()
+            shape = RoundedCornerShape(10.dp),
+            modifier = Modifier
+                .padding(start = 10.dp)
+                .fillMaxWidth()
         )
 
         Button(
@@ -156,7 +160,8 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
                     Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
                 }
             },
-            modifier = Modifier.size(width = 300.dp, height = 50.dp)
+            modifier = Modifier.size(width = 200.dp, height = 50.dp)
+                .padding(start = 10.dp)
         ) {
             Text("Add new contact")
         }
@@ -181,16 +186,19 @@ fun SingleConnectedContactItem(
         ) {
             Text(
                 text = if (isCareReceiver) contact.careGiverEmail else contact.careReceiverEmail,
-                fontSize = 24.sp,
+                fontSize = 18.sp,
                 modifier = Modifier.padding(start = 10.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
                 onClick = onButtonClick,
-                modifier = Modifier.size(width = 100.dp, height = 50.dp)
+                modifier = Modifier.height(50.dp)
             ) {
-                Text("Chat")
+                Text(
+                    text = "Chat",
+                    fontSize = 16.sp
+                )
             }
         }
     }
@@ -214,16 +222,19 @@ fun SingleSentContactItem(
         ) {
             Text(
                 text = if (isCareReceiver) contact.careGiverEmail else contact.careReceiverEmail,
-                fontSize = 24.sp,
+                fontSize = 18.sp,
                 modifier = Modifier.padding(start = 10.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
                 onClick = onButtonClick,
-                modifier = Modifier.size(width = 100.dp, height = 50.dp)
+                modifier = Modifier.height(50.dp)
             ) {
-                Text("Recall")
+                Text(
+                    text = "Recall",
+                    fontSize = 16.sp
+                )
             }
         }
     }
@@ -246,23 +257,32 @@ fun SinglePendingContactItem(
             modifier = Modifier.padding(10.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = if (isCareReceiver) contact.careGiverEmail else contact.careReceiverEmail, fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
+            Text(
+                text = if (isCareReceiver) contact.careGiverEmail else contact.careReceiverEmail,
+                fontSize = 18.sp,
+                modifier = Modifier.padding(start = 10.dp)
+            )
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
                 onClick = onAcceptButtonClick,
-                modifier = Modifier.size(width = 100.dp, height = 50.dp)
+                modifier = Modifier.height(50.dp)
             ) {
-                Text("Accept")
+                Text(text = "Accept",
+                fontSize = 16.sp
+                )
             }
 
             Spacer(modifier = Modifier.width(8.dp))
 
             Button(
                 onClick = onRefuseButtonClick,
-                modifier = Modifier.size(width = 100.dp, height = 50.dp)
+                modifier = Modifier.height(50.dp)
             ) {
-                Text("Refuse")
+                Text(
+                    text = "Refuse",
+                    fontSize = 16.sp
+                )
             }
         }
     }
