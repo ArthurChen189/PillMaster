@@ -15,15 +15,42 @@ private const val CARE_RECEIVER_ID_FIELD = "careReceiverId"
 private const val CARE_GIVER_ID_FIELD = "careGiverId"
 private const val CONTACT_COLLECTION = "contacts"
 
+/**
+ * Interface for the Contact Repository.
+ * Provides methods to manage user contacts.
+ */
 interface IContactRepository {
     val sentContactRequests: Flow<List<Contact>>
     val pendingContactRequests: Flow<List<Contact>>
     val connectedContacts: Flow<List<Contact>>
+    /**
+     * Adds a new contact to the repository.
+     *
+     * @param currentUserId The unique identifier of the current user requesting to add the contact.
+     * @param targetUserEmail The email address of the user to be added as a contact.
+     * @throws Exception If attempting to add oneself as a contact or if an error occurs during the process.
+     */
     suspend fun addContact(currentUserId: String, targetUserEmail: String)
+    /**
+     * Removes a contact from the repository.
+     *
+     * @param contact The Contact object representing the contact to be removed.
+     * @throws Exception If an error occurs during the removal process.
+     */
     suspend fun removeContact(contact: Contact)
+    /**
+     * Accepts a contact request and updates the contact's connection status in the repository.
+     *
+     * @param contact The Contact object representing the contact whose request is being accepted.
+     * @throws Exception If an error occurs during the update process.
+     */
     suspend fun acceptContactRequest(contact: Contact)
 }
 
+/**
+ * Repository class for Care Receivers' contacts.
+ * Implements the IContactRepository interface.
+ */
 class CareReceiverContactRepository
 @Inject constructor (
     private val firestore: FirebaseFirestore,

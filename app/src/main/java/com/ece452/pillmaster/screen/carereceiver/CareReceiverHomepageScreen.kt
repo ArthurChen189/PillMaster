@@ -56,16 +56,20 @@ import com.ece452.pillmaster.viewmodel.ReminderViewModel
 import java.time.LocalDate
 import java.util.Locale
 
+// Care receiver home page screen of viewing and managing the reminders
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CareReceiverHomepageScreen(
     // TODO - Expose an action if this action takes the user to another screen.
     navController: NavController,
-    vm: PillAddPageViewModel = hiltViewModel(),
-    viewModel: ReminderViewModel = hiltViewModel(),
+    vm: PillAddPageViewModel = hiltViewModel(), // Add reminder view model
+    viewModel: ReminderViewModel = hiltViewModel(), // Reminder view model
 ) {
+    // Reminder list of the user
     val reminders = viewModel.reminders.collectAsStateWithLifecycle(emptyList())
+    // Text of reminder list for text to speech
     var reminderText by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -93,15 +97,20 @@ fun CareReceiverHomepageScreen(
                 time[0].toInt() * 60 + time[1].toInt()
             }
 
+            // Build the text of reminder list for text to speech
             reminderText = viewModel.buildReminderText(todayReminderListSorted)
+
+            // Show each reminder row of reminders for the user for today sorted by reminder time
             items(todayReminderListSorted) { reminderItem ->
-                // TODO requested by Anna: show reminderTime below each SingleReminderItem's reminderName
                 SingleReminderItem(
                     reminder = reminderItem,
                 ) { viewModel.onReminderCheckChange(reminderItem) }
             }
         }
+
         AddPillButton(navController, reminderText)
+
+        // Navigation bar at the bottom of the screen
         NavBar(navController)
     }
 }
@@ -131,6 +140,7 @@ fun NavBar(
     }
 }
 
+// Each navigation item in the navigation bar
 @Composable
 fun RowScope.NavItem(
     icon: ImageVector, description: String,
@@ -163,6 +173,7 @@ fun AddPillButton(
 ) {
     val context = LocalContext.current
     var isSpeaking by remember { mutableStateOf(false) }
+    // TextToSpeech
     var tts by remember { mutableStateOf<TextToSpeech?>(null) }
 
     //TextToSpeech init
@@ -228,12 +239,13 @@ fun AddPillButton(
 
 
 // please use under code to implement each pill reminder
+// Each reminder row of the reminder list showing pill name, reminder time, and reminder checkbox
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun SingleReminderItem(
     reminder: Reminder,
-    onCheckChange: () -> Unit,
+    onCheckChange: () -> Unit, // Complete/uncomplete the reminder when the checkbox is checked or unchecked
 ) {
 
     Card(

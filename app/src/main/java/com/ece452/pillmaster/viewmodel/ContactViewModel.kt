@@ -16,6 +16,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
+/**
+ * Abstract ViewModel class representing the base functionality for managing contacts.
+ * @param authRepository The instance of the AuthRepository used for authentication operations.
+ * @param contactRepository The instance of the IContactRepository for contact-related operations.
+ */
 abstract class BaseContactViewModel constructor(
     private val authRepository: AuthRepository,
     protected val contactRepository: IContactRepository
@@ -33,6 +38,9 @@ abstract class BaseContactViewModel constructor(
     // Shared functions for removing, and accepting contacts
     abstract fun addNewContact(): Job
 
+    /**
+     * Removes a contact from the user's contacts list.
+     */
     fun removeContact() = viewModelScope.launch {
         try {
             contactUiState.contactToRemove?.let {
@@ -44,6 +52,9 @@ abstract class BaseContactViewModel constructor(
         }
     }
 
+    /**
+     * Accepts a contact request.
+     */
     fun acceptContact() = viewModelScope.launch {
         try {
             contactUiState.contactToAccept?.let {
@@ -55,6 +66,9 @@ abstract class BaseContactViewModel constructor(
         }
     }
 
+    /**
+     * Updates the values in the contact UI state.
+     */
     fun onNewContactEmailChange(email: String) {
         contactUiState = contactUiState.copy(newContactEmail = email)
     }
@@ -72,6 +86,11 @@ abstract class BaseContactViewModel constructor(
     }
 }
 
+/**
+ * ViewModel class for managing caregiver contacts.
+ * @param authRepository The instance of the AuthRepository used for authentication operations.
+ * @param contactRepository The instance of the IContactRepository for caregiver contact operations.
+ */
 @HiltViewModel
 class CareGiverContactViewModel @Inject constructor(
     authRepository: AuthRepository,
@@ -114,6 +133,11 @@ class CareGiverContactViewModel @Inject constructor(
     }
 }
 
+/**
+ * ViewModel class for managing care receiver contacts.
+ * @param authRepository The instance of the AuthRepository used for authentication operations.
+ * @param contactRepository The instance of the IContactRepository for care receiver contact operations.
+ */
 @HiltViewModel
 class CareReceiverContactViewModel @Inject constructor(
     authRepository: AuthRepository,
@@ -156,6 +180,13 @@ class CareReceiverContactViewModel @Inject constructor(
     }
 }
 
+/**
+ * Data class representing the state of the contact-related UI elements.
+ * @param newContactEmail The email of the new contact being added.
+ * @param contactToRemove The contact to be removed.
+ * @param contactToAccept The contact to be accepted.
+ * @param error The error message to be displayed.
+ */
 data class ContactUiState(
     var newContactEmail: String = "",
     var contactToRemove: Contact? = null,

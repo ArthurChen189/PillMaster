@@ -10,10 +10,13 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+// Dependency injection of Firebase backend services
 @Module
 @InstallIn(SingletonComponent::class)
 object FirebaseModule {
+  // Authentication
   @Provides fun auth(): FirebaseAuth = Firebase.auth
 
+  // Non-relational Cloud Database
   @Provides fun firestore(): FirebaseFirestore = Firebase.firestore
 }

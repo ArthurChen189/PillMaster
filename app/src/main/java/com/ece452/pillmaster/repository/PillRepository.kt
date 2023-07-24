@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
+// Interface of the Pill repository
 interface IPillRepository {
     val pills: Flow<List<Pill>>
     
@@ -18,9 +19,14 @@ interface IPillRepository {
     suspend fun delete(pillId: String)
 }
 
+// Implementation of the Pill repository
 class PillRepository
-@Inject constructor(private val firestore: FirebaseFirestore, private val auth: AuthRepository)
-: IPillRepository {
+@Inject constructor(
+    private val firestore: FirebaseFirestore, // database
+    private val auth: AuthRepository, // authentication
+    ) : IPillRepository {
+    
+    // Get Pill list of the user from firestore
     @OptIn(ExperimentalCoroutinesApi::class)
     override val pills: Flow<List<Pill>>
         get() =
@@ -28,6 +34,7 @@ class PillRepository
             firestore.collection(PILL_COLLECTION).whereEqualTo(USER_ID_FIELD, user.userId).dataObjects()
         }
 
+    // Get a single pill from firestore by document id
     override suspend fun getPill(pillId: String): Pill? =
         firestore.collection(PILL_COLLECTION).document(pillId).get().await().toObject()
 

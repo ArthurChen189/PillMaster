@@ -15,24 +15,25 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
-
+// View model for Pill management page for viewing and managing pill list
 @HiltViewModel
 class PillManagementViewModel @Inject constructor(
    private val repository: PillRepository
 ): ViewModel() {
-
+    // Pill list of the user
     val pills = repository.pills
+
     val pill = mutableStateOf(Pill())
 
-    // TODO: On PillManagementScreen, user can click on each pill to view name, description and info
-    // TODO: Open pill info viewing screen to show the fields of pill
+    // On PillManagementScreen, user can click on each pill to view name, description and info
+    // Open pill info viewing screen to show the fields of pill
     fun onGetPill(pillId: String) {
         viewModelScope.launch {
             pill.value = repository.getPill(pillId) ?: Pill()
         }
     }
 
-    // TODO: On PillManagementScreen, show each pill's name and a button to delete the pill
+    // On PillManagementScreen, show each pill's name and a button to delete the pill
     fun onPillDelete(pillId: String) {
         viewModelScope.launch {
             repository.delete(pillId)
