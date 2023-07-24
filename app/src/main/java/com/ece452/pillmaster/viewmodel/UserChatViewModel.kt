@@ -15,6 +15,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * Abstract ViewModel class representing the base functionality for managing user chat.
+ * @param authRepository The instance of the AuthRepository used for authentication operations.
+ * @param chatRepository The instance of the UserChatRepository for user chat operations.
+ */
 abstract class BaseUserChatViewModel constructor(
     private val authRepository: AuthRepository,
     private val chatRepository: UserChatRepository
@@ -26,12 +31,19 @@ abstract class BaseUserChatViewModel constructor(
 
     val currentUserId: String = authRepository.getUserId()
 
+    /**
+     * Initializes the ViewModel by updating the chat messages.
+     */
     init {
         viewModelScope.launch {
             chatRepository.updateChatMessages()
         }
     }
 
+    /**
+     * Sends a new message to the specified receiver.
+     * @param receiverId The ID of the message receiver.
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     fun sendMessage(receiverId: String) = viewModelScope.launch {
         try {
@@ -45,6 +57,10 @@ abstract class BaseUserChatViewModel constructor(
         }
     }
 
+    /**
+     * Updates the values in the chat UI state.
+     * @param message The new message to be sent.
+     */
     fun onNewMessageChange(message: String) {
         chatUiState = chatUiState.copy(newMessage = message)
     }
@@ -54,18 +70,34 @@ abstract class BaseUserChatViewModel constructor(
     }
 }
 
+/**
+ * ViewModel class for managing caregiver user chat.
+ * @param authRepository The instance of the AuthRepository used for authentication operations.
+ * @param chatRepository The instance of the UserChatRepository for caregiver user chat operations.
+ */
 @HiltViewModel
 class CareGiverUserChatViewModel @Inject constructor(
     authRepository: AuthRepository,
     chatRepository: UserChatRepository
 ) : BaseUserChatViewModel(authRepository, chatRepository)
 
+/**
+ * ViewModel class for managing care receiver user chat.
+ * @param authRepository The instance of the AuthRepository used for authentication operations.
+ * @param chatRepository The instance of the UserChatRepository for care receiver user chat operations.
+ */
 @HiltViewModel
 class CareReceiverUserChatViewModel @Inject constructor(
     authRepository: AuthRepository,
     chatRepository: UserChatRepository
 ) : BaseUserChatViewModel(authRepository, chatRepository)
 
+/**
+ * Data class representing the state of the user chat-related UI elements.
+ * @param newMessage The new chat message to be sent.
+ * @param receiverEmail The email of the message receiver.
+ * @param error The error message to be displayed.
+ */
 data class ChatUiState(
     var newMessage: String = "",
     var receiverEmail: String = "",
