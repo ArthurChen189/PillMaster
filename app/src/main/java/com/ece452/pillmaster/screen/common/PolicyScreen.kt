@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import com.ece452.pillmaster.ui.theme.*
 
+// Screen for users to view the privacy policy details
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PolicyScreen(
@@ -27,6 +28,7 @@ fun PolicyScreen(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
+        // Top bar with back button to Sign Up Screen
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Start,
@@ -43,6 +45,7 @@ fun PolicyScreen(
             }
         }
 
+        // Privacy policy details
         Text(
             text = "PRIVACY POLICY - PILLMASTER PROJECT",
             style = Typography.titleLarge,
@@ -152,6 +155,7 @@ fun PolicyScreen(
             modifier = Modifier.padding(all = 16.dp)
         )
 
+        // Bottom bar with back button to Sign Up Screen
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Start,

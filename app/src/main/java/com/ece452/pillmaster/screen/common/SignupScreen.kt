@@ -48,6 +48,7 @@ fun SignupScreen(
     val isError = loginUiState.signUpError != null
     val context = LocalContext.current
 
+    // Top bar with back button to Home Screen
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Start,
@@ -120,6 +121,7 @@ fun SignupScreen(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
 
+        // Checkbox for users to accept the privacy policy
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -152,11 +154,12 @@ fun SignupScreen(
 
         Button(
             onClick = { loginViewModel.createUser(context) },
-            enabled = loginUiState.policyAccepted,
+            enabled = loginUiState.policyAccepted, // Sign up button is disabled until user accepts the privacy policy
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
         ) {
             Text("Sign Up")
         }
+
         Spacer(modifier = Modifier.size(16.dp))
 
         Text(

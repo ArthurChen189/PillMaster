@@ -31,6 +31,9 @@ import com.ece452.pillmaster.model.Pill
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillManagementViewModel
 
+// On PillManagementScreen, user can click on each pill to view name, description and info
+// Open pill info viewing screen to show the fields of pill
+// On PillManagementScreen, show each pill's name and a button to delete the pill
 @Composable
 fun PillManageScreen(
     navController: NavController,
@@ -48,7 +51,6 @@ fun PillManageScreen(
         LazyColumn(modifier = Modifier.weight(1f)){
             val pillList = pills.value
             items(pillList) { pillItem ->
-                // TODO requested by Anna: show reminderTime below each SingleReminderItem's reminderName
                 Button(
                     modifier = Modifier
                         .fillMaxWidth()
