@@ -18,6 +18,10 @@ interface ContactComponent {
     fun getConnectedContacts(list: Flow<List<Contact>>): Flow<List<Contact>>
 }
 
+/**
+ * An abstract class representing a ContactGroup, which is a composite of ContactComponents.
+ * It implements the ContactComponent interface and provides default implementations for some methods.
+ */
 abstract class ContactGroup()
     : ContactComponent
 {
@@ -70,7 +74,8 @@ abstract class ContactGroup()
 
 /**
  * Behavioural Design Pattern: Template Method Design Pattern
- * The ContactGroup class is an abstract class that defines the common structure and algorithm.
+ * The CareReceiverContactGroup class is a concrete subclass of ContactGroup,
+ * which represents a specific type of contact group for care receivers.
  */
 class CareReceiverContactGroup : ContactGroup()
 {
@@ -102,6 +107,11 @@ class CareReceiverContactGroup : ContactGroup()
     }
 }
 
+/**
+ * Behavioural Design Pattern: Template Method Design Pattern
+ * The CareGiverContactGroup class is a concrete subclass of ContactGroup,
+ * which represents a specific type of contact group for care givers.
+ */
 class CareGiverContactGroup: ContactGroup() {
     override fun createContactRequest(currentUser: User, targetUser: User): Contact {
         return Contact(

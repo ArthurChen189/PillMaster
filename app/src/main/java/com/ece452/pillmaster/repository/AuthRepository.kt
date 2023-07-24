@@ -16,25 +16,76 @@ import javax.inject.Inject
 interface IAuthRepository {
     val currentUser: FirebaseUser?
     val currentUserFlow: Flow<User>
+
+    /**
+     * Checks if there is a currently authenticated user.
+     *
+     * @return True if there is a currently authenticated user, otherwise false.
+     */
     fun hasUser(): Boolean
+
+    /**
+     * Returns the unique identifier (UID) of the currently authenticated user.
+     *
+     * @return The UID of the currently authenticated user, or an empty string if not authenticated.
+     */
     fun getUserId(): String
+
+    /**
+     * Retrieves the User profile from Firestore by user ID.
+     *
+     * @param userId The unique identifier of the user whose profile is to be fetched.
+     * @return The User model representing the user's profile.
+     * @throws Exception If the user profile is not found in Firestore or if it is null.
+     */
     suspend fun getUserProfileById(userId: String): User
+
+    /**
+     * Retrieves the User profile from Firestore by email.
+     *
+     * @param email The email of the user whose profile is to be fetched.
+     * @return The User model representing the user's profile.
+     * @throws Exception If the user profile is not found in Firestore or if it is null.
+     */
     suspend fun getUserProfileByEmail(email: String): User
+
+    /**
+     * Performs the login operation with email and password.
+     *
+     * @param email The user's email for login.
+     * @param password The user's password for login.
+     * @param onComplete Callback function invoked after login completion.
+     */
     suspend fun login(
         email: String,
         password: String,
         onComplete: (Boolean)->Unit
     )
+
+    /**
+     * Performs the signup operation with email and password.
+     *
+     * @param email The user's email for signup.
+     * @param password The user's password for signup.
+     * @param onComplete Callback function invoked after signup completion.
+     */
     suspend fun signup(
        email: String,
        password: String,
        onComplete: (Boolean)->Unit
     )
+
+    /**
+     * Signs out the current user.
+     */
     fun signout()
 }
 
-// Implementation of the Authentication repository
-// Used Resources: https://www.youtube.com/watch?v=n7tUmLP6pdo
+/**
+ * Implementation of the Authentication repository.
+ * This class provides functionalities for user authentication and user profile retrieval.
+ * Used Resources: https://www.youtube.com/watch?v=n7tUmLP6pdo
+ */
 class AuthRepository
 @Inject constructor(
     private val firestore: FirebaseFirestore, // database
@@ -57,7 +108,6 @@ class AuthRepository
 
     override fun getUserId(): String = auth.currentUser?.uid.orEmpty()
 
-    // Get User data model from firestore by userId
     override suspend fun getUserProfileById(userId: String): User {
         val querySnapshot = firestore.collection(USER_COLLECTION)
             .whereEqualTo(USER_ID_FIELD, userId)
