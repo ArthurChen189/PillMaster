@@ -1,10 +1,12 @@
 package com.ece452.pillmaster
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.ece452.pillmaster.screen.carereceiver.AutoFillEntry
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -13,7 +15,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.ece452.pillmaster.screen.carereceiver.CalendarScreen
 import com.ece452.pillmaster.screen.carereceiver.CaregiverManageScreen
-import com.ece452.pillmaster.screen.carereceiver.MessageScreen
+import com.ece452.pillmaster.screen.carereceiver.ChatScreen
+import com.ece452.pillmaster.screen.common.ContactScreen
 import com.ece452.pillmaster.screen.carereceiver.PillManageScreen
 import com.ece452.pillmaster.screen.carereceiver.ReceiverSettingScreen
 import com.ece452.pillmaster.screen.common.CareGiverHomeScreen
@@ -23,8 +26,14 @@ import com.ece452.pillmaster.screen.common.HomeScreen
 import com.ece452.pillmaster.screen.common.LoginScreen
 import com.ece452.pillmaster.screen.common.PillAddPageScreen
 import com.ece452.pillmaster.screen.common.SignupScreen
+import com.ece452.pillmaster.screen.common.UserChatScreen
 import com.ece452.pillmaster.utils.NavigationPath
+import com.ece452.pillmaster.viewmodel.CareGiverContactViewModel
+import com.ece452.pillmaster.viewmodel.CareGiverUserChatViewModel
+import com.ece452.pillmaster.viewmodel.CareReceiverContactViewModel
+import com.ece452.pillmaster.viewmodel.CareReceiverUserChatViewModel
 
+@SuppressLint("NewApi")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PillMasterNavHost(
@@ -63,7 +72,9 @@ fun PillMasterNavHost(
             )
         }
         composable(NavigationPath.CARE_GIVER_HOMEPAGE.route) {
-            CareGiverHomeScreen()
+            CareGiverHomeScreen(
+                navController = navController
+            )
         }
         composable(NavigationPath.PILL_ADD_PAGE.route) { entry ->
             PillAddPageScreen(navController = navController, entry)
@@ -77,9 +88,36 @@ fun PillMasterNavHost(
                 navController = navController,
             )
         }
-        composable(NavigationPath.MESSAGE.route) {
-            MessageScreen(
+        composable(NavigationPath.CARE_GIVER_CONTACT.route) {
+            ContactScreen(
                 navController = navController,
+                contactViewModel = hiltViewModel<CareGiverContactViewModel>()
+            )
+        }
+        composable(NavigationPath.CARE_RECEIVER_CONTACT.route) {
+            ContactScreen(
+                navController = navController,
+                contactViewModel = hiltViewModel<CareReceiverContactViewModel>()
+            )
+        }
+        composable(NavigationPath.CARE_GIVER_USER_CHAT.route) { backStackEntry ->
+            val receiverId = backStackEntry.arguments?.getString("receiverId") ?: ""
+            val receiverEmail = backStackEntry.arguments?.getString("receiverEmail") ?: ""
+            UserChatScreen(
+                navController = navController,
+                receiverId = receiverId,
+                receiverEmail = receiverEmail,
+                userChatViewModel = hiltViewModel<CareGiverUserChatViewModel>()
+            )
+        }
+        composable(NavigationPath.CARE_RECEIVER_USER_CHAT.route) { backStackEntry ->
+            val receiverId = backStackEntry.arguments?.getString("receiverId") ?: ""
+            val receiverEmail = backStackEntry.arguments?.getString("receiverEmail") ?: ""
+            UserChatScreen(
+                navController = navController,
+                receiverId = receiverId,
+                receiverEmail = receiverEmail,
+                userChatViewModel = hiltViewModel<CareReceiverUserChatViewModel>()
             )
         }
         composable(NavigationPath.RECEIVER_SETTING.route) {
@@ -94,6 +132,12 @@ fun PillMasterNavHost(
         }
         composable(NavigationPath.CAREGIVER_MANAGE.route) {
             CaregiverManageScreen(
+                navController = navController,
+            )
+        }
+
+        composable(NavigationPath.HEALTH_BOT_PATH.route) {
+            ChatScreen(
                 navController = navController,
             )
         }

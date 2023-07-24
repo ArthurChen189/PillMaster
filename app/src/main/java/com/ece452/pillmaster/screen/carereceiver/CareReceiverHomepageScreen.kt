@@ -119,11 +119,11 @@ fun NavBar(
         NavItem(Icons.Rounded.DateRange, "Calender", Color(0xFF227EBA)) {
             navController.navigate(NavigationPath.CALENDAR.route)
         }
-        NavItem(Icons.Rounded.Email, "Message", Color(0xFF227EBA)) {
-            navController.navigate(NavigationPath.MESSAGE.route)
+        NavItem(Icons.Rounded.Email, "Contact", Color(0xFF227EBA)) {
+            navController.navigate(NavigationPath.CARE_RECEIVER_CONTACT.route)
         }
         NavItem(Icons.Rounded.Face, "ChatBot", Color(0xFF227EBA)) {
-
+            navController.navigate(NavigationPath.HEALTH_BOT_PATH.route)
         }
         NavItem(Icons.Rounded.Settings,"Setting", Color(0xFF227EBA) ) {
             navController.navigate(NavigationPath.RECEIVER_SETTING.route)
