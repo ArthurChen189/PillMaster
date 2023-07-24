@@ -125,6 +125,10 @@ class LoginViewModel @Inject constructor(
         loginUiState = loginUiState.copy(confirmPasswordSignUp = confirmPasswordSignUp)
     }
 
+    fun onPolicyToggled(policyAccepted: Boolean) {
+        loginUiState = loginUiState.copy(policyAccepted = policyAccepted)
+    }
+
     private fun validateLoginForm() =
         loginUiState.userName.isNotBlank() && loginUiState.password.isNotBlank()
 
@@ -143,5 +147,6 @@ data class LoginUiState(
     val isLoading: Boolean = false,
     val isSuccessLogin: Boolean = false,
     val signUpError: String? = null,
-    val loginError: String? = null
+    val loginError: String? = null,
+    val policyAccepted: Boolean = false,
 )

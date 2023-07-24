@@ -19,17 +19,24 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.Checkbox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.LoginViewModel
+import com.ece452.pillmaster.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -113,8 +120,39 @@ fun SignupScreen(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
 
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+        ) {
+            Checkbox(
+                checked = loginUiState.policyAccepted,
+                modifier = Modifier.padding(6.dp),
+                onCheckedChange = { loginViewModel.onPolicyToggled(it) },
+            )
+
+            Text("You have to agree to our ")
+
+            val clickableText = buildAnnotatedString{append("Privacy Policy")}
+            ClickableText(text = clickableText, style = TextStyle(
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 16.sp,
+            ), onClick = {navController.navigate(NavigationPath.POLICY.route)})
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(0.9F),
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.Start,
+        ){
+            Text(
+                " before signing up.",
+            )
+        }
+
         Button(
             onClick = { loginViewModel.createUser(context) },
+            enabled = loginUiState.policyAccepted,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
         ) {
             Text("Sign Up")

@@ -5,6 +5,7 @@ enum class NavigationPath(val route: String) {
     HOMEPAGE("homepage"),
     LOGIN("login"),
     SIGNUP("signup"),
+    POLICY("policy"),
     CARE_RECEIVER_HOMEPAGE("care_receiver_homepage"),
     CARE_GIVER_HOMEPAGE("care_giver_homepage"),
     PILL_ADD_PAGE("pill_add_page"),
