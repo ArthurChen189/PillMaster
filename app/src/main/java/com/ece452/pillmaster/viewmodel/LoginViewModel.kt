@@ -15,8 +15,9 @@ import javax.inject.Inject
 // Used Resources: https://www.youtube.com/watch?v=n7tUmLP6pdo
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repository: AuthRepository
+    private val repository: AuthRepository, // authentication
 ): ViewModel() {
+
     val hasUser: Boolean
         get() = repository.hasUser()
 
@@ -125,6 +126,11 @@ class LoginViewModel @Inject constructor(
         loginUiState = loginUiState.copy(confirmPasswordSignUp = confirmPasswordSignUp)
     }
 
+    // When user toggles the privacy policy checkbox
+    fun onPolicyToggled(policyAccepted: Boolean) {
+        loginUiState = loginUiState.copy(policyAccepted = policyAccepted)
+    }
+
     private fun validateLoginForm() =
         loginUiState.userName.isNotBlank() && loginUiState.password.isNotBlank()
 
@@ -143,5 +149,6 @@ data class LoginUiState(
     val isLoading: Boolean = false,
     val isSuccessLogin: Boolean = false,
     val signUpError: String? = null,
-    val loginError: String? = null
+    val loginError: String? = null,
+    val policyAccepted: Boolean = false,
 )

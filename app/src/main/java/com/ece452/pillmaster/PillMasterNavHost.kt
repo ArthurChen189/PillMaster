@@ -26,6 +26,7 @@ import com.ece452.pillmaster.screen.common.HomeScreen
 import com.ece452.pillmaster.screen.common.LoginScreen
 import com.ece452.pillmaster.screen.common.PillAddPageScreen
 import com.ece452.pillmaster.screen.common.SignupScreen
+import com.ece452.pillmaster.screen.common.PolicyScreen
 import com.ece452.pillmaster.screen.common.UserChatScreen
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.CareGiverContactViewModel
@@ -54,6 +55,9 @@ fun PillMasterNavHost(
         }
         composable(NavigationPath.SIGNUP.route) {
             SignupScreen(navController = navController)
+        }
+        composable(NavigationPath.POLICY.route) {
+            PolicyScreen(navController = navController)
         }
         composable("${NavigationPath.HOMEPAGE.route}/{user}",
             arguments = listOf(navArgument("user") {

@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
+// Interface of the Authentication repository
 interface IAuthRepository {
     val currentUser: FirebaseUser?
     val currentUserFlow: Flow<User>
@@ -32,11 +33,12 @@ interface IAuthRepository {
     fun signout()
 }
 
+// Implementation of the Authentication repository
 // Used Resources: https://www.youtube.com/watch?v=n7tUmLP6pdo
 class AuthRepository
 @Inject constructor(
-    private val firestore: FirebaseFirestore,
-    private val auth: FirebaseAuth
+    private val firestore: FirebaseFirestore, // database
+    private val auth: FirebaseAuth, // authentication
     ) : IAuthRepository{
 
     override val currentUser: FirebaseUser? = auth.currentUser
@@ -55,6 +57,7 @@ class AuthRepository
 
     override fun getUserId(): String = auth.currentUser?.uid.orEmpty()
 
+    // Get User data model from firestore by userId
     override suspend fun getUserProfileById(userId: String): User {
         val querySnapshot = firestore.collection(USER_COLLECTION)
             .whereEqualTo(USER_ID_FIELD, userId)
@@ -69,6 +72,7 @@ class AuthRepository
         }
     }
 
+    // Get User data model from firestore by email
     override suspend fun getUserProfileByEmail(email: String): User {
         val querySnapshot = firestore.collection(USER_COLLECTION)
             .whereEqualTo(EMAIL_FIELD, email)
@@ -113,6 +117,7 @@ class AuthRepository
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        // Add user to firestore database when sign up
                         val user = User(
                             userId = task.result?.user!!.uid,
                             email = email
