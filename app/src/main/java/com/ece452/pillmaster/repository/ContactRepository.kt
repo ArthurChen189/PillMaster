@@ -3,10 +3,6 @@ package com.ece452.pillmaster.repository
 import com.ece452.pillmaster.model.CareGiverContactGroup
 import com.ece452.pillmaster.model.CareReceiverContactGroup
 import com.ece452.pillmaster.model.Contact
-import com.ece452.pillmaster.model.ContactGroup
-import com.ece452.pillmaster.model.Reminder
-import com.ece452.pillmaster.model.User
-import com.ece452.pillmaster.utils.UserRole
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.dataObjects
 import kotlinx.coroutines.ExperimentalCoroutinesApi
