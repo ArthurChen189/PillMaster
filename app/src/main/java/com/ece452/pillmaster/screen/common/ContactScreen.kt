@@ -148,7 +148,7 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
             label = { Text("Add new contact") },
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
-                .padding(start = 10.dp)
+                .padding(10.dp)
                 .fillMaxWidth()
         )
 
@@ -161,7 +161,7 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
                 }
             },
             modifier = Modifier.size(width = 200.dp, height = 50.dp)
-                .padding(start = 10.dp)
+                .padding(bottom = 10.dp)
         ) {
             Text("Add new contact")
         }
