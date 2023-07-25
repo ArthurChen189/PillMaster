@@ -183,7 +183,7 @@ fun PillAddPageScreen(
         ) {
             Button(
                 onClick = {
-                    navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
+                    navController.popBackStack()
                 },
                 modifier = Modifier.size(width = 100.dp, height = 50.dp)
             ) {
@@ -210,7 +210,7 @@ fun PillAddPageScreen(
                             selectedOption,
                             isChecked
                         )
-                        navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
+                        navController.popBackStack()
                     } else {
                         Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
                     }
