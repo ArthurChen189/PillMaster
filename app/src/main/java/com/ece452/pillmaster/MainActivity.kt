@@ -19,13 +19,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    // TODO - Use https://developer.android.com/reference/android/window/SplashScreen to create the splash.
-    // TODO - Create App Icon resource and register it in AndroidManifest.xml
+    // Tagged with @AndroidEntryPoint, we tell Hilt that this is the main entry point.
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
+            // Taking advantage of Jetpack Compose throughout our project, we could write intuitive,
+            // readable and clearly-structured UI components with ease.
             PillMasterTheme {
                 PillMasterApp()
             }
@@ -37,11 +38,6 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PillMasterApp() {
-    // Inflate the reminder screen as an example for now.
-    // TODO - This reminder screen is an example.
-    // ReminderScreen()
-
-    // TODO !!! This is the entry composable.
     val navController = rememberNavController()
     Scaffold() { innerPadding ->
         PillMasterNavHost(

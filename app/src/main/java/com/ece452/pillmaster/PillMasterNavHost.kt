@@ -42,6 +42,9 @@ fun PillMasterNavHost(
     modifier: Modifier = Modifier
 ) {
 
+    // This is the central navigation controller that has all our screens registered.
+    // This greatly simplifies the navigation from the potential "Intent" way of navigating
+    // to different activities or fragments.
     NavHost(
         navController = navController,
         startDestination = NavigationPath.DASHBOARD.route,

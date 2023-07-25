@@ -194,12 +194,14 @@ fun AddPillButton(
 
     val defaultButtonColor = MaterialTheme.colorScheme.primary
     var buttonColor by remember { mutableStateOf(defaultButtonColor) }
+    // animate color transition when user switches to easy mode for clarity.
     val animatedButtonColor = animateColorAsState(targetValue = buttonColor, animationSpec = tween(1000))
 
 
     // Update the width state in a LaunchedEffect when isEasyMode changes
     LaunchedEffect(isEasyMode.value) {
         if (isEasyMode.value) {
+            // ensure a smooth transition.
             easyModeWidth.animateTo(500f, tween(durationMillis = 1000))
             otherButtonsWidth.animateTo(0.01f, tween(durationMillis = 1000))
         } else {
