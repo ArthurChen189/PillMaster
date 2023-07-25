@@ -25,7 +25,7 @@ import java.util.TimeZone
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-
+// View model for PillAddPage for adding a new pill reminder
 // TODO consider renaming this so as to serve for both uploading and retrieving
 // TODO pill info to and from the database.
 @RequiresApi(Build.VERSION_CODES.S)
@@ -34,6 +34,7 @@ class PillAddPageViewModel @Inject constructor(
     private val application: PillMasterApplication,
     private val repository: ReminderRepository) : ViewModel() {
 
+    // Reminder list of the user
     val reminders = repository.reminders
 
 
@@ -45,10 +46,8 @@ class PillAddPageViewModel @Inject constructor(
         // Add more fields as needed
     )
 
-    // TODO Static list for testing purpose.
-    // This should be replaced by medicineList, which is dynamically fetched from the
-    // backend. Each item in the list should at least contain
-    // pill_name, start, end date, isTakenToday, etc.
+    // Static list for testing purpose.
+    // This is already replaced by reminder list of the user
     val testList = mutableStateOf(mutableListOf<Pill>())
     init {
         testList.value = mutableListOf(
@@ -58,6 +57,7 @@ class PillAddPageViewModel @Inject constructor(
         )
         sortPillsByDate(testList.value)
     }
+
     var month = 0
     var day = 0
     var year = 0
@@ -84,7 +84,7 @@ class PillAddPageViewModel @Inject constructor(
 
 
 
-    // submit a reminderList
+    // submit multiple reminders for each reminder time
     fun pillListSubmit(
         pillName: (String),
         direction: (String),
@@ -107,7 +107,7 @@ class PillAddPageViewModel @Inject constructor(
 
     }
 
-    // submit a new pill
+    // submit a single reminder
     @RequiresApi(Build.VERSION_CODES.S)
     fun newPillSubmit(
         pillName: (String),
