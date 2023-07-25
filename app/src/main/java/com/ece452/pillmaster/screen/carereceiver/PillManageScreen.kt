@@ -116,6 +116,10 @@ fun ItemDescriptionPopup(
                         Text(text = "Info:")
                         Text(text = pill.info, fontWeight = FontWeight.Bold)
                     }
+                    item {
+                        Text(text = "Potential drug-drug interactions:")
+                        Text(text = pill.incompatibleDrugs.toString(), fontWeight =  FontWeight.Bold)
+                    }
                 }
             }
         },
