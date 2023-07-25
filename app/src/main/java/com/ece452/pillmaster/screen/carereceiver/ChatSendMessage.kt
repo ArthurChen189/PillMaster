@@ -33,6 +33,14 @@ import java.time.format.TextStyle
 fun ChatSendMessage(
     healthBotSearch: HealthBotSearch = hiltViewModel()
 ) {
+    /*
+    This is a screen that allows the user to send a message to the health bot.
+    User needs to send a message to query the health bot. The health bot will then
+    respond with an answer. Note that each conversation is independent of each other,
+    that is, the health bot will not remember the previous conversation.
+    */
+
+    // Create a coroutine scope that uses the main dispatcher.
     val scope = rememberCoroutineScope()
     var text by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -43,13 +51,17 @@ fun ChatSendMessage(
             .navigationBarsPadding()
             .imePadding(),
     ) {
+        // Add a column to contain the text field and the response.
         Column {
+            // Add a divider to separate the text field and the response.
             Divider(Modifier.height(0.2.dp))
             Box(
+                // Add a box to contain the text field and the send button.
                 Modifier
                     .padding(horizontal = 4.dp)
                     .padding(top = 6.dp, bottom = 10.dp)
             ) {
+                // Add a text field to allow the user to send a message to the health bot.
                 Row {
                     TextField(
                         value = text,
@@ -70,9 +82,7 @@ fun ChatSendMessage(
                     IconButton(onClick = {
                         scope.launch {
                             val textClone = text.text
-//                            text = TextFieldValue("")
                             healthBotSearch.sendMessage(textClone)
-                            // Called getResponse inside sendMessage.
                         }
                     }) {
                         Icon(
@@ -84,11 +94,8 @@ fun ChatSendMessage(
                     }
                 }
             }
-            // Try to display the gpt's response in a scrollable box.
             Row(
-                // center the text content in the column
-//            verticalArrangement = Arrangement.Center,
-//            horizontalAlignment = Alignment.CenterHorizontally,
+                // Add a scrollable box to display the response if the text is too long.
                 modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
@@ -96,6 +103,7 @@ fun ChatSendMessage(
                 .padding(8.dp)
 
             ) {
+                // Display the response from the health bot.
                 Text(text = "${healthBotSearch._messages.answer}",
                     modifier = Modifier
                         .background(Color(R.color.teal_200))

@@ -15,17 +15,22 @@ import androidx.navigation.NavController
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChatScreen(
-    // TODO - Expose an action if this action takes the user to another screen.
     navController: NavController,
-//    viewModel: HealthBotSearch = hiltViewModel(),
-// this viewModel is injected into ChatSendMessage.
 ) {
+    /*
+    This is a screen that entails the ChatSendMessage composable. This screen is used to
+    send a message to the health bot. The health bot will then respond with an answer.
+     */
+
+     // Add a surface to contain the ChatSendMessage composable.
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(12),
     ) {
+        // Add a column to contain the ChatSendMessage composable.
         Box(Modifier.fillMaxSize()) {
             Column(Modifier.fillMaxSize()) {
+                // Add the ChatSendMessage composable.
                 ChatSendMessage()
                 Spacer(modifier = Modifier.weight(1f))
                 Row(
@@ -35,7 +40,7 @@ fun ChatScreen(
 
                 ) {
                     Button(
-
+                        // Add a button to navigate back to the previous screen.
                         onClick = {
                             navController.popBackStack()
                         },
