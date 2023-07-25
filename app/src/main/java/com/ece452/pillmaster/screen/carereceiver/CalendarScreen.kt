@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -147,6 +149,33 @@ fun processMedicineData(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+fun processMedicineData(
+    pillList: List<Reminder>,
+    date: LocalDate // Add date parameter
+): Any {
+    // Return immediately as there are no pills, even in the future.
+    if (pillList.isEmpty()) {
+        return listOf("No medicines to take!")
+    }
+    // Here we must find all pills eligible for this future date.
+    val currentPills: List<Reminder> = pillList.filter { pill ->
+        val startDate = LocalDate.parse(pill.startDate)
+        val endDate = if (pill.endDate.isNotEmpty()) LocalDate.parse(pill.endDate) else LocalDate.MAX
+
+        date.isEqual(startDate) || date.isEqual(endDate) ||
+                (date.isAfter(startDate) && (endDate == LocalDate.MAX || date.isBefore(endDate)))
+    }
+
+    // Return now, if there are no pills for today.
+    if (currentPills.isEmpty()) {
+        return listOf("No medicines to take!")
+    }
+
+    // Create list of medicine names
+    val medicineNames = currentPills.map { pill -> "• ${pill.name}" }
+    return medicineNames
+}
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -160,8 +189,10 @@ fun <T : SelectionState> DefaultD(
     val selectionState = state.selectionState
     val cardData = remember { mutableStateListOf<String>() }
     var isCardClicked by remember { mutableStateOf(false) }
+    var isFutureCardClicked by remember { mutableStateOf(false) }
+    val futureCardData = remember { mutableStateListOf<String>() }
 
-   // Function to handle yellow card click
+    // Function to handle yellow card click
     val onTodayClick: (vm: PillAddPageViewModel) -> Unit = {
         isCardClicked = true
         when (result) {
@@ -181,12 +212,25 @@ fun <T : SelectionState> DefaultD(
         }
     }
 
+    val pill_list = vm.reminders.collectAsStateWithLifecycle(emptyList()).value
+
+    val onFutureClick: () -> Unit = {
+        isFutureCardClicked = true
+        val futurePills = processMedicineData(pill_list, date) as List<String>
+        futureCardData.addAll(futurePills)
+    }
+
     Card(
         modifier = Modifier
             .aspectRatio(1f)
-            .padding(2.dp).clickable {
+            .padding(2.dp)
+            .clickable {
                 if (date == LocalDate.now()) {
                     onTodayClick(vm)
+                }
+                // Handle user clicking on a future date here.
+                if (date > LocalDate.now()) {
+                    onFutureClick()
                 }
                 onClick(date)
                 selectionState.onDateSelected(date)
@@ -238,6 +282,45 @@ fun <T : SelectionState> DefaultD(
                     onClick = {
                         isCardClicked = false
                         cardData.clear()
+                    }
+                ) {
+                    Text(text = "Got it!")
+                }
+            }
+        )
+    }
+
+    if (isFutureCardClicked) {
+        AlertDialog(
+            onDismissRequest = {
+                isFutureCardClicked = false
+                // Must reset the futureCardData.
+                futureCardData.clear()
+            },
+            title = { Text(text = "$date") },
+            text = {
+                if (futureCardData.isNotEmpty() && futureCardData[0] == "No medicines to take!") {
+                    futureCardData.forEach { item ->
+                        Text(text = item)
+                    }
+                } else {
+                    Column {
+                        Text(text = "Medicine(s) to take...", style = MaterialTheme.typography.titleMedium)
+                        LazyColumn {
+                            items(futureCardData) {
+                                    item ->
+                                Text(text = item)
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                // Close the dialog with a confirm button
+                TextButton(
+                    onClick = {
+                        isFutureCardClicked = false
+                        futureCardData.clear()
                     }
                 ) {
                     Text(text = "Got it!")
