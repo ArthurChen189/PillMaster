@@ -153,7 +153,7 @@ fun PillMasterNavHost(
         composable(NavigationPath.CARERECEIVER_MANAGE.route) {
             CareReceiverManageScreen(
                 navController = navController,
-                contactViewModel = hiltViewModel<CareReceiverContactViewModel>()
+                contactViewModel = hiltViewModel<CareGiverContactViewModel>()
 
             )
         }
