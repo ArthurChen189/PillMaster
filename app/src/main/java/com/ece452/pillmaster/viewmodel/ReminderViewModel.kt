@@ -31,7 +31,7 @@ class ReminderViewModel @Inject constructor(
         }
     }
 
-    // For text to speech
+    // User Read Mode: text to speech
     fun buildReminderText(reminderList: List<Reminder>): String {
         val stringBuilder = StringBuilder()
         stringBuilder.append("Today you need to")

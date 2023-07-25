@@ -58,6 +58,7 @@ class PillAddPageViewModel @Inject constructor(
         sortPillsByDate(testList.value)
     }
 
+    //global time variable for notification time set
     var month = 0
     var day = 0
     var year = 0
@@ -138,6 +139,7 @@ class PillAddPageViewModel @Inject constructor(
             cal.set(Calendar.HOUR_OF_DAY, reminderTime.hour)
             cal.set(Calendar.MINUTE, reminderTime.min)
             id?.let {
+                //schedule a pop up notification
                 var res = it.replace("[^0-9]".toRegex(), "")
                 scheduleNotification(cal,res.toLong() * Math.floor(Math.random() * 999).toLong(), pillName, reminderTime.hour, reminderTime.min)
             }
@@ -151,7 +153,7 @@ class PillAddPageViewModel @Inject constructor(
         val intent = Intent(application.applicationContext, ReminderReceiver::class.java)
 
         intent.putExtra("INTENT_NOTIFY", true)
-
+        // set notification message and title
         intent.putExtra("id", id)
         intent.putExtra("title", "Pill Master")
         intent.putExtra("msg","Remember to take $pillName at $hour:$minute :)")
@@ -159,6 +161,7 @@ class PillAddPageViewModel @Inject constructor(
             PendingIntent.getBroadcast(application.applicationContext,
                 id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
+        //set the notification time, considered time offset
         val differenceInMillis = System.currentTimeMillis()  - calender.timeInMillis
         val differenceInSeconds = TimeUnit.MILLISECONDS.toSeconds(differenceInMillis)
 
