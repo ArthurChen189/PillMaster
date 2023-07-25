@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import com.ece452.pillmaster.utils.DrugInfo
 
 // Interface of the Reminder repository
 interface IReminderRepository {
@@ -22,12 +23,9 @@ interface IReminderRepository {
 
 // Implementation of the Reminder repository
 class ReminderRepository
-@Inject constructor(
-    private val firestore: FirebaseFirestore, // database
-    private val auth: AuthRepository, // authentication
-    ) : IReminderRepository {
+@Inject constructor(private val firestore: FirebaseFirestore, private val auth: AuthRepository)
+: IReminderRepository {
 
-    // Get reminder list of the user from firestore
     @OptIn(ExperimentalCoroutinesApi::class)
     override val reminders: Flow<List<Reminder>>
         get() =
@@ -48,6 +46,7 @@ class ReminderRepository
             newPill.userId = userid
             newPill.name = reminder.name
             newPill.description = reminder.description
+            newPill.info = DrugInfo.get_incompatible_drug_list(reminder.name, 3)
             firestore.collection(PILL_COLLECTION).add(newPill).await()
         }
         val reminderWithUserId = reminder.copy(userId = userid)
