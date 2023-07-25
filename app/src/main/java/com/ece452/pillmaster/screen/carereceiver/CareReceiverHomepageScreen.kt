@@ -3,6 +3,9 @@ package com.ece452.pillmaster.screen.common
 import android.os.Build
 import android.speech.tts.TextToSpeech
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,6 +32,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -69,6 +73,8 @@ fun CareReceiverHomepageScreen(
     val reminders = viewModel.reminders.collectAsStateWithLifecycle(emptyList())
     // Text of reminder list for text to speech
     var reminderText by remember { mutableStateOf("") }
+    // State to watch whether user in easy-mode or not.
+    val isEasyMode = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -108,20 +114,27 @@ fun CareReceiverHomepageScreen(
             }
         }
 
-        AddPillButton(navController, reminderText)
+        AddPillButton(navController, reminderText, isEasyMode)
 
         // Navigation bar at the bottom of the screen
-        NavBar(navController)
+        NavBar(navController, isEasyMode)
     }
 }
 
 @Composable
 fun NavBar(
     navController: NavController,
+    isEasyMode: MutableState<Boolean>
 ) {
+    val dynamicHeight = remember { Animatable(initialValue = 80f) }
+
+    LaunchedEffect(isEasyMode.value) {
+        dynamicHeight.animateTo(if (isEasyMode.value) 0.01f else 80f, tween(1500))
+    }
+
     Row(
         Modifier
-            .height(80.dp)
+            .height(dynamicHeight.value.dp)
             .padding(0.dp, 0.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -169,12 +182,33 @@ fun RowScope.NavItem(
 @Composable
 fun AddPillButton(
     navController: NavController,
-    reminderText: String
+    reminderText: String,
+    isEasyMode: MutableState<Boolean>
 ) {
     val context = LocalContext.current
     var isSpeaking by remember { mutableStateOf(false) }
     // TextToSpeech
     var tts by remember { mutableStateOf<TextToSpeech?>(null) }
+    val easyModeWidth = remember { Animatable(initialValue = 1.5f) }
+    val otherButtonsWidth = remember { Animatable(initialValue = 5f) }
+
+    val defaultButtonColor = MaterialTheme.colorScheme.primary
+    var buttonColor by remember { mutableStateOf(defaultButtonColor) }
+    // animate color transition when user switches to easy mode for clarity.
+    val animatedButtonColor = animateColorAsState(targetValue = buttonColor, animationSpec = tween(1000))
+
+
+    // Update the width state in a LaunchedEffect when isEasyMode changes
+    LaunchedEffect(isEasyMode.value) {
+        if (isEasyMode.value) {
+            // ensure a smooth transition.
+            easyModeWidth.animateTo(500f, tween(durationMillis = 1000))
+            otherButtonsWidth.animateTo(0.01f, tween(durationMillis = 1000))
+        } else {
+            easyModeWidth.animateTo(1.5f, tween(durationMillis = 1000))
+            otherButtonsWidth.animateTo(5f, tween(durationMillis = 1000))
+        }
+    }
 
     //TextToSpeech init
     DisposableEffect(Unit) {
@@ -192,47 +226,80 @@ fun AddPillButton(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 0.dp),
+            .padding(bottom = 8.dp),
     ) {
+        // easy-mode
         Button(
             onClick = {
-                navController.navigate(NavigationPath.PILL_ADD_PAGE.route)
-            },
-            Modifier
-                .padding(horizontal = 5.dp)
-                .weight(3.5f),
-            shape = RoundedCornerShape(10.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Add,
-                contentDescription = "Add",
-                Modifier.size((40.dp)),
-
-                )
-        }
-
-        //read/pause all reminders
-        Button(
-            onClick = {
-                if (isSpeaking) {
-                    tts?.stop()
-                } else {
-                    tts?.setSpeechRate(0.5f)
-                    tts?.speak(reminderText, TextToSpeech.QUEUE_ADD, null, null)
-                }
-                isSpeaking = !isSpeaking
+                isEasyMode.value = !isEasyMode.value
+                buttonColor = if (isEasyMode.value) Color(51,204,0) else defaultButtonColor
             },
             modifier = Modifier
                 .padding(horizontal = 5.dp)
-                .weight(1.5f),
+                .fillMaxWidth()
+                .weight(easyModeWidth.value),
+            colors = ButtonDefaults.buttonColors(containerColor = animatedButtonColor.value),
             shape = RoundedCornerShape(10.dp)
         ) {
-            val speakerIcon: Painter = painterResource(id = R.drawable.ic_speaker)
+            val easyModeIcon: Painter = painterResource(id = R.drawable.easy_mode)
             Icon(
-                painter = speakerIcon,
-                contentDescription = "Speaker",
+                painter = easyModeIcon,
+                contentDescription = "Toggle Easy Mode",
                 modifier = Modifier.size(40.dp)
             )
+        }
+//        AnimatedVisibility(
+//            visible = !isEasyMode.value,
+//            enter = fadeIn(animationSpec = tween(durationMillis = 1000)),
+//            exit = fadeOut(animationSpec = tween(durationMillis = 1000)),
+//            modifier =
+//            Modifier.
+//            weight(otherButtonsWidth.value)
+//                .alpha(if (!isEasyMode.value) 1f else 0f)
+//        ) {
+            Row(modifier = Modifier
+                .fillMaxWidth().weight(otherButtonsWidth.value)) {
+                Button(
+                    onClick = {
+                        navController.navigate(NavigationPath.PILL_ADD_PAGE.route)
+                    },
+                    Modifier
+                        .padding(horizontal = 5.dp)
+                        .weight(3.5f),
+                    shape = RoundedCornerShape(10.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Add",
+                        Modifier.size((40.dp)),
+
+                        )
+                }
+
+                //read/pause all reminders
+                Button(
+                    onClick = {
+                        if (isSpeaking) {
+                            tts?.stop()
+                        } else {
+                            tts?.setSpeechRate(0.5f)
+                            tts?.speak(reminderText, TextToSpeech.QUEUE_ADD, null, null)
+                        }
+                        isSpeaking = !isSpeaking
+                    },
+                    modifier = Modifier
+                        .padding(horizontal = 5.dp)
+                        .weight(1.5f),
+                    shape = RoundedCornerShape(10.dp)
+                ) {
+                    val speakerIcon: Painter = painterResource(id = R.drawable.ic_speaker)
+                    Icon(
+                        painter = speakerIcon,
+                        contentDescription = "Speaker",
+                        modifier = Modifier.size(40.dp)
+                    )
+                }
+//            }
         }
     }
 }

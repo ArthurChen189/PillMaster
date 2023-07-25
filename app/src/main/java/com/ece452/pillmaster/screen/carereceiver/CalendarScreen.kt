@@ -66,10 +66,7 @@ fun CalendarScreen(
 
     // Retrieve Medicine Data for Calendar View
     // Real-time Calendar
-    // TODO - mock for now
     CustomizedCalendarView(vm)
-//    CustomizedCalendarView(medicineList = vm.medicineList.value)
-
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -133,6 +130,7 @@ fun processMedicineData(
         noMedicineTaken -> -1
         allMedicineTaken -> 1
         else -> {
+            // Create sentences as prompts to user.
             val result = mutableListOf<String>()
             for (pill in currentPills) {
                 val medicine = pill.name
@@ -149,6 +147,7 @@ fun processMedicineData(
     }
 }
 
+// This function is used when user clicks on a future date.
 @RequiresApi(Build.VERSION_CODES.O)
 fun processMedicineData(
     pillList: List<Reminder>,
@@ -168,6 +167,7 @@ fun processMedicineData(
     }
 
     // Return now, if there are no pills for today.
+    // Tell user that on that specific future date, no medicines are to be taken.
     if (currentPills.isEmpty()) {
         return listOf("No medicines to take!")
     }
@@ -192,7 +192,7 @@ fun <T : SelectionState> DefaultD(
     var isFutureCardClicked by remember { mutableStateOf(false) }
     val futureCardData = remember { mutableStateListOf<String>() }
 
-    // Function to handle yellow card click
+    // Function to handle yellow card (i.e. current date) click
     val onTodayClick: (vm: PillAddPageViewModel) -> Unit = {
         isCardClicked = true
         when (result) {
@@ -225,6 +225,7 @@ fun <T : SelectionState> DefaultD(
             .aspectRatio(1f)
             .padding(2.dp)
             .clickable {
+                // Handle user clicking on the current date here.
                 if (date == LocalDate.now()) {
                     onTodayClick(vm)
                 }
@@ -237,6 +238,7 @@ fun <T : SelectionState> DefaultD(
             },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         border = if (state.isCurrentDay) BorderStroke(1.dp, currentDayColor) else null,
+        // Logic for displaying different colors.
         colors = CardDefaults.cardColors(
             contentColor = contentColorFor(
                 backgroundColor = if (result == -1 && date == LocalDate.now()) Color.Red
