@@ -1,4 +1,5 @@
-package com.ece452.pillmaster.screen.carereceiver
+package com.ece452.pillmaster.screen.caregiver
+
 
 import android.os.Build
 import android.widget.Toast
@@ -44,7 +45,7 @@ import com.ece452.pillmaster.viewmodel.CareReceiverContactViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
+inline fun<reified T : BaseContactViewModel> CareReceiverManageScreen(
     navController: NavController,
     contactViewModel: T = hiltViewModel()
 ) {
@@ -79,16 +80,16 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
         //horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TopAppBar(
-            title = { Text("Manage Caregivers") },
+            title = { Text("Manage Carereceivers") },
 
-        )
+            )
         Text(text = "Connected Contacts", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(connectedContacts.value) { connectedContactItem ->
 //                val receiverId = if (isCareReceiver) connectedContactItem.careGiverId else connectedContactItem.careReceiverId
 //                val receiverEmail = if (isCareReceiver) connectedContactItem.careGiverEmail else connectedContactItem.careReceiverEmail
 
-                SingleConnectedContactItem(
+                ConnectedContactItem(
                     contact = connectedContactItem,
                     isCareReceiver = isCareReceiver,
                     onButtonClick = {
@@ -102,7 +103,7 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
         Text(text = "Sent Contact Requests", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(sentContactRequests.value) { sentContactRequest ->
-                SingleSentContactItem(
+                SentContactItem(
                     contact = sentContactRequest,
                     isCareReceiver = isCareReceiver,
                     onButtonClick = {
@@ -116,7 +117,7 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
         Text(text = "Pending Contact Requests", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(pendingContactRequests.value) { pendingContactRequest ->
-                SinglePendingContactItem(
+                PendingContactItem(
                     contact = pendingContactRequest,
                     isCareReceiver = isCareReceiver,
                     onAcceptButtonClick = {
@@ -140,7 +141,7 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
                     .padding(start = 5.dp, end = 5.dp)
-                    //.fillMaxWidth()
+                //.fillMaxWidth()
             )
 
             Button(
@@ -183,7 +184,7 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
 }
 
 @Composable
-fun SingleConnectedContactItem(
+fun ConnectedContactItem(
     contact: Contact,
     isCareReceiver: Boolean,
     onButtonClick: () -> Unit
@@ -219,7 +220,7 @@ fun SingleConnectedContactItem(
 }
 
 @Composable
-fun SingleSentContactItem(
+fun SentContactItem(
     contact: Contact,
     isCareReceiver: Boolean,
     onButtonClick: () -> Unit
@@ -255,7 +256,7 @@ fun SingleSentContactItem(
 }
 
 @Composable
-fun SinglePendingContactItem(
+fun PendingContactItem(
     contact: Contact,
     isCareReceiver:Boolean,
     onAcceptButtonClick: () -> Unit,

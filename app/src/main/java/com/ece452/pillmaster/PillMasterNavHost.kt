@@ -13,13 +13,15 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.ece452.pillmaster.screen.caregiver.CareGiverHomeScreen
+import com.ece452.pillmaster.screen.caregiver.CareReceiverManageScreen
+import com.ece452.pillmaster.screen.caregiver.CaregiverSettingScreen
 import com.ece452.pillmaster.screen.carereceiver.CalendarScreen
 import com.ece452.pillmaster.screen.carereceiver.CaregiverManageScreen
 import com.ece452.pillmaster.screen.carereceiver.ChatScreen
 import com.ece452.pillmaster.screen.common.ContactScreen
 import com.ece452.pillmaster.screen.carereceiver.PillManageScreen
 import com.ece452.pillmaster.screen.carereceiver.ReceiverSettingScreen
-import com.ece452.pillmaster.screen.common.CareGiverHomeScreen
 import com.ece452.pillmaster.screen.common.CareReceiverHomepageScreen
 import com.ece452.pillmaster.screen.common.DashboardScreen
 import com.ece452.pillmaster.screen.common.HomeScreen
@@ -80,7 +82,9 @@ fun PillMasterNavHost(
         }
         composable(NavigationPath.CARE_GIVER_HOMEPAGE.route) {
             CareGiverHomeScreen(
-                navController = navController
+                navController = navController,
+                contactViewModel = hiltViewModel<CareGiverContactViewModel>()
+
             )
         }
         composable(NavigationPath.PILL_ADD_PAGE.route) { entry ->
@@ -132,6 +136,11 @@ fun PillMasterNavHost(
                 navController = navController,
             )
         }
+        composable(NavigationPath.CAREGIVER_SETTING.route) {
+            CaregiverSettingScreen(
+                navController = navController,
+            )
+        }
         composable(NavigationPath.PILL_MANAGE.route) {
             PillManageScreen(
                 navController = navController,
@@ -140,6 +149,15 @@ fun PillMasterNavHost(
         composable(NavigationPath.CAREGIVER_MANAGE.route) {
             CaregiverManageScreen(
                 navController = navController,
+                contactViewModel = hiltViewModel<CareReceiverContactViewModel>()
+
+            )
+        }
+        composable(NavigationPath.CARERECEIVER_MANAGE.route) {
+            CareReceiverManageScreen(
+                navController = navController,
+                contactViewModel = hiltViewModel<CareGiverContactViewModel>()
+
             )
         }
 
