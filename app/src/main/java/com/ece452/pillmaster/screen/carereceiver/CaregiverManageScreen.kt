@@ -3,8 +3,12 @@ package com.ece452.pillmaster.screen.carereceiver
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +26,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,7 +36,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -75,63 +83,104 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
             .fillMaxSize()
             .fillMaxWidth(),
 
-        verticalArrangement = Arrangement.Center,
         //horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TopAppBar(
             title = { Text("Manage Caregivers") },
-
+            navigationIcon = {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                }
+            }
         )
-        Text(text = "Connected Contacts", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
-        LazyColumn(modifier = Modifier.weight(1f)) {
-            items(connectedContacts.value) { connectedContactItem ->
+        Divider(
+            modifier = Modifier.padding(vertical = 20.dp),
+            color = Color.Black
+        )
+        Text(text = "" +
+                "Connected Contacts", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
+        Box(
+            modifier = Modifier
+                .height(120.dp) // Fix the height of the Box to 200.dp
+                .width(1000.dp)
+                .background(color = Color.LightGray) // Set the background color of the Box to grey
+                .padding(8.dp) // Add padding to create some space between the border and the content
+        ) {
+
+            LazyColumn() {
+
+                    items(connectedContacts.value) { connectedContactItem ->
 //                val receiverId = if (isCareReceiver) connectedContactItem.careGiverId else connectedContactItem.careReceiverId
 //                val receiverEmail = if (isCareReceiver) connectedContactItem.careGiverEmail else connectedContactItem.careReceiverEmail
 
-                SingleConnectedContactItem(
-                    contact = connectedContactItem,
-                    isCareReceiver = isCareReceiver,
-                    onButtonClick = {
-                        contactViewModel.onContactToRemoveChange(connectedContactItem)
-                        contactViewModel.removeContact()
+                        SingleConnectedContactItem(
+                            contact = connectedContactItem,
+                            isCareReceiver = isCareReceiver,
+                            onButtonClick = {
+                                contactViewModel.onContactToRemoveChange(connectedContactItem)
+                                contactViewModel.removeContact()
+                            }
+                        )
                     }
-                )
+
             }
         }
 
         Text(text = "Sent Contact Requests", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
-        LazyColumn(modifier = Modifier.weight(1f)) {
-            items(sentContactRequests.value) { sentContactRequest ->
-                SingleSentContactItem(
-                    contact = sentContactRequest,
-                    isCareReceiver = isCareReceiver,
-                    onButtonClick = {
-                        contactViewModel.onContactToRemoveChange(sentContactRequest)
-                        contactViewModel.removeContact()
-                    }
-                )
+
+        Box(
+            modifier = Modifier
+                .height(120.dp) // Fix the height of the Box to 200.dp
+                .width(1000.dp)
+                .background(color = Color.LightGray) // Set the background color of the Box to grey
+                .padding(8.dp)// Add padding to create some space between the border and the content
+        ) {
+
+            LazyColumn() {
+                items(sentContactRequests.value) { sentContactRequest ->
+                    SingleSentContactItem(
+                        contact = sentContactRequest,
+                        isCareReceiver = isCareReceiver,
+                        onButtonClick = {
+                            contactViewModel.onContactToRemoveChange(sentContactRequest)
+                            contactViewModel.removeContact()
+                        }
+                    )
+                }
             }
         }
 
         Text(text = "Pending Contact Requests", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
-        LazyColumn(modifier = Modifier.weight(1f)) {
-            items(pendingContactRequests.value) { pendingContactRequest ->
-                SinglePendingContactItem(
-                    contact = pendingContactRequest,
-                    isCareReceiver = isCareReceiver,
-                    onAcceptButtonClick = {
-                        // Implement the action to accept the contact request
-                        contactViewModel.onContactToAcceptChange(pendingContactRequest)
-                        contactViewModel.acceptContact()
-                    },
-                    onRefuseButtonClick = {
-                        // Implement the action to refuse the contact request
-                        contactViewModel.onContactToRemoveChange(pendingContactRequest)
-                        contactViewModel.removeContact()
-                    }
-                )
+        Box(
+            modifier = Modifier
+                .height(120.dp) // Fix the height of the Box to 200.dp
+                .width(1000.dp)
+                .background(color = Color.LightGray) // Set the background color of the Box to grey
+                .padding(8.dp) // Add padding to create some space between the border and the content
+        ) {
+            LazyColumn() {
+                items(pendingContactRequests.value) { pendingContactRequest ->
+                    SinglePendingContactItem(
+                        contact = pendingContactRequest,
+                        isCareReceiver = isCareReceiver,
+                        onAcceptButtonClick = {
+                            // Implement the action to accept the contact request
+                            contactViewModel.onContactToAcceptChange(pendingContactRequest)
+                            contactViewModel.acceptContact()
+                        },
+                        onRefuseButtonClick = {
+                            // Implement the action to refuse the contact request
+                            contactViewModel.onContactToRemoveChange(pendingContactRequest)
+                            contactViewModel.removeContact()
+                        }
+                    )
+                }
             }
         }
+        Divider(
+            modifier = Modifier.padding(vertical = 20.dp),
+            color = Color.Black
+        )
         Row() {
             TextField(
                 value = contactUiState.newContactEmail,
@@ -160,25 +209,8 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
                 Text("Add")
             }
         }
+        Row() {}
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-
-        ) {
-            Button(
-
-                onClick = {
-                    navController.popBackStack()
-                },
-                modifier = Modifier.size(width = 120.dp, height = 50.dp)
-            ) {
-                Text("Back")
-            }
-
-
-        }
     }
 }
 
