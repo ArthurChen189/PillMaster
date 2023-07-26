@@ -1,6 +1,5 @@
 package com.ece452.pillmaster.utils
 
-import android.util.Log
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
@@ -63,20 +62,39 @@ class DrugInfo @Inject constructor() {
             if (!response.isSuccessful) {
                 throw IOException("Unexpected code $response")
             }
-            // Convert the response body to a JSON object
-            val responseJson = JSONObject(response.body?.string())
-            var potential_drug = ""
+            val responseBody = response.body?.string()
+            if (responseBody.isNullOrEmpty()) {
+                return ""
+            }
 
-            // If the drug is found, get its rxcui
-            if(responseJson.getJSONObject("drugGroup").length() > 1){
-                val jsonArray = responseJson.getJSONObject("drugGroup").getJSONArray("conceptGroup")
-                for (i in 0 until  jsonArray.length()){
-                    if (!jsonArray.getJSONObject(i).isNull("conceptProperties")){
-                        potential_drug = jsonArray.getJSONObject(i).getJSONArray("conceptProperties").getJSONObject(0).getString("rxcui")
+            try {
+                // Convert the response body to a JSONObject
+                val responseJson = JSONObject(responseBody)
+
+                // Check if the "drugGroup" key exists and contains "conceptGroup" array
+                if (responseJson.has("drugGroup")) {
+                    val drugGroup = responseJson.getJSONObject("drugGroup")
+
+                    if (drugGroup.has("conceptGroup")) {
+                        val conceptGroupArray = drugGroup.getJSONArray("conceptGroup")
+
+                        // Check if the "conceptGroup" array is not empty
+                        if (conceptGroupArray.length() > 0) {
+                            // Get the rxcui of the drug from the first element of "conceptProperties"
+                            val conceptGroup = conceptGroupArray.getJSONObject(0)
+                            val conceptProperties = conceptGroup.getJSONArray("conceptProperties")
+
+                            if (conceptProperties.length() > 0) {
+                                return conceptProperties.getJSONObject(0).optString("rxcui", "")
+                            }
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                return ""
             }
-            return potential_drug;
+
+            return ""
         }
     }
 }
