@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -34,10 +36,6 @@ fun HomeScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Home",
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
 
         if (errorText.isNotEmpty()) {
             Text(
@@ -48,21 +46,21 @@ fun HomeScreen(
 
         if (userId != null) {
             // Display content for care giver
+            Text(text = "I am a Care Giver")
             Button(onClick = { navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route) }) {
                 Text(text = "Care Receiver Homepage")
             }
+            Divider(
+                modifier = Modifier.padding(vertical = 8.dp),
+                color = Color.Gray
+            )
+            Text(text = "I am a Care Giver")
 
             // Display content for care receiver
             Button(onClick = { navController.navigate(NavigationPath.CARE_GIVER_HOMEPAGE.route) }) {
                 Text(text = "Care Giver Homepage")
             }
 
-            Button(onClick = {
-                loginViewModel.signoutUser()
-                navController.navigate(NavigationPath.DASHBOARD.route)
-            }) {
-                Text(text = "Sign out")
-            }
         } else {
             errorText = "Invalid User."
         }
