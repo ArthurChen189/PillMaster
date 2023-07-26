@@ -46,7 +46,7 @@ class ReminderRepository
             newPill.userId = userid
             newPill.name = reminder.name
             newPill.description = reminder.description
-            newPill.info = DrugInfo.get_incompatible_drug_list(reminder.name, 3)
+            newPill.info = DrugInfo.get_incompatible_drug_list(reminder.name.split("\\s".toRegex())[0], 3)
             firestore.collection(PILL_COLLECTION).add(newPill).await()
         }
         val reminderWithUserId = reminder.copy(userId = userid)
