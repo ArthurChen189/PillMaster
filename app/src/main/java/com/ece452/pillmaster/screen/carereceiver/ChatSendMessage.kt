@@ -25,8 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ece452.pillmaster.R
 import kotlinx.coroutines.launch
+import androidx.compose.material3.TopAppBar
 import java.time.format.TextStyle
-
+import androidx.compose.material3.MaterialTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -44,7 +45,11 @@ fun ChatSendMessage(
     val scope = rememberCoroutineScope()
     var text by remember { mutableStateOf(TextFieldValue("")) }
 
-    Box(
+    TopAppBar(
+        title = { Text("Chat with Health Bot") },
+    )
+
+    Column(
         // Use navigationBarsPadding() imePadding() and , to move the input panel above both the
         // navigation bar, and on-screen keyboard (IME)
         modifier = Modifier
@@ -94,6 +99,11 @@ fun ChatSendMessage(
                     }
                 }
             }
+
+            Card(
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier.padding(4.dp)
+            ) {
             Row(
                 // Add a scrollable box to display the response if the text is too long.
                 modifier = Modifier
@@ -103,11 +113,27 @@ fun ChatSendMessage(
                 .padding(8.dp)
 
             ) {
+
                 // Display the response from the health bot.
-                Text(text = "${healthBotSearch._messages.answer}",
-                    modifier = Modifier
-                        .background(Color(R.color.teal_200))
-                )
+
+                if (healthBotSearch._messages.answer.isNotEmpty()) {
+                    // Display the text content if it is not empty
+                    Text(
+                        text = healthBotSearch._messages.answer,
+                        modifier = Modifier.padding(8.dp),
+                        fontSize = 16.sp,
+                        color = Color.Black
+                    )
+                } else {
+                    // Display the note if there is no text content
+                    Text(
+                        text = "Hi! I am a Health Bot, you can ask me anything here!",
+                        modifier = Modifier.padding(8.dp),
+                        fontSize = 16.sp,
+                        color = Color.Gray // Use a different color for the note
+                    )
+                }
+                }
 
             }
         }
