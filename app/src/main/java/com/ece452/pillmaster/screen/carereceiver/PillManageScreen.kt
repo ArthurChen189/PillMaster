@@ -1,7 +1,9 @@
 package com.ece452.pillmaster.screen.carereceiver
 
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,6 +36,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
+import com.ece452.pillmaster.R
 import com.ece452.pillmaster.model.Pill
 import com.ece452.pillmaster.utils.NavigationPath
 import com.ece452.pillmaster.viewmodel.PillManagementViewModel
@@ -64,7 +68,7 @@ fun PillManageScreen(
             val pillList = pills.value
             items(pillList) { pillItem ->
                 Button(
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF85CED4)),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xff7897b2)),
 
                     modifier = Modifier
                         .fillMaxWidth()
@@ -75,6 +79,11 @@ fun PillManageScreen(
                         viewModel.onGetPill(pillItem.id)
                         showDialog.value = true
                 }) {
+                    Image(
+                        modifier = Modifier.size(50.dp),
+                        painter = rememberImagePainter(R.drawable.reminder_capture),
+                        contentDescription = null
+                    )
                     Text(text = pillItem.name, fontSize = 30.sp)
                 }
             }
@@ -130,50 +139,52 @@ fun PillDescriptionPopup(
     onClose: () -> Unit,
     onDeleteChange: () -> Unit,
 ) {
-    AlertDialog(
-        modifier = Modifier
-            .size(500.dp)
-            .padding(16.dp),
-        onDismissRequest = { onClose() },
-        title = { Text(text = pill.name) },
-        text = {
-            Column(modifier = Modifier.fillMaxSize()) {
-                LazyColumn {
-                    item {
-                        Text(text = "Description:")
-                        Text(text = pill.description, fontWeight = FontWeight.Bold)
-                    }
-                    item {
-                        Text(text = "Potential drug-drug interactions:")
-                        Text(text = pill.info.toString(), fontWeight =  FontWeight.Bold)
-                    }
-                }
-            }
-        },
 
-        confirmButton = {
-            Row(
-                Modifier.padding(top = 8.dp),
-                
-                ) {
-                Button(
-                    onClick = { onClose() },
-                    modifier = Modifier.width(100.dp)
-                ) {
-                    Text(text = "Close")
+        AlertDialog(
+            modifier = Modifier
+                .size(500.dp)
+                .padding(16.dp),
+            onDismissRequest = { onClose() },
+            title = { Text(text = pill.name) },
+            text = {
+                Column(modifier = Modifier.fillMaxSize()) {
+                    LazyColumn {
+                        item {
+                            Text(text = "Description:")
+                            Text(text = pill.description, fontWeight = FontWeight.Bold)
+                        }
+                        item {
+                            Text(text = "Potential drug-drug interactions:")
+                            Text(text = pill.info.toString(), fontWeight = FontWeight.Bold)
+                        }
+                    }
                 }
-                Spacer(modifier = Modifier.weight(1f))
-                // Todo need to delete not only the pill in database, also those reminders relating this pill
-                Button(
-                    onClick = {
-                        onDeleteChange()
-                        onClose()
-                    },
-                    modifier = Modifier.width(100.dp)
-                ) {
-                    Text(text = "Delete")
+            },
+
+            confirmButton = {
+                Row(
+                    Modifier.padding(top = 8.dp),
+
+                    ) {
+                    Button(
+                        onClick = { onClose() },
+                        modifier = Modifier.width(100.dp)
+                    ) {
+                        Text(text = "Close")
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+                    // Todo need to delete not only the pill in database, also those reminders relating this pill
+                    Button(
+                        onClick = {
+                            onDeleteChange()
+                            onClose()
+                        },
+                        modifier = Modifier.width(100.dp)
+                    ) {
+                        Text(text = "Delete")
+                    }
                 }
             }
-        }
-    )
+        )
+
 }
