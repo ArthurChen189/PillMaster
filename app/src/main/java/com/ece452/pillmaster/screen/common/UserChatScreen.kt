@@ -16,8 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -27,6 +29,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,6 +47,7 @@ import com.ece452.pillmaster.R
 import com.ece452.pillmaster.utils.UserRole
 import com.ece452.pillmaster.viewmodel.BaseUserChatViewModel
 import com.ece452.pillmaster.viewmodel.CareGiverUserChatViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -98,7 +103,10 @@ inline fun<reified T : BaseUserChatViewModel> UserChatScreen(
         ) {
             // Display chat history
             LazyColumn(
-                modifier = Modifier.weight(1f).fillMaxHeight().fillMaxWidth()
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .fillMaxWidth()
             ) {
                 items(chatHistory.value
                     .filter { chatMessage ->
@@ -170,26 +178,42 @@ inline fun<reified T : BaseUserChatViewModel> UserChatScreen(
             }
 
 
-                    // Spacer to take up the remaining available space
-                    Spacer(modifier = Modifier.weight(1f))
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(Color.Black)
+            )
+            Row() {
+                TextField(
+                    value = chatUiState.newMessage,
+                    onValueChange = userChatViewModel::onNewMessageChange,
+                    placeholder = { Text("Type your message") },
+                    shape = RoundedCornerShape(25.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 18.dp)
+                        .weight(1f),
 
-                    // Input field to type a new message
-                    OutlinedTextField(
-                        value = chatUiState.newMessage,
-                        onValueChange = userChatViewModel::onNewMessageChange,
-                        label = { Text("Type your message") },
-                        modifier = Modifier.fillMaxWidth()
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = Color.Transparent,
+                        unfocusedBorderColor = Color.Transparent),
+                )
+                IconButton(onClick = {
+                    userChatViewModel.sendMessage(receiverId = receiverId)
+                    userChatViewModel.onNewMessageChange("")
+                }) {
+                    Icon(
+                        Icons.Filled.Send,
+                        "sendMessage",
+                        modifier = Modifier.size(26.dp),
+                        tint = MaterialTheme.colorScheme.primary,
                     )
+                }
 
-                    // Send button to send the message
-                    Button(
-                        onClick = { userChatViewModel.sendMessage(receiverId = receiverId) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp)
-                    ) {
-                        Text(text = "Send")
-                    }
+            }
+
+
                 }
             }
         }
