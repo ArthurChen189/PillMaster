@@ -64,13 +64,13 @@ class DrugInfo @Inject constructor() {
             }
             // Convert the response body to a JSON object
             val responseJson = JSONObject(response.body?.string())
-            // If the JSON object contains a "conceptGroup", get the rxcui of the drug
-            if(responseJson.getJSONObject("drugGroup").getJSONArray("conceptGroup").length() != 0){
-                val potential_drug = responseJson.getJSONObject("drugGroup").getJSONArray("conceptGroup").getJSONObject(1).getJSONArray("conceptProperties").getJSONObject(0).getString("rxcui")
-                return potential_drug
+            var potential_drug = ""
+
+            // If the drug is found, get its rxcui
+            if(!responseJson.getJSONObject("drugGroup").isNull("name")){
+                potential_drug = responseJson.getJSONObject("drugGroup").getJSONArray("conceptGroup").getJSONObject(1).getJSONArray("conceptProperties").getJSONObject(0).getString("rxcui")
             }
-            // If no rxcui is found, return an empty string
-            return "";
+            return potential_drug;
         }
     }
 }
