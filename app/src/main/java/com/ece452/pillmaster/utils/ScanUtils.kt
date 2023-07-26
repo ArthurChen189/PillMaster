@@ -42,6 +42,7 @@ class ScanUtils @Inject constructor(): ViewModel() {
         }
     }
 
+    //scan pill prescription algo
     private fun extractListOfInfo( inputText: Text, navController: NavController ){
 
         val pattern = Pattern.compile("\\d{1,2}:\\d{2}\\s*[ap]m", Pattern.CASE_INSENSITIVE)

@@ -27,11 +27,28 @@ private const val RECEIVER_ID_FIELD = "receiverId"
 private const val TIMESTAMP_FIELD = "timestamp"
 private const val USER_CHAT_MESSAGE_COLLECTION = "chat"
 
+/**
+ * Interface for the User Chat Repository.
+ * Provides methods to manage user chat messages.
+ */
 interface IUserChatRepository {
     val allChatMessages: Flow<List<UserChatMessage>>
+    /**
+     * Sends a user chat message to the specified receiver and updates the chat messages flow.
+     *
+     * @param receiverId The unique identifier of the message receiver.
+     * @param message The content of the chat message to be sent.
+     * @return The UserChatMessage object representing the sent message.
+     * @throws IllegalArgumentException If the message is empty or blank.
+     * @throws IllegalStateException If the current user is not found.
+     */
     suspend fun sendUserChatMessage(receiverId: String, message: String): UserChatMessage
 }
 
+/**
+ * Repository class for managing user chat messages.
+ * Implements the IUserChatRepository interface.
+ */
 class UserChatRepository
 @Inject constructor(
     private val firestore: FirebaseFirestore,
@@ -47,6 +64,9 @@ class UserChatRepository
     override val allChatMessages: Flow<List<UserChatMessage>>
         get() = chatMessagesFlow
 
+    /**
+     * Fetches chat messages from Firestore for the current user and updates the chat messages flow.
+     */
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun fetchChatMessages(): Flow<List<UserChatMessage>> =
         auth.currentUserFlow.flatMapLatest { user ->
@@ -56,6 +76,9 @@ class UserChatRepository
                 .dataObjects()
         }
 
+    /**
+     * Updates the chat messages flow with the latest chat messages.
+     */
     suspend fun updateChatMessages() {
         val user = auth.currentUserFlow.firstOrNull()
         if (user != null) {

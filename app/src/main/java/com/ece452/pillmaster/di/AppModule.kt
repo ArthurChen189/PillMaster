@@ -2,8 +2,6 @@ package com.ece452.pillmaster.di
 
 import android.content.Context
 import com.ece452.pillmaster.PillMasterApplication
-import com.ece452.pillmaster.usecase.GetReminderUseCase
-import com.ece452.pillmaster.usecase.IGetReminderUseCase
 import com.ece452.pillmaster.repository.IAuthRepository
 import com.ece452.pillmaster.repository.AuthRepository
 import com.ece452.pillmaster.repository.CareGiverContactRepository
@@ -15,7 +13,6 @@ import com.ece452.pillmaster.repository.IReminderRepository
 import com.ece452.pillmaster.repository.IUserChatRepository
 import com.ece452.pillmaster.repository.ReminderRepository
 import com.ece452.pillmaster.repository.UserChatRepository
-import com.ece452.pillmaster.service.IReminderService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -31,31 +28,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
-
-    @Provides
-    @Singleton
-    fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://www.themealdb.com/api/json/v1/1/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        //will convert it to string for debugging
-//            .addConverterFactory(ScalarsConverterFactory.create())
-
-        //will convert it to ReminderResponse object format
-
-    }
     @Singleton
     @Provides
     fun provideApplication(@ApplicationContext app: Context): PillMasterApplication {
         return app as PillMasterApplication
-    }
-    @Provides
-    @Singleton
-    //know how to call api
-    fun providesReminderService(retrofit: Retrofit): IReminderService {
-        return retrofit.create(IReminderService::class.java)
     }
 
     @Module
@@ -87,11 +63,6 @@ class AppModule {
         @Binds
         @Singleton
         fun provideUserChatRepository(repo: UserChatRepository) : IUserChatRepository
-
-        @Binds
-        @Singleton
-        fun provideGetReminderUseCase(uc: GetReminderUseCase) : IGetReminderUseCase
-
 
     }
 

@@ -21,7 +21,9 @@ import java.util.Date
 
 
 class ReminderReceiver : BroadcastReceiver() {
+    //listen the time to pop a notification
     override fun onReceive(context: Context?, intent: Intent?) {
+        //build the notification message
         val notificationManager: NotificationManager =
             context?.getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
         val dbId = intent?.getLongExtra("id", -1) ?: -1

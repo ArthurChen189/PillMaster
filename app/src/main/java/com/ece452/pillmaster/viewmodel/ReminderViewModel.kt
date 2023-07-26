@@ -15,20 +15,23 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
-
+// View model for Care receiver homepage for viewing and managing reminder list
 @HiltViewModel
 class ReminderViewModel @Inject constructor(
    private val repository: ReminderRepository
 ): ViewModel() {
 
+    // Reminder list of the user
     val reminders = repository.reminders
 
+    // When user toggles the checkbox for the reminder row 
     fun onReminderCheckChange(reminder: Reminder) {
         viewModelScope.launch {
             repository.update(reminder.copy(completed = !reminder.completed))
         }
     }
 
+    // User Read Mode: text to speech
     fun buildReminderText(reminderList: List<Reminder>): String {
         val stringBuilder = StringBuilder()
         stringBuilder.append("Today you need to")
@@ -39,21 +42,4 @@ class ReminderViewModel @Inject constructor(
         }
         return stringBuilder.toString()
     }
-    
-//     private val _listofReminders: MutableState<List<Reminder>> = mutableStateOf(emptyList())
-//     val listOfReminders: State<List<Reminder>> = _listofReminders
-//     init{
-//         viewModelScope.launch {
-//             // trigger invoke fun
-//             val reminderList = useCase()
-//             // change the name later
-//             _listofReminders.value = ReminderRepository.reminders
-// //            reminderList.categories.forEach{
-// //                Log.d("YW", it.strCategory)
-// //                Log.d("YW", it.strCategoryDescription)
-// //            }
-
-//         }
-
-//     }
 }

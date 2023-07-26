@@ -2,36 +2,52 @@ package com.ece452.pillmaster.screen.common
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.ece452.pillmaster.R
 import com.ece452.pillmaster.utils.UserRole
 import com.ece452.pillmaster.viewmodel.BaseUserChatViewModel
 import com.ece452.pillmaster.viewmodel.CareGiverUserChatViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -87,56 +103,118 @@ inline fun<reified T : BaseUserChatViewModel> UserChatScreen(
         ) {
             // Display chat history
             LazyColumn(
-                modifier = Modifier.weight(1f).fillMaxHeight().fillMaxWidth()
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .fillMaxWidth()
             ) {
                 items(chatHistory.value
-                    .filter { chatMessage -> (chatMessage.receiverId == receiverId && chatMessage.senderId == currentUserId)
-                            || (chatMessage.senderId == receiverId && chatMessage.receiverId == currentUserId)}
+                    .filter { chatMessage ->
+                        (chatMessage.receiverId == receiverId && chatMessage.senderId == currentUserId)
+                                || (chatMessage.senderId == receiverId && chatMessage.receiverId == currentUserId)
+                    }
                 ) { chatMessage ->
-                    Column(
-                        modifier = Modifier.fillMaxWidth()
+                    val senderLabel =
+                        if (chatMessage.senderId == receiverId) receiverEmail else "Me"
+                    val isSentByCurrentUser = chatMessage.senderId == currentUserId
+                    // Apply different background colors and alignment based on sender
+                    val backgroundColor = if (isSentByCurrentUser) Color.Gray else Color.White
+                    val horizontalAlignment =
+                        if (isSentByCurrentUser) Alignment.End else Alignment.Start
+
+                    Card(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .background(color = backgroundColor),
                     ) {
-                        val senderLabel = if (chatMessage.senderId == receiverId) receiverEmail else "Me"
+                        Row(
+                            modifier = Modifier
 
-                        Text(
-                            text = "$senderLabel (${chatMessage.timestamp})",
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = FontWeight.Bold
-                        )
+                                .padding(8.dp),
+                            horizontalArrangement = if (isSentByCurrentUser) Arrangement.End else Arrangement.Start
+                        ) {
+                            // Optionally, you can add an avatar to identify the sender visually
+                            if (!isSentByCurrentUser) {
+                                // Replace the imageResource with your avatar image
+                                Image(
+                                    painter = painterResource(R.drawable.user_icon),
+                                    contentDescription = "Avatar",
+                                    modifier = Modifier
+                                        .size(32.dp)
+                                        .padding(end = 8.dp),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }else {
+                                Image(
+                                    painter = painterResource(R.drawable.user_icon_green),
+                                    contentDescription = "Avatar",
+                                    modifier = Modifier
+                                        .size(32.dp)
+                                        .padding(end = 8.dp),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }
 
-                        Spacer(modifier = Modifier.height(4.dp))
-                        // Display the message content
-                        Text(
-                            text = chatMessage.message,
-                            style = MaterialTheme.typography.bodySmall
-                        )
+                            Column(
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(
+                                    text = "$senderLabel (${chatMessage.timestamp})",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontWeight = FontWeight.Bold
+                                )
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                                Spacer(modifier = Modifier.height(4.dp))
+
+                                // Display the message content
+                                Text(
+                                    text = chatMessage.message,
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            }
+                        }
                     }
                 }
             }
 
 
-            // Spacer to take up the remaining available space
-            Spacer(modifier = Modifier.weight(1f))
-
-            // Input field to type a new message
-            OutlinedTextField(
-                value = chatUiState.newMessage,
-                onValueChange = userChatViewModel::onNewMessageChange,
-                label = { Text("Type your message") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            // Send button to send the message
-            Button(
-                onClick = { userChatViewModel.sendMessage(receiverId = receiverId) },
+            Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp)
-            ) {
-                Text(text = "Send")
+                    .height(1.dp)
+                    .background(Color.Black)
+            )
+            Row() {
+                TextField(
+                    value = chatUiState.newMessage,
+                    onValueChange = userChatViewModel::onNewMessageChange,
+                    placeholder = { Text("Type your message") },
+                    shape = RoundedCornerShape(25.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 18.dp)
+                        .weight(1f),
+
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = Color.Transparent,
+                        unfocusedBorderColor = Color.Transparent),
+                )
+                IconButton(onClick = {
+                    userChatViewModel.sendMessage(receiverId = receiverId)
+                    userChatViewModel.onNewMessageChange("")
+                }) {
+                    Icon(
+                        Icons.Filled.Send,
+                        "sendMessage",
+                        modifier = Modifier.size(26.dp),
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
+
+            }
+
+
+                }
             }
         }
-    }
-}
+

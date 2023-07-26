@@ -1,14 +1,13 @@
-package com.ece452.pillmaster.screen.carereceiver
+package com.ece452.pillmaster.screen.caregiver
+
 
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,7 +36,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -52,7 +49,7 @@ import com.ece452.pillmaster.viewmodel.CareReceiverContactViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
+inline fun<reified T : BaseContactViewModel> CareReceiverManageScreen(
     navController: NavController,
     contactViewModel: T = hiltViewModel()
 ) {
@@ -86,7 +83,7 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
         //horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TopAppBar(
-            title = { Text("Manage Caregivers") },
+            title = { Text("Manage Carereceivers") },
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(Icons.Default.ArrowBack, contentDescription = "Back")
@@ -97,8 +94,7 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
             modifier = Modifier.padding(vertical = 20.dp),
             color = Color.Black
         )
-        Text(text = "" +
-                "Connected Contacts", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
+        Text(text = "Connected Contacts", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
         Box(
             modifier = Modifier
                 .height(120.dp) // Fix the height of the Box to 200.dp
@@ -106,39 +102,34 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
                 .background(color = Color.LightGray) // Set the background color of the Box to grey
                 .padding(8.dp) // Add padding to create some space between the border and the content
         ) {
-
             LazyColumn() {
-
-                    items(connectedContacts.value) { connectedContactItem ->
+                items(connectedContacts.value) { connectedContactItem ->
 //                val receiverId = if (isCareReceiver) connectedContactItem.careGiverId else connectedContactItem.careReceiverId
 //                val receiverEmail = if (isCareReceiver) connectedContactItem.careGiverEmail else connectedContactItem.careReceiverEmail
 
-                        SingleConnectedContactItem(
-                            contact = connectedContactItem,
-                            isCareReceiver = isCareReceiver,
-                            onButtonClick = {
-                                contactViewModel.onContactToRemoveChange(connectedContactItem)
-                                contactViewModel.removeContact()
-                            }
-                        )
-                    }
-
+                    ConnectedContactItem(
+                        contact = connectedContactItem,
+                        isCareReceiver = isCareReceiver,
+                        onButtonClick = {
+                            contactViewModel.onContactToRemoveChange(connectedContactItem)
+                            contactViewModel.removeContact()
+                        }
+                    )
+                }
             }
         }
 
         Text(text = "Sent Contact Requests", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
-
         Box(
             modifier = Modifier
                 .height(120.dp) // Fix the height of the Box to 200.dp
                 .width(1000.dp)
                 .background(color = Color.LightGray) // Set the background color of the Box to grey
-                .padding(8.dp)// Add padding to create some space between the border and the content
+                .padding(8.dp) // Add padding to create some space between the border and the content
         ) {
-
             LazyColumn() {
                 items(sentContactRequests.value) { sentContactRequest ->
-                    SingleSentContactItem(
+                    SentContactItem(
                         contact = sentContactRequest,
                         isCareReceiver = isCareReceiver,
                         onButtonClick = {
@@ -160,7 +151,7 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
         ) {
             LazyColumn() {
                 items(pendingContactRequests.value) { pendingContactRequest ->
-                    SinglePendingContactItem(
+                    PendingContactItem(
                         contact = pendingContactRequest,
                         isCareReceiver = isCareReceiver,
                         onAcceptButtonClick = {
@@ -189,7 +180,7 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
                     .padding(start = 5.dp, end = 5.dp)
-                    //.fillMaxWidth()
+                //.fillMaxWidth()
             )
 
             Button(
@@ -211,11 +202,12 @@ inline fun<reified T : BaseContactViewModel> CaregiverManageScreen(
         }
         Row() {}
 
+
     }
 }
 
 @Composable
-fun SingleConnectedContactItem(
+fun ConnectedContactItem(
     contact: Contact,
     isCareReceiver: Boolean,
     onButtonClick: () -> Unit
@@ -251,7 +243,7 @@ fun SingleConnectedContactItem(
 }
 
 @Composable
-fun SingleSentContactItem(
+fun SentContactItem(
     contact: Contact,
     isCareReceiver: Boolean,
     onButtonClick: () -> Unit
@@ -287,7 +279,7 @@ fun SingleSentContactItem(
 }
 
 @Composable
-fun SinglePendingContactItem(
+fun PendingContactItem(
     contact: Contact,
     isCareReceiver:Boolean,
     onAcceptButtonClick: () -> Unit,

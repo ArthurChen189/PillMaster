@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -72,21 +73,21 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .fillMaxWidth()
-            .padding(bottom = 0.dp),
+            .fillMaxWidth(),
+
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         // TODO - Build this screen as per the Figma file.
         TopAppBar(
             title = { Text("Contacts") },
-            navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                }
-            }
+//            navigationIcon = {
+//                IconButton(onClick = { navController.popBackStack() }) {
+//                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+//                }
+//            }
         )
-        Text(text = "Connected Contacts", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
+//        Text(text = "Contacts", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(connectedContacts.value) { connectedContactItem ->
                 val receiverId = if (isCareReceiver) connectedContactItem.careGiverId else connectedContactItem.careReceiverId
@@ -106,60 +107,81 @@ inline fun<reified T : BaseContactViewModel> ContactScreen(
                 }
             }
         }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
 
-        Text(text = "Sent Contact Requests", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
-        LazyColumn(modifier = Modifier.weight(1f)) {
-            items(sentContactRequests.value) { sentContactRequest ->
-                SingleSentContactItem(
-                    contact = sentContactRequest,
-                    isCareReceiver = isCareReceiver,
-                    onButtonClick = {
-                        contactViewModel.onContactToRemoveChange(sentContactRequest)
-                        contactViewModel.removeContact()
-                    }
-                )
-            }
-        }
-
-        Text(text = "Pending Contact Requests", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
-        LazyColumn(modifier = Modifier.weight(1f)) {
-            items(pendingContactRequests.value) { pendingContactRequest ->
-                SinglePendingContactItem(
-                    contact = pendingContactRequest,
-                    isCareReceiver = isCareReceiver,
-                    onAcceptButtonClick = {
-                        // Implement the action to accept the contact request
-                        contactViewModel.onContactToAcceptChange(pendingContactRequest)
-                        contactViewModel.acceptContact()
-                    },
-                    onRefuseButtonClick = {
-                        // Implement the action to refuse the contact request
-                        contactViewModel.onContactToRemoveChange(pendingContactRequest)
-                        contactViewModel.removeContact()
-                    }
-                )
-            }
-        }
-
-        TextField(
-            value = contactUiState.newContactEmail,
-            onValueChange = { contactViewModel.onNewContactEmailChange(it) },
-            label = { Text("Add new contact") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Button(
-            onClick = {
-                if (contactUiState.newContactEmail.isNotEmpty()) {
-                    contactViewModel.addNewContact()
-                } else {
-                    Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
-                }
-            },
-            modifier = Modifier.size(width = 300.dp, height = 50.dp)
         ) {
-            Text("Add new contact")
+            Button(
+
+                onClick = {
+                    navController.popBackStack()
+                },
+                modifier = Modifier.size(width = 120.dp, height = 50.dp)
+            ) {
+                Text("Back")
+            }
+
+
         }
+//        Text(text = "Sent Contact Requests", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
+//        LazyColumn(modifier = Modifier.weight(1f)) {
+//            items(sentContactRequests.value) { sentContactRequest ->
+//                SingleSentContactItem(
+//                    contact = sentContactRequest,
+//                    isCareReceiver = isCareReceiver,
+//                    onButtonClick = {
+//                        contactViewModel.onContactToRemoveChange(sentContactRequest)
+//                        contactViewModel.removeContact()
+//                    }
+//                )
+//            }
+//        }
+//
+//        Text(text = "Pending Contact Requests", fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
+//        LazyColumn(modifier = Modifier.weight(1f)) {
+//            items(pendingContactRequests.value) { pendingContactRequest ->
+//                SinglePendingContactItem(
+//                    contact = pendingContactRequest,
+//                    isCareReceiver = isCareReceiver,
+//                    onAcceptButtonClick = {
+//                        // Implement the action to accept the contact request
+//                        contactViewModel.onContactToAcceptChange(pendingContactRequest)
+//                        contactViewModel.acceptContact()
+//                    },
+//                    onRefuseButtonClick = {
+//                        // Implement the action to refuse the contact request
+//                        contactViewModel.onContactToRemoveChange(pendingContactRequest)
+//                        contactViewModel.removeContact()
+//                    }
+//                )
+//            }
+//        }
+//
+//        TextField(
+//            value = contactUiState.newContactEmail,
+//            onValueChange = { contactViewModel.onNewContactEmailChange(it) },
+//            label = { Text("Add new contact") },
+//            shape = RoundedCornerShape(10.dp),
+//            modifier = Modifier
+//                .padding(10.dp)
+//                .fillMaxWidth()
+//        )
+//
+//        Button(
+//            onClick = {
+//                if (contactUiState.newContactEmail.isNotEmpty()) {
+//                    contactViewModel.addNewContact()
+//                } else {
+//                    Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
+//                }
+//            },
+//            modifier = Modifier.size(width = 200.dp, height = 50.dp)
+//                .padding(bottom = 10.dp)
+//        ) {
+//            Text("Add new contact")
+//        }
     }
 }
 
@@ -181,16 +203,19 @@ fun SingleConnectedContactItem(
         ) {
             Text(
                 text = if (isCareReceiver) contact.careGiverEmail else contact.careReceiverEmail,
-                fontSize = 24.sp,
+                fontSize = 18.sp,
                 modifier = Modifier.padding(start = 10.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
                 onClick = onButtonClick,
-                modifier = Modifier.size(width = 100.dp, height = 50.dp)
+                modifier = Modifier.height(50.dp)
             ) {
-                Text("Chat")
+                Text(
+                    text = "Chat",
+                    fontSize = 16.sp
+                )
             }
         }
     }
@@ -214,16 +239,19 @@ fun SingleSentContactItem(
         ) {
             Text(
                 text = if (isCareReceiver) contact.careGiverEmail else contact.careReceiverEmail,
-                fontSize = 24.sp,
+                fontSize = 18.sp,
                 modifier = Modifier.padding(start = 10.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
                 onClick = onButtonClick,
-                modifier = Modifier.size(width = 100.dp, height = 50.dp)
+                modifier = Modifier.height(50.dp)
             ) {
-                Text("Recall")
+                Text(
+                    text = "Recall",
+                    fontSize = 16.sp
+                )
             }
         }
     }
@@ -246,23 +274,32 @@ fun SinglePendingContactItem(
             modifier = Modifier.padding(10.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = if (isCareReceiver) contact.careGiverEmail else contact.careReceiverEmail, fontSize = 24.sp, modifier = Modifier.padding(start = 10.dp))
+            Text(
+                text = if (isCareReceiver) contact.careGiverEmail else contact.careReceiverEmail,
+                fontSize = 18.sp,
+                modifier = Modifier.padding(start = 10.dp)
+            )
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
                 onClick = onAcceptButtonClick,
-                modifier = Modifier.size(width = 100.dp, height = 50.dp)
+                modifier = Modifier.height(50.dp)
             ) {
-                Text("Accept")
+                Text(text = "Accept",
+                fontSize = 16.sp
+                )
             }
 
             Spacer(modifier = Modifier.width(8.dp))
 
             Button(
                 onClick = onRefuseButtonClick,
-                modifier = Modifier.size(width = 100.dp, height = 50.dp)
+                modifier = Modifier.height(50.dp)
             ) {
-                Text("Refuse")
+                Text(
+                    text = "Refuse",
+                    fontSize = 16.sp
+                )
             }
         }
     }

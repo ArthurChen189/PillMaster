@@ -25,7 +25,7 @@ import java.util.TimeZone
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-
+// View model for PillAddPage for adding a new pill reminder
 // TODO consider renaming this so as to serve for both uploading and retrieving
 // TODO pill info to and from the database.
 @RequiresApi(Build.VERSION_CODES.S)
@@ -34,6 +34,7 @@ class PillAddPageViewModel @Inject constructor(
     private val application: PillMasterApplication,
     private val repository: ReminderRepository) : ViewModel() {
 
+    // Reminder list of the user
     val reminders = repository.reminders
 
 
@@ -45,10 +46,8 @@ class PillAddPageViewModel @Inject constructor(
         // Add more fields as needed
     )
 
-    // TODO Static list for testing purpose.
-    // This should be replaced by medicineList, which is dynamically fetched from the
-    // backend. Each item in the list should at least contain
-    // pill_name, start, end date, isTakenToday, etc.
+    // Static list for testing purpose.
+    // This is already replaced by reminder list of the user
     val testList = mutableStateOf(mutableListOf<Pill>())
     init {
         testList.value = mutableListOf(
@@ -58,6 +57,8 @@ class PillAddPageViewModel @Inject constructor(
         )
         sortPillsByDate(testList.value)
     }
+
+    //global time variable for notification time set
     var month = 0
     var day = 0
     var year = 0
@@ -84,7 +85,7 @@ class PillAddPageViewModel @Inject constructor(
 
 
 
-    // submit a reminderList
+    // submit multiple reminders for each reminder time
     fun pillListSubmit(
         pillName: (String),
         direction: (String),
@@ -107,7 +108,7 @@ class PillAddPageViewModel @Inject constructor(
 
     }
 
-    // submit a new pill
+    // submit a single reminder
     @RequiresApi(Build.VERSION_CODES.S)
     fun newPillSubmit(
         pillName: (String),
@@ -138,6 +139,7 @@ class PillAddPageViewModel @Inject constructor(
             cal.set(Calendar.HOUR_OF_DAY, reminderTime.hour)
             cal.set(Calendar.MINUTE, reminderTime.min)
             id?.let {
+                //schedule a pop up notification
                 var res = it.replace("[^0-9]".toRegex(), "")
                 scheduleNotification(cal,res.toLong() * Math.floor(Math.random() * 999).toLong(), pillName, reminderTime.hour, reminderTime.min)
             }
@@ -151,7 +153,7 @@ class PillAddPageViewModel @Inject constructor(
         val intent = Intent(application.applicationContext, ReminderReceiver::class.java)
 
         intent.putExtra("INTENT_NOTIFY", true)
-
+        // set notification message and title
         intent.putExtra("id", id)
         intent.putExtra("title", "Pill Master")
         intent.putExtra("msg","Remember to take $pillName at $hour:$minute :)")
@@ -159,6 +161,7 @@ class PillAddPageViewModel @Inject constructor(
             PendingIntent.getBroadcast(application.applicationContext,
                 id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
+        //set the notification time, considered time offset
         val differenceInMillis = System.currentTimeMillis()  - calender.timeInMillis
         val differenceInSeconds = TimeUnit.MILLISECONDS.toSeconds(differenceInMillis)
 

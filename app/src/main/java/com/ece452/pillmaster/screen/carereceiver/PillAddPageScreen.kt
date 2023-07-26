@@ -45,6 +45,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 
+// The screen for adding a new pill reminder
 @RequiresApi(Build.VERSION_CODES.S)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,6 +56,7 @@ fun PillAddPageScreen(
 ) {
     val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
 
+    // Saved info of the new pill reminder
     var pillName by remember { mutableStateOf(savedStateHandle?.get<String>("pillName") ?: "")  }
     var reminderTime by remember {mutableStateOf(savedStateHandle?.get<String>("reminderTime") ?: "")}
     var startDate by remember { mutableStateOf(savedStateHandle?.get<String>("startDate") ?: "")}
@@ -64,12 +66,14 @@ fun PillAddPageScreen(
     val context = LocalContext.current
     var description by remember { mutableStateOf(savedStateHandle?.get<String>("description") ?: "") }
     val reminderTimeList = remember { mutableStateListOf<ReminderTime>() }
+
     if (reminderTime != "") {
         val hour = reminderTime.substringBefore(":").toInt()
         val min = reminderTime.substringAfter(":").toInt()
         reminderTimeList.clear()
         reminderTimeList.add(ReminderTime(hour = hour, min = min, timeString = reminderTime))
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -105,8 +109,8 @@ fun PillAddPageScreen(
             }
         }
 
-        // TODO requested by Anna: Allow user to add multiple reminderTimes,
-        // and when user clicks submit, newPillSubmit to reminder repository for each reminderTime
+        // Allow user to add multiple reminder times,
+        // when user clicks submit, newPillSubmit to reminder repository for each reminderTime
         Column(){
             Text("Selected Reminder Times:", fontSize = 20.sp)
             Spacer(modifier = Modifier.size(5.dp))
@@ -130,6 +134,8 @@ fun PillAddPageScreen(
                     }
                 }
             }
+
+            // Time picker that allows user to add multiple reminder times
             TimePicker2(
                 selectedTimes = reminderTimeList,
                 onSelectedTimesChange = { times ->
@@ -160,7 +166,6 @@ fun PillAddPageScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-//                .padding(top = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Checkbox(
@@ -170,6 +175,7 @@ fun PillAddPageScreen(
             )
             Text(text = "Link this reminder to your selected CareGiver above")
         }
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -177,15 +183,16 @@ fun PillAddPageScreen(
         ) {
             Button(
                 onClick = {
-                    navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
+                    navController.popBackStack()
                 },
                 modifier = Modifier.size(width = 100.dp, height = 50.dp)
-
-                    //.padding(start = 16.dp)
             ) {
                 Text("Cancel")
             }
+
             Spacer(modifier = Modifier.width(20.dp))
+
+            // Add the new pill reminder
             Button(
                 onClick = {
                     if (pillName.isNotEmpty() &&
@@ -203,14 +210,12 @@ fun PillAddPageScreen(
                             selectedOption,
                             isChecked
                         )
-                        navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route)
+                        navController.popBackStack()
                     } else {
                         Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
                     }
                 },
                 modifier = Modifier.size(width = 100.dp, height = 50.dp)
-
-                    //.padding(end = 16.dp)
             ) {
                 Text("Submit")
             }
@@ -287,10 +292,12 @@ fun DatePicker(
     val mMonth: Int
     val mDay: Int
     val mCalendar = Calendar.getInstance()
+
     mYear = mCalendar.get(Calendar.YEAR)
     mMonth = mCalendar.get(Calendar.MONTH)
     mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
     mCalendar.time = Date()
+
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
@@ -329,6 +336,7 @@ fun TimePicker(
     val mCalendar = Calendar.getInstance()
     val mHour = mCalendar[Calendar.HOUR_OF_DAY]
     val mMinute = mCalendar[Calendar.MINUTE]
+
     val mTimePickerDialog = TimePickerDialog(
         mContext,
         {_, mHour : Int, mMinute: Int ->

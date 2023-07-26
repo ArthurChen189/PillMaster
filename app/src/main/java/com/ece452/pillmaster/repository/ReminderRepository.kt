@@ -10,7 +10,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import com.ece452.pillmaster.utils.DrugInfo
 
+// Interface of the Reminder repository
 interface IReminderRepository {
     val reminders: Flow<List<Reminder>>
     suspend fun getReminder(reminderId: String): Reminder?
@@ -19,9 +21,11 @@ interface IReminderRepository {
     suspend fun delete(reminderId: String)
 }
 
+// Implementation of the Reminder repository
 class ReminderRepository
 @Inject constructor(private val firestore: FirebaseFirestore, private val auth: AuthRepository)
 : IReminderRepository {
+
     @OptIn(ExperimentalCoroutinesApi::class)
     override val reminders: Flow<List<Reminder>>
         get() =
@@ -29,21 +33,26 @@ class ReminderRepository
             firestore.collection(REMINDER_COLLECTION).whereEqualTo(USER_ID_FIELD, user.userId).dataObjects()
         }
 
+    // Get a single reminder from firestore by document id
     override suspend fun getReminder(reminderId: String): Reminder? =
         firestore.collection(REMINDER_COLLECTION).document(reminderId).get().await().toObject()
 
+    // Add a reminder to firestore, if the pill of the reminder name does not exist, add the pill to firestore as well
     override suspend fun save(reminder: Reminder): String {
         val userid = auth.getUserId()
         val pillRef = firestore.collection(PILL_COLLECTION).whereEqualTo(USER_ID_FIELD, userid).whereEqualTo(NAME_FIELD, reminder.name).limit(1).get().await().documents.firstOrNull()
+        val reminderWithUserId = reminder.copy(userId = userid)
+        val id = firestore.collection(REMINDER_COLLECTION).add(reminderWithUserId).await().id
         if (pillRef == null) {
             var newPill = Pill()
             newPill.userId = userid
             newPill.name = reminder.name
             newPill.description = reminder.description
+            newPill.info = DrugInfo.get_incompatible_drug_list(reminder.name.split("\\s".toRegex())[0], 3)
             firestore.collection(PILL_COLLECTION).add(newPill).await()
         }
-        val reminderWithUserId = reminder.copy(userId = userid)
-        return firestore.collection(REMINDER_COLLECTION).add(reminderWithUserId).await().id
+        return id
+
     }
 
     override suspend fun update(reminder: Reminder) {
