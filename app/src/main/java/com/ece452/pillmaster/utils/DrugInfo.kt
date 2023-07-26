@@ -1,5 +1,6 @@
 package com.ece452.pillmaster.utils
 
+import android.util.Log
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
@@ -67,8 +68,13 @@ class DrugInfo @Inject constructor() {
             var potential_drug = ""
 
             // If the drug is found, get its rxcui
-            if(!responseJson.getJSONObject("drugGroup").isNull("name")){
-                potential_drug = responseJson.getJSONObject("drugGroup").getJSONArray("conceptGroup").getJSONObject(1).getJSONArray("conceptProperties").getJSONObject(0).getString("rxcui")
+            if(responseJson.getJSONObject("drugGroup").length() > 1){
+                val jsonArray = responseJson.getJSONObject("drugGroup").getJSONArray("conceptGroup")
+                for (i in 0 until  jsonArray.length()){
+                    if (!jsonArray.getJSONObject(i).isNull("conceptProperties")){
+                        potential_drug = jsonArray.getJSONObject(i).getJSONArray("conceptProperties").getJSONObject(0).getString("rxcui")
+                    }
+                }
             }
             return potential_drug;
         }
