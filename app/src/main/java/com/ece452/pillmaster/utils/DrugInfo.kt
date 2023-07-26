@@ -62,15 +62,39 @@ class DrugInfo @Inject constructor() {
             if (!response.isSuccessful) {
                 throw IOException("Unexpected code $response")
             }
-            // Convert the response body to a JSON object
-            val responseJson = JSONObject(response.body?.string())
-            // If the JSON object contains a "conceptGroup", get the rxcui of the drug
-            if(responseJson.getJSONObject("drugGroup").getJSONArray("conceptGroup").length() != 0){
-                val potential_drug = responseJson.getJSONObject("drugGroup").getJSONArray("conceptGroup").getJSONObject(1).getJSONArray("conceptProperties").getJSONObject(0).getString("rxcui")
-                return potential_drug
+            val responseBody = response.body?.string()
+            if (responseBody.isNullOrEmpty()) {
+                return ""
             }
-            // If no rxcui is found, return an empty string
-            return "";
+
+            try {
+                // Convert the response body to a JSONObject
+                val responseJson = JSONObject(responseBody)
+
+                // Check if the "drugGroup" key exists and contains "conceptGroup" array
+                if (responseJson.has("drugGroup")) {
+                    val drugGroup = responseJson.getJSONObject("drugGroup")
+
+                    if (drugGroup.has("conceptGroup")) {
+                        val conceptGroupArray = drugGroup.getJSONArray("conceptGroup")
+
+                        // Check if the "conceptGroup" array is not empty
+                        if (conceptGroupArray.length() > 0) {
+                            // Get the rxcui of the drug from the first element of "conceptProperties"
+                            val conceptGroup = conceptGroupArray.getJSONObject(0)
+                            val conceptProperties = conceptGroup.getJSONArray("conceptProperties")
+
+                            if (conceptProperties.length() > 0) {
+                                return conceptProperties.getJSONObject(0).optString("rxcui", "")
+                            }
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                return ""
+            }
+
+            return ""
         }
     }
 }
