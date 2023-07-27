@@ -25,7 +25,7 @@ import javax.inject.Inject
 private const val SENDER_ID_FIELD = "senderId"
 private const val RECEIVER_ID_FIELD = "receiverId"
 private const val TIMESTAMP_FIELD = "timestamp"
-private const val USER_CHAT_MESSAGE_COLLECTION = "chat"
+private const val USER_CHAT_MESSAGE_COLLECTION = "user_chat"
 
 /**
  * Interface for the User Chat Repository.
@@ -39,7 +39,60 @@ interface IUserChatRepository {
      * @param receiverId The unique identifier of the message receiver.
      * @param message The content of the chat message to be sent.
      * @return The UserChatMessage object representing the sent message.
-     * @throws IllegalArgumentException If the message is empty or blank.
+     * @throws IllegalArgumentException If the message is empty or blank.I/System.out: COMMON HEADERS
+    I/System.out: -> alt-svc: h3=":443"; ma=86400
+    I/System.out: -> cf-cache-status: DYNAMIC
+    I/System.out: -> cf-ray: 7ece9fa3ae0e36d0-YYZ
+    I/System.out: -> content-length: 262
+    I/System.out: -> content-type: application/json; charset=utf-8
+    I/System.out: -> date: Wed, 26 Jul 2023 18:14:40 GMT
+    I/System.out: -> server: cloudflare
+    I/System.out: -> strict-transport-security: max-age=15724800; includeSubDomains
+    I/System.out: -> vary: Origin
+    I/System.out: -> x-request-id: 242bac253544dc6787c91ef77629a360
+
+    --------- beginning of crash
+    E/AndroidRuntime: FATAL EXCEPTION: main
+    Process: com.ece452.pillmaster, PID: 14609
+    com.aallam.openai.api.exception.AuthenticationException: Incorrect API key provided: openai-token. You can find your API key at https://platform.openai.com/account/api-keys.
+    at com.aallam.openai.client.internal.http.HttpTransport.openAIAPIException(HttpTransport.kt:66)
+    at com.aallam.openai.client.internal.http.HttpTransport.handleException(HttpTransport.kt:48)
+    at com.aallam.openai.client.internal.http.HttpTransport.perform(HttpTransport.kt:23)
+    at com.aallam.openai.client.internal.http.HttpTransport$perform$1.invokeSuspend(Unknown Source:15)
+    at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+    at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+    at androidx.compose.ui.platform.AndroidUiDispatcher.performTrampolineDispatch(AndroidUiDispatcher.android.kt:81)
+    at androidx.compose.ui.platform.AndroidUiDispatcher.access$performTrampolineDispatch(AndroidUiDispatcher.android.kt:41)
+    at androidx.compose.ui.platform.AndroidUiDispatcher$dispatchCallback$1.run(AndroidUiDispatcher.android.kt:57)
+    at android.os.Handler.handleCallback(Handler.java:942)
+    at android.os.Handler.dispatchMessage(Handler.java:99)
+    at android.os.Looper.loopOnce(Looper.java:201)
+    at android.os.Looper.loop(Looper.java:288)
+    at android.app.ActivityThread.main(ActivityThread.java:7872)
+    at java.lang.reflect.Method.invoke(Native Method)
+    at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+    at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:936)
+    Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [androidx.compose.ui.platform.MotionDurationScaleImpl@e037e71, androidx.compose.runtime.BroadcastFrameClock@4697456, StandaloneCoroutine{Cancelling}@2dcecd7, AndroidUiDispatcher@d8489c4]
+    Caused by: io.ktor.client.plugins.ClientRequestException: Client request(POST https://api.openai.com/v1/completions) invalid: 401 . Text: "{
+    "error": {
+    "message": "Incorrect API key provided: openai-token. You can find your API key at https://platform.openai.com/account/api-keys.",
+    "type": "invalid_request_error",
+    "param": null,
+    "code": "invalid_api_key"
+    }
+    }
+    "
+    at io.ktor.client.plugins.DefaultResponseValidationKt$addDefaultResponseValidation$1$1.invokeSuspend(DefaultResponseValidation.kt:54)
+    at io.ktor.client.plugins.DefaultResponseValidationKt$addDefaultResponseValidation$1$1.invoke(Unknown Source:8)
+    at io.ktor.client.plugins.DefaultResponseValidationKt$addDefaultResponseValidation$1$1.invoke(Unknown Source:4)
+    at io.ktor.client.plugins.HttpCallValidator.validateResponse(HttpCallValidator.kt:51)
+    at io.ktor.client.plugins.HttpCallValidator.access$validateResponse(HttpCallValidator.kt:43)
+    at io.ktor.client.plugins.HttpCallValidator$Companion$install$3.invokeSuspend(HttpCallValidator.kt:152)
+    at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+    at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+    ... 11 more
+    I/Process: Sending signal. PID: 14609 SIG: 9
+
      * @throws IllegalStateException If the current user is not found.
      */
     suspend fun sendUserChatMessage(receiverId: String, message: String): UserChatMessage

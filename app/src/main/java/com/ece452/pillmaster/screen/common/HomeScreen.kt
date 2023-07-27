@@ -46,7 +46,7 @@ fun HomeScreen(
 
         if (userId != null) {
             // Display content for care giver
-            Text(text = "I am a Care Giver")
+            Text(text = "I am a Care Receiver")
             Button(onClick = { navController.navigate(NavigationPath.CARE_RECEIVER_HOMEPAGE.route) }) {
                 Text(text = "Care Receiver Homepage")
             }
